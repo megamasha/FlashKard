@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/application_exit.svgz</file>
+        <file>images/document_open.svgz</file>
+        <file>images/document_save.svgz</file>
+        <file>images/edit.svg</file>
+        <file>images/go_next.svgz</file>
+        <file>images/view_statistics.svgz</file>
+    </qresource>
+</RCC>
