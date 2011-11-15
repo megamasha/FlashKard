@@ -25,5 +25,7 @@ void MainWindow::on_exitButton_clicked()
 void MainWindow::on_loadButton_clicked()
 {
     QString fileName;
-    fileName = QFileDialog::getOpenFileName(this, tr("Load Flashcard Database"), "~/Documents", tr("Files (*.*)"));
+    fileName = QFileDialog::getOpenFileName(this, tr("Load Flashcard Database"),
+                                            "~/Documents", tr("Files (*.*)"));
+
 }

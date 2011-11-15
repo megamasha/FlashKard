@@ -10,6 +10,7 @@ class cardpack : public QObject
     public:
         explicit cardpack(QObject *parent = 0);
 
+        bool importTsv(const QString);
         flashcard * getRandom();
         flashcard * getNext(const flashcard *);
 
