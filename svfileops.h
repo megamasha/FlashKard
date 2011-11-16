@@ -10,8 +10,8 @@ original Vocab tester Version 1 (http://github.com/megamasha/Vocab-Tester)
 #include <ctype.h>
 #include <string.h>
 
-#define DINPUTFILENAME "vtdb.~sv"
 #define MAXTEXTLENGTH 256
+#define MAXINTVALUE 2147483647
 
 struct vocab
 {
@@ -33,13 +33,15 @@ struct listinfo//struct holds head, tail and the number of entries for the n2l, 
     struct vocab * tail;
 };
 
+FILE * inputfile = NULL;
 struct listinfo n2l, norm, known, old;
 
-void loaddatabase();//select which database to load and pass it to getrecordsfromfile
-char * validfilename (char * filename, char * extension);//filename validation
+void loaddatabase(char * inputfilename);//set up legacy environment and pass correct parameters to getrecordsfromfile
 void getrecordsfromfile(char * inputfilename,char separator);//load a file into memory
 char * readtextfromfile(int maxchars,char separator);//get text field from file
 int readnumberfromfile(int maxvalue,char separator);//get integer field from file
 struct vocab * addtolist(struct vocab * newentry, struct listinfo * list);//add given (already filled in) vocab record to given list
+int removefromlist(struct vocab * entry, struct listinfo * list,int freeup);//remove given entry from given list. Also destroy record if freeup is true
+void reindex (struct listinfo * list);//necessary to stop gaps in the numbering system, which could cause random vocab selection to fail
 
 #endif // SVFILEOPS_H

@@ -1,70 +1,12 @@
 #include "svfileops.h"
 
-void loaddatabase()//select which database to load
+void loaddatabase(char * inputfilename) // set up legacy environment and pass correct parameters to getrecordsfromfile()
 {
     char separator = '~';
-    char * tildesep = ".~sv";
-    char * commasep = ".csv";
-    char * extension = tildesep;
-    char * deffilename = DINPUTFILENAME;
-    char * inputfilename = (char *)malloc(MAXTEXTLENGTH+1);
-    if (!inputfilename) {fprintf(stderr, "Error allocating memory for filename input");exit(1);}
-    strcpy(inputfilename,deffilename);
-    printf("Loading...\nLoad default database: %s? (y/n)",inputfilename);
-    if (!getyesorno())//import user specified database
-    {
-        printf("Default file type is .~sv. Load .~sv file? (y/n)");
-        if (getyesorno()) //import .~sv file
-        {
-            printf("Enter name of .~sv file to load:\n");
-        }
-        else //alternative options
-        {
-            printf("Import .csv file instead? (y/n)");
-            if (getyesorno()) //import .csv file
-            {
-                separator = ',';
-                extension = commasep;
-                printf("Enter name of .csv file to import:\n");
-            }
-            else //not loading a file
-            {
-                printf("No database file selected. No database loaded!\n");
-                free(inputfilename);
-                return;
-            }
-        }
-        inputfilename=validfilename(gettextfromkeyboard(inputfilename,MAXTEXTLENGTH),extension);
-    }
-    getrecordsfromfile(inputfilename,separator);
-    inputfilename=validfilename(inputfilename,".~sv");
-    strcpy(currentfilename,inputfilename);
-    free(inputfilename);
-}
 
-char * validfilename (char * filename, char * extension)//filename validation
-{
-    int i, j=0, alreadyvalid=1;
-    //check filename is longer than the extension
-    if (strlen(filename)>strlen(extension))
-    {
-        //if so, see if string already contains given extension
-        for(i=0;i<=strlen(extension);i++)
-        {
-            if (filename[(strlen(filename))-i]!=extension[(strlen(extension))-i]) alreadyvalid=0;
-        }
-        if (alreadyvalid) return filename;//is valid filename, return it
-    }
-    //find first 'dot' or null in string to append file extension (first character can be dot for hidden unix files)
-    for (i=1;filename[i]!='.'&&i<strlen(filename);i++);
-    //add extension and return result
-    while (i<MAXTEXTLENGTH && j<=strlen(extension))
-    {
-        filename[i]=extension[j];
-        i++;j++;
-    }
-    if (i==MAXTEXTLENGTH) fprintf(stderr,"Filename reached maximum length including extension, possibly truncated!\n");
-    return filename;
+    if (inputfilename[strlen(inputfilename)-3] == 'c') separator = ',';
+
+    getrecordsfromfile(inputfilename,separator);
 }
 
 void getrecordsfromfile(char * inputfilename,char separator)
@@ -104,6 +46,7 @@ void getrecordsfromfile(char * inputfilename,char separator)
                     case 1: newvocablist = &norm;break;
                     case 2: newvocablist = &known;break;
                     case 3: newvocablist = &old;break;
+                    default: {newvocablist = &n2l;fprintf(stderr,"invalid known level! Defaulting to 0");}
                 }
 
                 addtolist(newvocab,newvocablist);
@@ -125,7 +68,7 @@ void getrecordsfromfile(char * inputfilename,char separator)
 char * readtextfromfile(int maxchars,char separator)
 {
     int i=0;
-    char ch;
+    int ch;
     char * target = (char *)malloc(maxchars+1); //allocate memory for new string
     if (!target) {printf("Memory allocation failed!\n");return 0;}//return 0 and print error if alloc failed
 
@@ -169,7 +112,7 @@ int readnumberfromfile (int maxvalue,char separator)
     ch=getc(inputfile);
     while (!isdigit(ch))
     {
-        if (ch == separator||ch=='\n'||ch==EOF) {fprintf(stderr,"Format error or field missing in file\nExpected number, but found '%c'. Replacing with '0'\n",separator,ch);free(buff);return 0;}//if no number found(reached separator before digit), print error, free buff and return 0
+        if (ch == separator||ch=='\n'||ch==EOF) {fprintf(stderr,"Format error or field missing in file\nExpected number, but found '%c'. Replacing with '0'\n",ch);free(buff);return 0;}//if no number found(reached separator before digit), print error, free buff and return 0
         ch = getc(inputfile);//cycle forward until you reach a digit
     }
     while (i<10 && ch!=separator && ch!='\n')//stop when you reach separator, end of line, or when number too long
@@ -206,4 +149,67 @@ struct vocab * addtolist(struct vocab * newentry, struct listinfo * list)
     else {fprintf(stderr,"Unable to correctly add vocab entry to list!");return NULL;}
 
     return newentry;
+}
+
+int removefromlist(struct vocab * entry, struct listinfo * list,int freeup)
+{
+    struct vocab * prev;
+    if (list->head == entry) //if entry being deleted is first in the list
+    {
+        if (list->tail == entry) //if entry is only item in the list
+        {
+            list->head = list->tail = NULL;
+        }
+        else //if first in list, but not last
+        {
+            list->head = entry->next;
+        }
+    }
+    else //entry is not first in list, so set prev to point to previous entry
+    {
+        prev = list->head;
+        while (prev->next!=entry)
+        {
+            prev=prev->next;
+            if (!prev)
+            {
+                printf("Trying to delete an entry from a list it's not in!!\n");
+                return 0;
+            }
+        }
+        if (list->tail == entry)//if entry is at the end of the list
+        {
+            list->tail = prev;
+            list->tail->next = NULL;
+        }
+        else //if entry is somewhere in middle of list
+        {
+            prev->next=entry->next;
+        }
+    }//this entry is now not pointed to in any list
+    list->entries--;
+    /*following line removed because it could theoretically break a list if the entry was removed from a list after it had been added to another
+    entry->next = NULL;//and doesn't point to anything either*/
+    reindex(list);
+    if (freeup) //if freeup is set, this also wipes the record and frees up the memory associated with it
+    {
+        if(entry->question) free(entry->question);
+        if(entry->answer) free(entry->answer);
+        if(entry->info) free(entry->info);
+        if(entry->hint) free(entry->hint);
+        if(entry) free(entry);
+    }
+    return 1;
+}
+
+void reindex (struct listinfo * list)
+{
+    int counter = 1;
+    struct vocab * workingentry = list->head;
+    while (workingentry)
+    {
+        workingentry->index = counter++;
+        workingentry=workingentry->next;
+    }
+    if (list->entries!=counter-1) printf("Reindexing Error!\n");
 }
