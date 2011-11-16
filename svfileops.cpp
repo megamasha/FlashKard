@@ -1,12 +1,20 @@
 #include "svfileops.h"
 
-void loaddatabase(char * inputfilename) // set up legacy environment and pass correct parameters to getrecordsfromfile()
+void loaddatabase(char * inputfilename)
+/* sets up legacy environment (mostly using the header file) and
+passes correct parameters to getrecordsfromfile(), which reads the file into memory.
+
+TODO from this point...
+
+It then populates a cardpack with flashcards generated from the vocab structs
+and frees up the memory...*/
 {
     char separator = '~';
 
     if (inputfilename[strlen(inputfilename)-3] == 'c') separator = ',';
 
     getrecordsfromfile(inputfilename,separator);
+
 }
 
 void getrecordsfromfile(char * inputfilename,char separator)
