@@ -1,6 +1,7 @@
 #include "cardpack.h"
 
-cardpack::cardpack(QObject *parent) :
+cardPack::cardPack(QObject *parent) :
     QObject(parent)
 {
+
 }

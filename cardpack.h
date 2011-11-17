@@ -4,15 +4,15 @@
 #include <QObject>
 #include "flashcard.h"
 
-class cardpack : public QObject
+class cardPack : public QObject
 {
     Q_OBJECT
     public:
-        explicit cardpack(QObject *parent = 0);
+        explicit cardPack(QObject *parent = 0);
 
         bool importTsv(const QString);
-        flashcard * getRandom();
-        flashcard * getNext(const flashcard *);
+        flashCard * getRandom();
+        flashCard * getNext(const flashCard *);
 
     signals:
 

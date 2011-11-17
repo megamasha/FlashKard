@@ -1,38 +1,36 @@
 #ifndef FLASHCARD_H
 #define FLASHCARD_H
 
-#include <string>
 #include <QObject> // required for Qt Signals and Slots
-using namespace std;
 
-class flashcard : public QObject
+class flashCard : public QObject
 {
     Q_OBJECT // required for Qt Signals and Slots
 
     public:
-        bool isCorrect (string);
-        // bool isAlmostCorrect (string); //FISH! TODO
+        bool isCorrect (QString);
+        // bool isAlmostCorrect (QString); //FISH! TODO
 
-        string getQuestion();
-        bool setQuestion(string);
-        string getAnswer();
-        bool setAnswer(string);
-        string getInfo();
-        bool setInfo(string);
-        string getHint();
-        bool setHint(string);
+        QString getQuestion();
+        bool setQuestion(QString);
+        QString getAnswer();
+        bool setAnswer(QString);
+        QString getInfo();
+        bool setInfo(QString);
+        QString getHint();
+        bool setHint(QString);
 
         bool wasCorrectLastTime();
 
     private:
-        string question;
-        string answer;
-        string info;
-        string hint;
+        QString question;
+        QString answer;
+        QString info;
+        QString hint;
         bool lastCorrect;
         int currentStreak;
         int levelUp;
-        int knownlevel;
+        int knownLevel;
 };
 
 #endif // FLASHCARD_H

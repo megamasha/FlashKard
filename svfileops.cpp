@@ -1,16 +1,22 @@
-#include "svfileops.h"
+/* uses legacy C functions (below) and structs/defines (mostly using the header
+file).
 
-void loaddatabase(char * inputfilename)
-/* sets up legacy environment (mostly using the header file) and
-passes correct parameters to getrecordsfromfile(), which reads the file into memory.
+The importdatabase() performs the functions of the old loaddatabase(),
+passing correct parameters to getrecordsfromfile(), which reads the file into
+vocab structs in memory.
 
 TODO from this point...
 
-It then populates a cardpack with flashcards generated from the vocab structs
-and frees up the memory...*/
-{
-    char separator = '~';
+It then converts these vocab structs into flashcards in a cardpack and unloads
+the vocab structs from memory.
+*/
 
+#include "svfileops.h"
+
+void importdatabase(char * inputfilename)
+{
+    //identify csv or ~sv file
+    char separator = '~';
     if (inputfilename[strlen(inputfilename)-3] == 'c') separator = ',';
 
     getrecordsfromfile(inputfilename,separator);
