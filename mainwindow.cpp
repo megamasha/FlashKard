@@ -2,6 +2,7 @@
 #include <QFileDialog>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "svfileops.h"
 
 using namespace std;
 
@@ -24,8 +25,13 @@ void MainWindow::on_exitButton_clicked()
 
 void MainWindow::on_loadButton_clicked()
 {
-    QString fileName;
-    fileName = QFileDialog::getOpenFileName(this, tr("Load Flashcard Database"),
+    QString filename;
+    filename = QFileDialog::getOpenFileName(this, tr("Load Flashcard Database"),
                                             "~/Documents", tr("Files (*.*)"));
+    QByteArray poop = filename.toAscii();
+    char * importfilename = (char *)malloc(256);
+    importfilename = poop.data();
+
+    importdatabase(importfilename);
 
 }

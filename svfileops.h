@@ -33,15 +33,21 @@ struct listinfo//struct holds head, tail and the number of entries for the n2l, 
     struct vocab * tail;
 };
 
-FILE * inputfile = NULL;
-struct listinfo n2l, norm, known, old;
+extern FILE * inputfile;
+extern struct listinfo n2l, norm, known, old;
 
-void loaddatabase(char * inputfilename);//set up legacy environment and pass correct parameters to getrecordsfromfile
+void importdatabase(char * inputfilename);/*performs the functions of the old loaddatabase(),
+passing correct parameters to getrecordsfromfile(), which reads the file into
+vocab structs in memory.
+It then converts these vocab structs into flashcards in a cardpack and unloads
+the vocab structs from memory.*/
 void getrecordsfromfile(char * inputfilename,char separator);//load a file into memory
 char * readtextfromfile(int maxchars,char separator);//get text field from file
 int readnumberfromfile(int maxvalue,char separator);//get integer field from file
 struct vocab * addtolist(struct vocab * newentry, struct listinfo * list);//add given (already filled in) vocab record to given list
 int removefromlist(struct vocab * entry, struct listinfo * list,int freeup);//remove given entry from given list. Also destroy record if freeup is true
 void reindex (struct listinfo * list);//necessary to stop gaps in the numbering system, which could cause random vocab selection to fail
+int unloaddatabase();//clears all vocab structs from memory
+int loadvocabintoflashcards();//this (and importdatabase) is new code
 
 #endif // SVFILEOPS_H

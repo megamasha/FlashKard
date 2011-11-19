@@ -3,11 +3,15 @@
 
 #include <QObject> // required for Qt Signals and Slots
 
-class flashCard : public QObject
+enum knownLevel_t {level_n2l = 0, level_norm, level_known, level_old};
+
+class flashCard : public QObject // required for Qt Signals and Slots
 {
     Q_OBJECT // required for Qt Signals and Slots
 
     public:
+
+        flashCard(QString qu, QString an, QString in, QString hi, knownLevel_t kl, int lc, int cs, int lu);
         bool isCorrect (QString);
         // bool isAlmostCorrect (QString); //FISH! TODO
 
@@ -22,15 +26,20 @@ class flashCard : public QObject
 
         bool wasCorrectLastTime();
 
+        friend class cardSet;
+
     private:
         QString question;
         QString answer;
         QString info;
         QString hint;
+
+        knownLevel_t knownLevel;
         bool lastCorrect;
         int currentStreak;
         int levelUp;
-        int knownLevel;
+
+        flashCard * next;
 };
 
 #endif // FLASHCARD_H

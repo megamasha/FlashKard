@@ -1,17 +1,20 @@
-/* uses legacy C functions (below) and structs/defines (mostly using the header
+/* uses legacy C functions and variables (below) and structs/defines (using the header
 file).
 
 The importdatabase() performs the functions of the old loaddatabase(),
 passing correct parameters to getrecordsfromfile(), which reads the file into
 vocab structs in memory.
-
-TODO from this point...
-
 It then converts these vocab structs into flashcards in a cardpack and unloads
 the vocab structs from memory.
 */
 
 #include "svfileops.h"
+#include "QString"
+#include "flashcard.h"
+#include "cardpack.h"
+
+FILE * inputfile = NULL;
+struct listinfo n2l, norm, known, old;
 
 void importdatabase(char * inputfilename)
 {
@@ -21,6 +24,10 @@ void importdatabase(char * inputfilename)
 
     getrecordsfromfile(inputfilename,separator);
 
+    loadvocabintoflashcards();
+
+    //clear the vocab structs
+    unloaddatabase();
 }
 
 void getrecordsfromfile(char * inputfilename,char separator)
@@ -226,4 +233,69 @@ void reindex (struct listinfo * list)
         workingentry=workingentry->next;
     }
     if (list->entries!=counter-1) printf("Reindexing Error!\n");
+}
+
+int unloaddatabase()
+{
+    int l = 0,counter = 0;
+    struct vocab * entry;
+    struct listinfo * list; //assigned by switch with l, cycles through all the lists
+    for (;l<=3;l++)
+    {
+        switch (l)
+        {
+            case 0: {list = &n2l;break;}
+            case 1: {list = &norm;break;}
+            case 2: {list = &known;break;}
+            case 3: {list = &old;break;}
+            default: {fprintf(stderr,"List pointer error!\n");return 0;}
+        }
+        while (list->head!=NULL)
+        {
+            entry = list->head;
+            removefromlist(entry,list,1);
+            counter++;
+        }
+    }
+    printf("Unloaded %i entries from memory.\n",counter);
+    return 1;
+}
+
+int loadvocabintoflashcards()
+{
+    int l = 0;
+    struct vocab * entry;
+    struct listinfo * list; //assigned by switch with l, cycles through all the lists
+    for (;l<=3;l++) //cycle through all levels
+    {
+        switch (l)
+        {
+            case 0: {list = &n2l;break;}
+            case 1: {list = &norm;break;}
+            case 2: {list = &known;break;}
+            case 3: {list = &old;break;}
+            default: {fprintf(stderr,"List pointer error!\n");return 0;}
+        }
+        entry = list->head;
+        while (entry!=NULL)
+        {
+            knownLevel_t knownLevel = (knownLevel_t)l;
+            int lastCorrect = entry->right;
+            int currentStreak = entry->counter;
+            int levelUp = entry->counter;
+            QString qu = entry->question;
+            QString an = entry->answer;
+            QString in = entry->info;
+            QString hi;
+
+            flashCard * fc = new flashCard(qu,an,in,hi,knownLevel,lastCorrect,currentStreak,levelUp);
+
+            mainPack.addCard(*fc,knownLevel);
+
+            entry = entry->next;
+        }
+
+    } //for: cycling through lists
+
+    return 1;
 }

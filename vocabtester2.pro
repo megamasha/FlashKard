@@ -14,12 +14,14 @@ SOURCES += main.cpp\
         mainwindow.cpp\
         flashcard.cpp \
     cardpack.cpp \
-    svfileops.cpp
+    svfileops.cpp \
+    cardset.cpp
 
 HEADERS  += mainwindow.h \
     cardpack.h \
     flashcard.h \
-    svfileops.h
+    svfileops.h \
+    cardset.h
 
 FORMS    += mainwindow.ui
 
