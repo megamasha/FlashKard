@@ -16,13 +16,13 @@ class flashCard : public QObject // required for Qt Signals and Slots
         // bool isAlmostCorrect (QString); //FISH! TODO
 
         QString getQuestion();
-        bool setQuestion(QString);
+        bool setQuestion(QString & newQuestion);
         QString getAnswer();
-        bool setAnswer(QString);
+        bool setAnswer(QString & newAnswer);
         QString getInfo();
-        bool setInfo(QString);
+        bool setInfo(QString & newInfo);
         QString getHint();
-        bool setHint(QString);
+        bool setHint(QString & newHint);
 
         bool wasCorrectLastTime();
 
