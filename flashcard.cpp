@@ -1,9 +1,16 @@
 #include "flashcard.h"
-#include <string>
-#include <stdio.h>
+#include "cardpack.h"
 #include <QString>
 
-flashCard::flashCard(QString qu, QString an, QString in, QString hi, knownLevel_t kl, int lc, int cs, int lu)
+flashCard::flashCard (
+    QString qu,
+    QString an,
+    QString in,
+    QString hi,
+    knownLevel_t kl,
+    bool lc,
+    int cs,
+    int lu)
 {
     question = qu;
     answer = an;
@@ -17,9 +24,68 @@ flashCard::flashCard(QString qu, QString an, QString in, QString hi, knownLevel_
 
     next = NULL;
 
-    fprintf(stderr,"Created flashCard.");
-};
+    qDebug("Created flashCard.");
+}
 
+
+//functions to do with answer correctness
+bool flashCard::isCorrect (QString & yourAnswer)
+{
+    if (yourAnswer == answer)
+        return true;
+    else
+        return false;
+}
+
+// bool isAlmostCorrect (QString & yourAnswer); //FISH! TODO
+
+bool flashCard::wasCorrectLastTime()
+{
+    return lastCorrect;
+}
+
+bool flashCard::markAsCorrect()
+{
+    if (lastCorrect)
+    {
+        currentStreak++;
+        levelUp++;
+    }
+    else // if this is the first time in a row you've got it right
+    {
+        lastCorrect = true;
+        currentStreak = 1;
+        levelUp = 1;
+    }
+
+    if (mainPack.canBePromoted(*this))
+        mainPack.promoteCard(*this);
+
+    return true;
+}
+
+bool flashCard::markAsIncorrect()
+{
+    if (lastCorrect) // if you got it right last time
+    {
+        lastCorrect = false;
+        currentStreak = 1;
+        levelUp = 1;
+    }
+    else // if this is not the first time in a row you've got it wrong
+    {
+        currentStreak++;
+        levelUp++;
+    }
+
+    if (mainPack.canBeDemoted(*this))
+        mainPack.demoteCard(*this);
+
+    return true;
+}
+
+
+//string access functions
 bool flashCard::setQuestion(QString & newQuestion)
 {
     question = newQuestion;
@@ -74,4 +140,13 @@ bool flashCard::setHint(QString & newHint)
 QString flashCard::getHint()
 {
     return hint;
+}
+
+
+//priority adjustment functions
+bool flashCard::resetKnownLevel()
+{
+    if (knownLevel != level_norm)
+        {};//FISH! TODO
+    return false;
 }

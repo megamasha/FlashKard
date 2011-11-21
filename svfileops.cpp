@@ -280,7 +280,8 @@ int loadvocabintoflashcards()
         while (entry!=NULL)
         {
             knownLevel_t knownLevel = (knownLevel_t)l;
-            int lastCorrect = entry->right;
+            bool lastCorrect = false;
+            if (entry->right) lastCorrect = true;
             int currentStreak = entry->counter;
             int levelUp = entry->counter;
             QString qu = entry->question;
