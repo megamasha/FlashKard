@@ -10,27 +10,10 @@ cardPack::cardPack(QObject *parent) :
 
 bool cardPack::addCard(flashCard &newCard, knownLevel_t set)
 {
-    bool success = false;
-    switch (set)
-    {
-        case level_n2l:
-                success = n2l.addCard(newCard);
-                break;
-        case level_norm:
-                success = n2l.addCard(newCard);
-                break;
-        case level_known:
-                success = n2l.addCard(newCard);
-                break;
-        case level_old:
-                success = n2l.addCard(newCard);
-                break;
-        default:
-                qDebug("unknown set when adding card");
-    }
+    bool success = knownLevelSets[set].addCard(newCard);
 
     if (success)
-        qDebug("Added file to set %i",set);
+        qDebug("Added card to set %i",set);
 
     return success;
 }
@@ -38,7 +21,7 @@ bool cardPack::addCard(flashCard &newCard, knownLevel_t set)
 bool cardPack::canBePromoted(flashCard & candidateCard)
 {
     if (candidateCard.wasCorrectLastTime() == false) return false;
-    if (candidateCard.knownLevel == level_old) return false;
+    if (candidateCard.knownLevel == level_max) return false;
 
     int requiredLevelUp = INT_MAX;
 
@@ -58,7 +41,7 @@ bool cardPack::canBePromoted(flashCard & candidateCard)
 bool cardPack::canBeDemoted(flashCard & candidateCard)
 {
     if (candidateCard.wasCorrectLastTime()) return false;
-    if (candidateCard.knownLevel == level_n2l) return false;
+    if (candidateCard.knownLevel == level_min) return false;
 
     int requiredLevelUp = INT_MAX;
 
@@ -77,48 +60,34 @@ bool cardPack::canBeDemoted(flashCard & candidateCard)
 
 bool cardPack::promoteCard(flashCard & promotedCard)
 {
-    if (promotedCard.knownLevel == level_old) return false;
+    if (promotedCard.knownLevel == level_max)
+        return false;
 
-
-    if (promotedCard.knownLevel == level_n2l)
-    {
-        n2l.removeCard(promotedCard);
-        norm.addCard(promotedCard);
-    }
-    else if (promotedCard.knownLevel == level_norm)
-    {
-        norm.removeCard(promotedCard);
-        known.addCard(promotedCard);
-    }
-    else if (promotedCard.knownLevel == level_n2l)
-    {
-        known.removeCard(promotedCard);
-        old.addCard(promotedCard);
-    }
+    knownLevelSets[promotedCard.knownLevel].removeCard(promotedCard);
+    promotedCard.knownLevel = (knownLevel_t) (promotedCard.knownLevel + 1);
+    knownLevelSets[promotedCard.knownLevel].addCard(promotedCard);
 
     return true; // FISH! TODO return success value
 }
 
 bool cardPack::demoteCard(flashCard & demotedCard)
 {
-    if (demotedCard.knownLevel == level_n2l) return false;
+    if (demotedCard.knownLevel == level_min)
+        return false;
 
-
-    if (demotedCard.knownLevel == level_norm)
+    if (demotedCard.knownLevel == level_old) // special case
     {
-        norm.removeCard(demotedCard);
-        n2l.addCard(demotedCard);
-    }
-    else if (demotedCard.knownLevel == level_known)
-    {
-        known.removeCard(demotedCard);
-        norm.addCard(demotedCard);
-    }
-    else if (demotedCard.knownLevel == level_old)
-    {
-        old.removeCard(demotedCard);
-        norm.addCard(demotedCard);
+        knownLevelSets[level_old].removeCard(demotedCard);
+        demotedCard.knownLevel = level_norm;
+        knownLevelSets[demotedCard.knownLevel].addCard(demotedCard);
     }
 
-        return true; // FISH! TODO return success value
+    else // all others
+    {
+        knownLevelSets[demotedCard.knownLevel].removeCard(demotedCard);
+        demotedCard.knownLevel = (knownLevel_t) (demotedCard.knownLevel - 1);
+        knownLevelSets[demotedCard.knownLevel].addCard(demotedCard);
+    }
+
+    return true; // FISH! TODO return success value
 }

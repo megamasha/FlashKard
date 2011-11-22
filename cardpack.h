@@ -34,11 +34,12 @@ class cardPack : public QObject
 
     private:
 
-        cardSet n2l;
-        cardSet norm;
-        cardSet known;
-        cardSet old;
-        unsigned int cardsInPack;
+        cardSet knownLevelSets[level_max]; //one set of cards for each 'knownLevel'
+        unsigned int cardsInPackCounter;
+
+    //friends:
+
+        friend class flashCard;
 };
 
 extern cardPack mainPack;

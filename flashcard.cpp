@@ -1,5 +1,6 @@
 #include "flashcard.h"
 #include "cardpack.h"
+#include "cardset.h"
 #include <QString>
 
 flashCard::flashCard (
@@ -146,7 +147,42 @@ QString flashCard::getHint()
 //priority adjustment functions
 bool flashCard::resetKnownLevel()
 {
+    bool success = true;
+
     if (knownLevel != level_norm)
-        {};//FISH! TODO
-    return false;
+    {
+        mainPack.knownLevelSets[knownLevel].removeCard(*this);
+        knownLevel = level_norm;
+        mainPack.knownLevelSets[knownLevel].addCard(*this);
+    }
+
+    return success; // FISH! TODO: implement success properly
+}
+
+bool flashCard::setAsHighPriorityToLearn()
+{
+    bool success = true;
+
+    if (knownLevel != level_n2l)
+    {
+        mainPack.knownLevelSets[knownLevel].removeCard(*this);
+        knownLevel = level_n2l;
+        mainPack.knownLevelSets[knownLevel].addCard(*this);
+    }
+
+    return success; // FISH! TODO: implement success properly
+}
+
+bool flashCard::setAsLowPriorityToLearn()
+{
+    bool success = true;
+
+    if (knownLevel < level_known)
+    {
+        mainPack.knownLevelSets[knownLevel].removeCard(*this);
+        knownLevel = level_known;
+        mainPack.knownLevelSets[knownLevel].addCard(*this);
+    }
+
+    return success; // FISH! TODO: implement success properly
 }

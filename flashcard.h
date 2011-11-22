@@ -39,9 +39,9 @@ class flashCard : public QObject // required for Qt Signals and Slots
         bool setHint(QString & newHint);
 
         //priority adjustment functions
-        bool resetKnownLevel(); //FISH! TODO
-        bool setAsHighPriorityToLearn(); //FISH! TODO
-        bool setAsLowPriorityToLearn(); //FISH! TODO
+        bool resetKnownLevel();
+        bool setAsHighPriorityToLearn();
+        bool setAsLowPriorityToLearn();
 
     private:
 
