@@ -15,15 +15,18 @@ SOURCES += main.cpp\
         flashcard.cpp \
     cardpack.cpp \
     svfileops.cpp \
-    cardset.cpp
+    cardset.cpp \
+    flashcardbox.cpp
 
 HEADERS  += mainwindow.h \
     cardpack.h \
     flashcard.h \
     svfileops.h \
-    cardset.h
+    cardset.h \
+    flashcardbox.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    flashcardbox.ui
 
 RESOURCES += \
     resources.qrc
