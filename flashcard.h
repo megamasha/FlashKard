@@ -5,6 +5,9 @@
 
 enum knownLevel_t {level_min = 0, level_n2l = 0, level_norm = 1, level_known = 2, level_old = 3, level_max = 3};
 
+class cardSet;
+class cardPack;
+
 class flashCard : public QObject // required for Qt Signals and Slots
 {
     Q_OBJECT // required for Qt Signals and Slots
@@ -39,6 +42,11 @@ class flashCard : public QObject // required for Qt Signals and Slots
         bool setHint(QString & newHint);
 
         //priority adjustment functions
+        bool canBePromoted();
+        bool canBeDemoted();
+        bool promoteCard();
+        bool demoteCard();
+
         bool resetKnownLevel();
         bool setAsHighPriorityToLearn();
         bool setAsLowPriorityToLearn();
@@ -56,6 +64,8 @@ class flashCard : public QObject // required for Qt Signals and Slots
         int levelUp;
 
         flashCard * next;
+        cardSet * parentSet;
+        cardPack * parentPack;
 
     //friends:
 

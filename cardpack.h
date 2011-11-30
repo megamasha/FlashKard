@@ -23,10 +23,6 @@ class cardPack : public QObject
 
         flashCard * getRandomCard();
         flashCard * getNextCard(const flashCard *);
-        bool canBePromoted(flashCard & candidateCard);
-        bool canBeDemoted(flashCard & candidateCard);
-        bool promoteCard(flashCard & promotedCard);
-        bool demoteCard(flashCard & demotedCard);
 
     signals:
 

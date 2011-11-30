@@ -3,7 +3,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "svfileops.h"
-#include "flashcardbox.h"
+#include "flashcardwindow.h"
 
 using namespace std;
 
@@ -39,7 +39,8 @@ void MainWindow::on_loadButton_clicked()
 
 void MainWindow::on_testButton_clicked()
 {
-   flashCardBox tester;
+
+    flashCardWindow tester;
     tester.exec();
 }
 

@@ -59,8 +59,8 @@ bool flashCard::markAsCorrect()
         levelUp = 1;
     }
 
-    if (mainPack.canBePromoted(*this))
-        mainPack.promoteCard(*this);
+    if (canBePromoted())
+        promoteCard();
 
     return true;
 }
@@ -79,8 +79,8 @@ bool flashCard::markAsIncorrect()
         levelUp++;
     }
 
-    if (mainPack.canBeDemoted(*this))
-        mainPack.demoteCard(*this);
+    if (canBeDemoted())
+        demoteCard();
 
     return true;
 }
@@ -145,6 +145,76 @@ QString flashCard::getHint()
 
 
 //priority adjustment functions
+bool flashCard::canBePromoted()
+{
+    if (wasCorrectLastTime() == false) return false;
+    if (knownLevel == level_max) return false;
+
+    int requiredLevelUp = INT_MAX;
+
+    if (knownLevel == level_n2l)
+        requiredLevelUp = N2LTONORM;
+    else if (knownLevel == level_norm)
+        requiredLevelUp = NORMTOKNOWN;
+    else if (knownLevel == level_known)
+        requiredLevelUp = KNOWNTOOLD;
+
+    if (levelUp >= requiredLevelUp)
+        return true;
+    else
+        return false;
+}
+
+bool flashCard::canBeDemoted()
+{
+    if (wasCorrectLastTime()) return false;
+    if (knownLevel == level_min) return false;
+
+    int requiredLevelUp = INT_MAX;
+
+    if (knownLevel == level_norm)
+        requiredLevelUp = NORMTON2L;
+    else if (knownLevel == level_known)
+        requiredLevelUp = KNOWNTONORM;
+    else if (knownLevel == level_old)
+        requiredLevelUp = OLDTONORM;
+
+    if (levelUp >= requiredLevelUp)
+        return true;
+    else
+        return false;
+}
+
+bool flashCard::promoteCard()
+{
+    if (knownLevel == level_max)
+        return false;
+
+    parentPack->knownLevelSets[knownLevel].removeCard(*this);
+    knownLevel = (knownLevel_t) (knownLevel + 1);
+    parentPack->knownLevelSets[knownLevel].addCard(*this);
+
+    return true; // FISH! TODO return success value
+}
+
+bool flashCard::demoteCard()
+{
+    if (knownLevel == level_min)
+        return false;
+
+    parentPack->knownLevelSets[knownLevel].removeCard(*this);
+
+    if (knownLevel == level_old) // special case
+        knownLevel = level_norm;
+    else // all others
+        knownLevel = (knownLevel_t) (knownLevel - 1);
+
+    parentPack->knownLevelSets[knownLevel].addCard(*this);
+
+    return true; // FISH! TODO return success value
+}
+
+
 bool flashCard::resetKnownLevel()
 {
     bool success = true;

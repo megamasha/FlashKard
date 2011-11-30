@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>flashcardBox</class>
- <widget class="QDialog" name="flashcardBox">
+ <class>flashCardWindow</class>
+ <widget class="QDialog" name="flashCardWindow">
   <property name="windowModality">
    <enum>Qt::WindowModal</enum>
   </property>
