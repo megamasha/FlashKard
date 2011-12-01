@@ -28,6 +28,7 @@ class flashCard : public QObject // required for Qt Signals and Slots
         bool isCorrect (QString & yourAnswer);
         // bool isAlmostCorrect (QString & yourAnswer); //FISH! TODO
         bool wasCorrectLastTime();
+        int getCurrentStreak();
         bool markAsCorrect();
         bool markAsIncorrect();
 

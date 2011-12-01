@@ -16,6 +16,9 @@ public:
     explicit flashCardWindow(QWidget *parent = 0);
     ~flashCardWindow();
 
+protected:
+    void closeEvent(QCloseEvent *event);
+
 private slots:
     void on_infoButton_clicked();
 
@@ -26,6 +29,7 @@ private slots:
 private:
     Ui::flashCardWindow *ui;
     flashCard * currentCard;
+    bool answered; //are we expecting an answer, or just waiting around?
     bool usedHintThisTime;
     void anotherCard();
 };

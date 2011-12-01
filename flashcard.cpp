@@ -45,6 +45,11 @@ bool flashCard::wasCorrectLastTime()
     return lastCorrect;
 }
 
+int flashCard::getCurrentStreak()
+{
+    return currentStreak;
+}
+
 bool flashCard::markAsCorrect()
 {
     if (lastCorrect)

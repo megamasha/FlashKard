@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     svfileops.cpp \
     cardset.cpp \
     flashcardwindow.cpp \
-    popupwindow.cpp
+    popupwindow.cpp \
+    resultswindow.cpp
 
 HEADERS  += mainwindow.h \
     cardpack.h \
@@ -25,10 +26,12 @@ HEADERS  += mainwindow.h \
     svfileops.h \
     cardset.h \
     flashcardwindow.h \
-    popupwindow.h
+    popupwindow.h \
+    resultswindow.h
 
 FORMS    += mainwindow.ui \
-    flashcardwindow.ui
+    flashcardwindow.ui \
+    resultswindow.ui
 
 RESOURCES += \
     resources.qrc

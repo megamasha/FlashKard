@@ -2,6 +2,8 @@
 #include "ui_flashcardwindow.h"
 #include "cardpack.h"
 #include "popupwindow.h"
+#include "resultswindow.h"
+#include <QCloseEvent>
 
 flashCardWindow::flashCardWindow(QWidget *parent) :
     QDialog(parent),
@@ -16,6 +18,19 @@ flashCardWindow::~flashCardWindow()
     delete ui;
 }
 
+void flashCardWindow::closeEvent(QCloseEvent * event)
+{
+    if (answered)
+        event->accept();
+    else if (popup.importantQuestion(this,tr("Are you sure you want to close the tester?\n\nThis will count as an incorrect answer!")))
+    {
+        currentCard->markAsIncorrect();
+        event->accept();
+    }
+    else
+        event->ignore();
+}
+
 void flashCardWindow::anotherCard()
 {
     currentCard = mainPack.getRandomCard();
@@ -24,6 +39,8 @@ void flashCardWindow::anotherCard()
         popup.error(this,tr("No vocab loaded!"));
         delete this;
     }
+    ui->answerBox->clear();
+    answered = usedHintThisTime = false;
     ui->questionText->setText(currentCard->getQuestion());
 }
 
@@ -48,4 +65,9 @@ void flashCardWindow::on_hintButton_clicked()
 void flashCardWindow::on_answerOKButton_clicked()
 {
 
+    resultsWindow results(this);
+    results.processResults(*currentCard,ui->answerBox->text());
+    if (results.exec())
+        anotherCard();
+    else accept();
 }
