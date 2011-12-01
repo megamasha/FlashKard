@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string notr="true">FlashKard</string>
   </property>
   <widget class="QWidget" name="mainButtonLayout">
    <layout class="QGridLayout" name="gridLayout_2">

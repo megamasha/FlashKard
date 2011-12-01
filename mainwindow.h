@@ -26,4 +26,6 @@ private:
     Ui::MainWindow *ui;
 };
 
+extern MainWindow mainWindow;
+
 #endif // MAINWINDOW_H

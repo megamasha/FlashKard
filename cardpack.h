@@ -24,6 +24,9 @@ class cardPack : public QObject
         flashCard * getRandomCard();
         flashCard * getNextCard(const flashCard *);
 
+        bool isEmpty();
+        unsigned int cardsInPack();
+
     signals:
 
     public slots:
@@ -32,6 +35,7 @@ class cardPack : public QObject
 
         cardSet knownLevelSets[level_max]; //one set of cards for each 'knownLevel'
         unsigned int cardsInPackCounter;
+        bool n2lFlag;
 
     //friends:
 

@@ -6,18 +6,21 @@
 class cardSet
 {
 
-public:
+    public:
 
-    cardSet();
-    bool addCard(flashCard & newCard);
-    bool removeCard(flashCard & oldCard);
-    unsigned int cardsInSet();
+        cardSet();
+        bool addCard(flashCard & newCard);
+        bool removeCard(flashCard & oldCard);
+        unsigned int cardsInSet();
+        bool isEmpty();
 
-private:
+    private:
 
-    flashCard * head;
-    flashCard * tail;
-    unsigned int cardsInSetCounter;
+        flashCard * head;
+        flashCard * tail;
+        unsigned int cardsInSetCounter;
+
+    friend class cardPack;
 };
 
 #endif // CARDSET_H

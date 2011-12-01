@@ -16,14 +16,16 @@ SOURCES += main.cpp\
     cardpack.cpp \
     svfileops.cpp \
     cardset.cpp \
-    flashcardwindow.cpp
+    flashcardwindow.cpp \
+    popupwindow.cpp
 
 HEADERS  += mainwindow.h \
     cardpack.h \
     flashcard.h \
     svfileops.h \
     cardset.h \
-    flashcardwindow.h
+    flashcardwindow.h \
+    popupwindow.h
 
 FORMS    += mainwindow.ui \
     flashcardwindow.ui

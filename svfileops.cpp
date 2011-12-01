@@ -22,15 +22,16 @@ void importdatabase(char * inputfilename)
     char separator = '~';
     if (inputfilename[strlen(inputfilename)-3] == 'c') separator = ',';
 
-    getrecordsfromfile(inputfilename,separator);
-
-    loadvocabintoflashcards();
-
-    //clear the vocab structs
-    unloaddatabase();
+    //check some records are imported from the file
+    if (getrecordsfromfile(inputfilename,separator))
+    {
+        loadvocabintoflashcards();
+        //clear the vocab structs
+        unloaddatabase();
+    }
 }
 
-void getrecordsfromfile(char * inputfilename,char separator)
+int getrecordsfromfile(char * inputfilename,char separator)
 {
     int goodcounter = 0,badcounter = 0;
     struct vocab * newvocab;
@@ -41,14 +42,14 @@ void getrecordsfromfile(char * inputfilename,char separator)
     }
     else
     {
-        printf("Opened input file %s, reading contents...\n",inputfilename);
+        qDebug("Opened input file %s, reading contents...\n",inputfilename);
         while (!feof(inputfile))
         {
             newvocab = (struct vocab *)malloc(sizeof(struct vocab));
             if (!newvocab)
             {
-                printf("Memory allocation failed!\n");
-                return;
+                qDebug("Memory allocation failed!\n");
+                return goodcounter;
             }
             else
             {
@@ -74,16 +75,16 @@ void getrecordsfromfile(char * inputfilename,char separator)
                 if (newvocab->question==NULL||newvocab->answer==NULL)
                 {
                     badcounter++;
-                    printf("Removing faulty vocab record (%d) created at line %i of input file...\n",badcounter,(goodcounter+badcounter));
+                    qDebug("Removing faulty vocab record (%d) created at line %i of input file...\n",badcounter,(goodcounter+badcounter));
                     removefromlist(newvocab,newvocablist,1);
                 }
                 else goodcounter++;
             }
         }
         fclose(inputfile);
-        printf("...finished.\n%i entries read from %s.\n%i faulty entries encountered.\n\n",goodcounter,inputfilename,badcounter);
+        qDebug("...finished.\n%i entries read from %s.\n%i faulty entries encountered.\n\n",goodcounter,inputfilename,badcounter);
     }
-    return;
+    return goodcounter;
 }
 
 char * readtextfromfile(int maxchars,char separator)
@@ -91,7 +92,7 @@ char * readtextfromfile(int maxchars,char separator)
     int i=0;
     int ch;
     char * target = (char *)malloc(maxchars+1); //allocate memory for new string
-    if (!target) {printf("Memory allocation failed!\n");return 0;}//return 0 and print error if alloc failed
+    if (!target) {qDebug("Memory allocation failed!\n");return 0;}//return 0 and print error if alloc failed
 
     ch=getc(inputfile);
     if (ch==separator||ch==EOF){free(target);return NULL;}//if field is blank (zero-length), return null pointer (||EOF added because it hangs on blank database)
@@ -127,7 +128,7 @@ int readnumberfromfile (int maxvalue,char separator)
     int number, i=0;
     char ch;
     char * buff = (char *)malloc(10+1);//allocate enough space for an 10-digit number and a terminating null
-    if (!buff) {printf("Memory allocation failed!\n");return 0;}//return 0 and print error if alloc failed
+    if (!buff) {qDebug("Memory allocation failed!\n");return 0;}//return 0 and print error if alloc failed
     if (!maxvalue) maxvalue=MAXINTVALUE;
 
     ch=getc(inputfile);
@@ -194,7 +195,7 @@ int removefromlist(struct vocab * entry, struct listinfo * list,int freeup)
             prev=prev->next;
             if (!prev)
             {
-                printf("Trying to delete an entry from a list it's not in!!\n");
+                qDebug("Trying to delete an entry from a list it's not in!!\n");
                 return 0;
             }
         }
@@ -232,7 +233,7 @@ void reindex (struct listinfo * list)
         workingentry->index = counter++;
         workingentry=workingentry->next;
     }
-    if (list->entries!=counter-1) printf("Reindexing Error!\n");
+    if (list->entries!=counter-1) qDebug("Reindexing Error!\n");
 }
 
 int unloaddatabase()
@@ -257,7 +258,7 @@ int unloaddatabase()
             counter++;
         }
     }
-    printf("Unloaded %i entries from memory.\n",counter);
+    qDebug("Unloaded %i entries from memory.\n",counter);
     return 1;
 }
 
@@ -287,7 +288,7 @@ int loadvocabintoflashcards()
             QString qu = entry->question;
             QString an = entry->answer;
             QString in = entry->info;
-            QString hi;
+            QString hi = entry->hint;
 
             flashCard * fc = new flashCard(qu,an,in,hi,knownLevel,lastCorrect,currentStreak,levelUp);
 

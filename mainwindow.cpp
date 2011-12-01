@@ -3,9 +3,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "svfileops.h"
+#include "cardpack.h"
 #include "flashcardwindow.h"
-
-using namespace std;
+#include "popupwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -39,8 +39,17 @@ void MainWindow::on_loadButton_clicked()
 
 void MainWindow::on_testButton_clicked()
 {
+    if (mainPack.isEmpty())
+        on_loadButton_clicked();
+
+    while (mainPack.isEmpty())
+    {
+        if(popup.importantQuestion(this,tr("Nothing to test!\n\nLoad flashcards?")))
+            on_loadButton_clicked();
+        else
+            return;
+    }
 
     flashCardWindow tester;
     tester.exec();
 }
-

@@ -41,7 +41,7 @@ passing correct parameters to getrecordsfromfile(), which reads the file into
 vocab structs in memory.
 It then converts these vocab structs into flashcards in a cardpack and unloads
 the vocab structs from memory.*/
-void getrecordsfromfile(char * inputfilename,char separator);//load a file into memory
+int getrecordsfromfile(char * inputfilename,char separator);//load a file into memory
 char * readtextfromfile(int maxchars,char separator);//get text field from file
 int readnumberfromfile(int maxvalue,char separator);//get integer field from file
 struct vocab * addtolist(struct vocab * newentry, struct listinfo * list);//add given (already filled in) vocab record to given list

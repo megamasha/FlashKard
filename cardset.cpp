@@ -69,3 +69,16 @@ bool cardSet::removeCard(flashCard &oldCard)
 
     return true;
 }
+
+unsigned int cardSet::cardsInSet()
+{
+    return cardsInSetCounter;
+}
+
+bool cardSet::isEmpty()
+{
+    if (cardsInSetCounter == 0)
+        return true;
+    else
+        return false;
+}
