@@ -22,6 +22,7 @@ class cardPack : public QObject
         bool addCard(flashCard & newCard, knownLevel_t set);
 
         flashCard * getRandomCard();
+        flashCard * getFirstCard();
         flashCard * getNextCard(const flashCard *);
 
         bool isEmpty();
@@ -33,7 +34,7 @@ class cardPack : public QObject
 
     private:
 
-        cardSet knownLevelSets[level_max]; //one set of cards for each 'knownLevel'
+        cardSet knownLevelSets[level_max + 1]; //one set of cards for each 'knownLevel'
         unsigned int cardsInPackCounter;
         bool n2lFlag;
 

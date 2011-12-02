@@ -19,6 +19,7 @@ bool cardPack::addCard(flashCard &newCard, knownLevel_t set)
     if (success)
     {
         qDebug("Added card to set %i",set);
+        newCard.parentPack = this;
         cardsInPackCounter++;
     }
 
@@ -68,6 +69,39 @@ flashCard * cardPack::getRandomCard()
         else return NULL;
     }
     return returnCard;
+}
+
+flashCard * cardPack::getFirstCard()
+{
+    if (isEmpty())
+        return NULL;
+
+    flashCard * returnCard = NULL;
+    for (int i = 0;i <= level_max;i++)
+    {
+        returnCard = knownLevelSets[i].head;
+        if (returnCard) break;
+    }
+    return returnCard;
+}
+
+flashCard * cardPack::getNextCard(const flashCard * currentCard)
+{
+    //return next card in set, if there is one
+    if (currentCard->next)
+        return currentCard->next;
+
+    //otherwise set up a set pointer...
+    cardSet * currentSet = currentCard->parentSet;
+    while (currentSet != &knownLevelSets[level_max])
+        //...and if this is not the last set, loop until the last set
+    {
+        //move onto next set (works because they're declared as an array)
+        currentSet++;
+        if (currentSet->isEmpty() == false)
+            return currentSet->head;
+    }
+    return NULL;
 }
 
 bool cardPack::isEmpty()

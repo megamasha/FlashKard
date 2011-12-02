@@ -190,19 +190,22 @@ bool flashCard::canBeDemoted()
         return false;
 }
 
-bool flashCard::promoteCard()
+bool flashCard::promoteCard() //FISH! TODO display (somewhere) messages about promotion
 {
     if (knownLevel == level_max)
         return false;
 
     parentPack->knownLevelSets[knownLevel].removeCard(*this);
+
     knownLevel = (knownLevel_t) (knownLevel + 1);
+    levelUp = 1;
+
     parentPack->knownLevelSets[knownLevel].addCard(*this);
 
     return true; // FISH! TODO return success value
 }
 
-bool flashCard::demoteCard()
+bool flashCard::demoteCard() //FISH! TODO display (somewhere) messages about demotion
 {
     if (knownLevel == level_min)
         return false;
@@ -213,6 +216,8 @@ bool flashCard::demoteCard()
         knownLevel = level_norm;
     else // all others
         knownLevel = (knownLevel_t) (knownLevel - 1);
+
+    levelUp = 1;
 
     parentPack->knownLevelSets[knownLevel].addCard(*this);
 
@@ -228,6 +233,7 @@ bool flashCard::resetKnownLevel()
     {
         mainPack.knownLevelSets[knownLevel].removeCard(*this);
         knownLevel = level_norm;
+        levelUp = 1
         mainPack.knownLevelSets[knownLevel].addCard(*this);
     }
 
@@ -242,6 +248,7 @@ bool flashCard::setAsHighPriorityToLearn()
     {
         mainPack.knownLevelSets[knownLevel].removeCard(*this);
         knownLevel = level_n2l;
+        levelUp = 1;
         mainPack.knownLevelSets[knownLevel].addCard(*this);
     }
 
@@ -256,6 +263,7 @@ bool flashCard::setAsLowPriorityToLearn()
     {
         mainPack.knownLevelSets[knownLevel].removeCard(*this);
         knownLevel = level_known;
+        levelUp = 1;
         mainPack.knownLevelSets[knownLevel].addCard(*this);
     }
 

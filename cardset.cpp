@@ -23,6 +23,7 @@ bool cardSet::addCard(flashCard & newCard)
     }
 
     newCard.next = NULL;
+    newCard.parentSet = this;
     cardsInSetCounter++;
 
     return true;
@@ -65,6 +66,7 @@ bool cardSet::removeCard(flashCard &oldCard)
         }
     }//this entry is now not pointed to in any list
 
+    oldCard.parentSet = NULL;
     cardsInSetCounter--;
 
     return true;
