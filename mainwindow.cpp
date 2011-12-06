@@ -6,6 +6,7 @@
 #include "cardpack.h"
 #include "flashcardwindow.h"
 #include "popupwindow.h"
+#include "databasewindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -52,4 +53,10 @@ void MainWindow::on_testButton_clicked()
 
     flashCardWindow tester;
     tester.exec();
+}
+
+void MainWindow::on_databaseButton_clicked()
+{
+    databaseWindow database;
+    database.exec();
 }

@@ -22,6 +22,8 @@ private slots:
 
     void on_testButton_clicked();
 
+    void on_databaseButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

@@ -104,6 +104,19 @@ flashCard * cardPack::getNextCard(const flashCard * currentCard)
     return NULL;
 }
 
+flashCard * cardPack::getCardByIndex(int index)
+{
+    //this is VERY lazy and VERY inefficient
+    //FISH! better implementation with guards etc. TODO
+    flashCard * returnCard = getFirstCard();
+    while (index != 1)
+    {
+        returnCard = getNextCard(returnCard);
+        index--;
+    }
+    return returnCard;
+}
+
 bool cardPack::isEmpty()
 {
     if (cardsInPackCounter == 0)

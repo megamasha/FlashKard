@@ -24,6 +24,7 @@ class cardPack : public QObject
         flashCard * getRandomCard();
         flashCard * getFirstCard();
         flashCard * getNextCard(const flashCard *);
+        flashCard * getCardByIndex(int index);
 
         bool isEmpty();
         unsigned int cardsInPack();

@@ -233,7 +233,7 @@ bool flashCard::resetKnownLevel()
     {
         mainPack.knownLevelSets[knownLevel].removeCard(*this);
         knownLevel = level_norm;
-        levelUp = 1
+        levelUp = 1;
         mainPack.knownLevelSets[knownLevel].addCard(*this);
     }
 
