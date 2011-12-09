@@ -11,92 +11,92 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>FlashKard Editor</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <layout class="QGridLayout" name="gridLayout" columnstretch="0,1">
+  <layout class="QGridLayout" name="gridLayout_3">
+   <item row="0" column="0">
+    <layout class="QGridLayout" name="textLayout" columnstretch="0,1">
      <item row="0" column="0">
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="questionLabel">
        <property name="text">
         <string>Question:</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="lineEdit"/>
+      <widget class="QLineEdit" name="questionText"/>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="answerLabel">
        <property name="text">
         <string>Answer:</string>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="lineEdit_2"/>
+      <widget class="QLineEdit" name="answerText"/>
      </item>
      <item row="2" column="0">
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="infoLabel">
        <property name="text">
         <string>Info:</string>
        </property>
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="lineEdit_3"/>
+      <widget class="QLineEdit" name="infoText"/>
      </item>
      <item row="3" column="0">
-      <widget class="QLabel" name="label_4">
+      <widget class="QLabel" name="hintLabel">
        <property name="text">
         <string>Hint:</string>
        </property>
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="lineEdit_4"/>
+      <widget class="QLineEdit" name="hintText"/>
      </item>
     </layout>
    </item>
-   <item>
-    <widget class="QLabel" name="label_5">
+   <item row="1" column="0">
+    <widget class="QLabel" name="levelText">
      <property name="text">
       <string>&lt;Current level&gt;</string>
      </property>
     </widget>
    </item>
-   <item>
-    <widget class="QLabel" name="label_6">
+   <item row="2" column="0">
+    <widget class="QLabel" name="streakText">
      <property name="text">
       <string>&lt;Current streak&gt;</string>
      </property>
     </widget>
    </item>
-   <item>
-    <layout class="QGridLayout" name="gridLayout_2" columnstretch="1,0">
+   <item row="3" column="0">
+    <layout class="QGridLayout" name="priorityLayout" columnstretch="1,0">
      <item row="0" column="0">
-      <widget class="QLabel" name="label_7">
+      <widget class="QLabel" name="markN2lLabel">
        <property name="text">
         <string>Mark High Priority</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="markN2lButton">
        <property name="text">
         <string>High Priority</string>
        </property>
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="label_8">
+      <widget class="QLabel" name="markKnownLabel">
        <property name="text">
         <string>Mark Low Priority</string>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="markKnownButton">
        <property name="text">
         <string>Low Priority</string>
        </property>
@@ -104,7 +104,7 @@
      </item>
     </layout>
    </item>
-   <item>
+   <item row="4" column="0">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>

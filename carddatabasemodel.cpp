@@ -33,11 +33,15 @@ QVariant cardDatabaseModel::data ( const QModelIndex & index, int role ) const
     else
         return returnValue;
 
-    // check they want a string (as, right now, that's all we do)
-    if (role != Qt::DisplayRole)
+    // check they want a string or index int (as, right now, that's all we do)
+    if (role != Qt::DisplayRole && role != Qt::EditRole)
         return returnValue;
 
-    // now use the column to retreive the right string
+    // now return the index int
+    if (role == Qt::EditRole)
+        return QVariant(index.row() + 1);
+
+    // or use the column to retreive the right string
     switch (index.column())
     {
         case 0: returnValue = currentCard->getQuestion();

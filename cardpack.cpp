@@ -125,7 +125,7 @@ bool cardPack::isEmpty()
         return false;
 }
 
-unsigned int cardPack::cardsInPack()
+int cardPack::cardsInPack()
 {
     return cardsInPackCounter;
 }

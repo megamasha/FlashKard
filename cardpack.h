@@ -27,7 +27,7 @@ class cardPack : public QObject
         flashCard * getCardByIndex(int index);
 
         bool isEmpty();
-        unsigned int cardsInPack();
+        int cardsInPack();
 
     signals:
 
