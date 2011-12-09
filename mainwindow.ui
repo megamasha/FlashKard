@@ -30,7 +30,7 @@
        </size>
       </property>
       <property name="text">
-       <string>Load</string>
+       <string>L&amp;oad</string>
       </property>
       <property name="icon">
        <iconset>
@@ -63,7 +63,7 @@
        </size>
       </property>
       <property name="text">
-       <string>Test Me!</string>
+       <string>&amp;Test Me!</string>
       </property>
       <property name="icon">
        <iconset>
@@ -96,7 +96,7 @@
        </size>
       </property>
       <property name="text">
-       <string>Save</string>
+       <string>&amp;Save</string>
       </property>
       <property name="icon">
        <iconset>
@@ -129,7 +129,7 @@
        </size>
       </property>
       <property name="text">
-       <string>Edit Database</string>
+       <string>&amp;Edit Database</string>
       </property>
       <property name="icon">
        <iconset>
@@ -162,7 +162,7 @@
        </size>
       </property>
       <property name="text">
-       <string>View Stats</string>
+       <string>&amp;View Stats</string>
       </property>
       <property name="icon">
        <iconset>
@@ -195,7 +195,7 @@
        </size>
       </property>
       <property name="text">
-       <string>Exit</string>
+       <string>E&amp;xit</string>
       </property>
       <property name="icon">
        <iconset>

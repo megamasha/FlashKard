@@ -65,8 +65,7 @@ void flashCardWindow::on_hintButton_clicked()
 void flashCardWindow::on_answerOKButton_clicked()
 {
 
-    resultsWindow results(this);
-    results.processResults(*currentCard,ui->answerBox->text());
+    resultsWindow results(this,currentCard,ui->answerBox->text());
     if (results.exec())
         anotherCard();
     else accept();

@@ -14,6 +14,7 @@ class flashCard : public QObject // required for Qt Signals and Slots
 
     public:
 
+        flashCard();
         flashCard (
             QString qu,
             QString an,
@@ -34,13 +35,13 @@ class flashCard : public QObject // required for Qt Signals and Slots
 
         //string access functions
         QString getQuestion();
-        bool setQuestion(QString & newQuestion);
+        bool setQuestion(QString newQuestion);
         QString getAnswer();
-        bool setAnswer(QString & newAnswer);
+        bool setAnswer(QString newAnswer);
         QString getInfo();
-        bool setInfo(QString & newInfo);
+        bool setInfo(QString newInfo);
         QString getHint();
-        bool setHint(QString & newHint);
+        bool setHint(QString newHint);
 
         //priority adjustment functions
         bool canBePromoted();
@@ -49,8 +50,10 @@ class flashCard : public QObject // required for Qt Signals and Slots
         bool demoteCard();
 
         bool resetKnownLevel();
-        bool setAsHighPriorityToLearn();
-        bool setAsLowPriorityToLearn();
+        bool isHighPriority();
+        bool setHighPriority();
+        bool isLowPriority();
+        bool setLowPriority();
 
     private:
 
@@ -81,6 +84,11 @@ class flashCard : public QObject // required for Qt Signals and Slots
         /*cardPack required for promoting and demoting cards*/
 
         friend class cardPack;
+
+        /*editorWindow is a friend because it is the designated class for
+          allowing the user to change the card*/
+
+        friend class editorWindow;
 };
 
 #endif // FLASHCARD_H

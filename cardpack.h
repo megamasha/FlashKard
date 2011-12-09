@@ -17,9 +17,10 @@ class cardPack : public QObject
     Q_OBJECT
     public:
 
-        explicit cardPack(QObject *parent = 0);
+        explicit cardPack();
 
         bool addCard(flashCard & newCard, knownLevel_t set);
+        bool removeCard(flashCard * cardToDelete = NULL);
 
         flashCard * getRandomCard();
         flashCard * getFirstCard();

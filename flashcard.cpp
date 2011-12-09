@@ -3,6 +3,19 @@
 #include "cardset.h"
 #include <QString>
 
+flashCard::flashCard()
+{
+    question = tr("Question");
+    answer = tr("Answer");
+    knownLevel = level_norm;
+    lastCorrect = false;
+    currentStreak = levelUp = 0;
+
+    next = NULL;
+    parentPack = NULL;
+    parentSet = NULL;
+}
+
 flashCard::flashCard (
     QString qu,
     QString an,
@@ -24,8 +37,9 @@ flashCard::flashCard (
     levelUp = lu;
 
     next = NULL;
+    parentPack = NULL;
+    parentSet = NULL;
 
-    qDebug("Created flashCard.");
 }
 
 
@@ -92,7 +106,7 @@ bool flashCard::markAsIncorrect()
 
 
 //string access functions
-bool flashCard::setQuestion(QString & newQuestion)
+bool flashCard::setQuestion(QString newQuestion)
 {
     question = newQuestion;
     if (question == newQuestion)
@@ -106,7 +120,7 @@ QString flashCard::getQuestion()
     return question;
 }
 
-bool flashCard::setAnswer(QString & newAnswer)
+bool flashCard::setAnswer(QString newAnswer)
 {
     answer = newAnswer;
     if (answer == newAnswer)
@@ -120,7 +134,7 @@ QString flashCard::getAnswer()
     return answer;
 }
 
-bool flashCard::setInfo(QString & newInfo)
+bool flashCard::setInfo(QString newInfo)
 {
     info = newInfo;
     if (info == newInfo)
@@ -134,7 +148,7 @@ QString flashCard::getInfo()
     return info;
 }
 
-bool flashCard::setHint(QString & newHint)
+bool flashCard::setHint(QString newHint)
 {
     hint = newHint;
     if (hint == newHint)
@@ -231,41 +245,69 @@ bool flashCard::resetKnownLevel()
 
     if (knownLevel != level_norm)
     {
-        mainPack.knownLevelSets[knownLevel].removeCard(*this);
+        success = success &
+            mainPack.knownLevelSets[knownLevel].removeCard(*this);
         knownLevel = level_norm;
         levelUp = 1;
-        mainPack.knownLevelSets[knownLevel].addCard(*this);
+        success = success &
+            mainPack.knownLevelSets[knownLevel].addCard(*this);
     }
+    else
+        success = false;
 
-    return success; // FISH! TODO: implement success properly
+    return success;
 }
 
-bool flashCard::setAsHighPriorityToLearn()
+bool flashCard::setHighPriority()
 {
     bool success = true;
 
     if (knownLevel != level_n2l)
     {
-        mainPack.knownLevelSets[knownLevel].removeCard(*this);
+        success = success &
+                mainPack.knownLevelSets[knownLevel].removeCard(*this);
         knownLevel = level_n2l;
         levelUp = 1;
-        mainPack.knownLevelSets[knownLevel].addCard(*this);
+        success = success &
+                mainPack.knownLevelSets[knownLevel].addCard(*this);
     }
+    else
+        success = false;
 
-    return success; // FISH! TODO: implement success properly
+    return success;
 }
 
-bool flashCard::setAsLowPriorityToLearn()
+bool flashCard::isHighPriority()
+{
+    if (knownLevel == level_n2l)
+        return true;
+    else
+        return false;
+}
+
+bool flashCard::setLowPriority()
 {
     bool success = true;
 
     if (knownLevel < level_known)
     {
-        mainPack.knownLevelSets[knownLevel].removeCard(*this);
+        success = success &
+                mainPack.knownLevelSets[knownLevel].removeCard(*this);
         knownLevel = level_known;
         levelUp = 1;
-        mainPack.knownLevelSets[knownLevel].addCard(*this);
+        success = success &
+                mainPack.knownLevelSets[knownLevel].addCard(*this);
     }
+    else
+        success = false;
 
-    return success; // FISH! TODO: implement success properly
+    return success;
+}
+
+bool flashCard::isLowPriority()
+{
+    if (knownLevel >= level_known)
+        return true;
+    else
+        return false;
 }

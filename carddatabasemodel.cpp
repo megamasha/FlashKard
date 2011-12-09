@@ -58,3 +58,29 @@ QVariant cardDatabaseModel::data ( const QModelIndex & index, int role ) const
 
     return returnValue;
 }
+
+bool cardDatabaseModel::insertRows(int row, int count, const QModelIndex &parent)
+{
+    bool success = true;
+
+    beginInsertRows(parent,mainPack.cardsInPack(),mainPack.cardsInPack()+count-1);
+    for (int i = 0;i<count;i++)
+    {
+        flashCard * card = new flashCard;
+        success = success &
+                mainPack.addCard(*card,level_norm);
+    }
+    endInsertRows();
+    return success;
+}
+
+bool cardDatabaseModel::removeRows (int row,int count,const QModelIndex & parent)
+{
+    beginRemoveRows (parent,row,row+count-1);
+    for (int i = 0;i<count;i++)
+    {
+        flashCard * cardToBeRemoved = mainPack.getCardByIndex(row+1);
+        mainPack.removeCard(cardToBeRemoved);
+    }
+    endRemoveRows();
+}

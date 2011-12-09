@@ -74,31 +74,31 @@
    </item>
    <item row="3" column="0">
     <layout class="QGridLayout" name="priorityLayout" columnstretch="1,0">
-     <item row="0" column="0">
-      <widget class="QLabel" name="markN2lLabel">
-       <property name="text">
-        <string>Mark High Priority</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QPushButton" name="markN2lButton">
-       <property name="text">
-        <string>High Priority</string>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="0">
       <widget class="QLabel" name="markKnownLabel">
        <property name="text">
-        <string>Mark Low Priority</string>
+        <string>Click to mark this as low priority to learn:</string>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
       <widget class="QPushButton" name="markKnownButton">
        <property name="text">
-        <string>Low Priority</string>
+        <string>&amp;Low Priority</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="markN2lButton">
+       <property name="text">
+        <string>&amp;High Priority</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="markN2lLabel">
+       <property name="text">
+        <string>Click to mark this as high priority to learn:</string>
        </property>
       </widget>
      </item>

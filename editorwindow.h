@@ -21,8 +21,21 @@ public:
 protected:
     void closeEvent(QCloseEvent *event) {/*FISH! TODO*/}
 
+private slots:
+    void on_markN2lButton_clicked();
+
+    void on_markKnownButton_clicked();
+
+    void on_buttonBox_accepted();
+
+    void on_buttonBox_rejected();
+
 private:
     Ui::editorWindow *ui;
+
+    QString createStreakText();
+    QString createLevelText();
+
     flashCard * currentCard;
 };
 

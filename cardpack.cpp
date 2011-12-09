@@ -6,13 +6,12 @@
 
 cardPack mainPack;
 
-cardPack::cardPack(QObject *parent) :
-    QObject(parent)
+cardPack::cardPack()
 {
     srand((unsigned)time(NULL));
 }
 
-bool cardPack::addCard(flashCard &newCard, knownLevel_t set)
+bool cardPack::addCard(flashCard &newCard, knownLevel_t set = level_norm)
 {
     bool success = knownLevelSets[set].addCard(newCard);
 
@@ -21,6 +20,22 @@ bool cardPack::addCard(flashCard &newCard, knownLevel_t set)
         qDebug("Added card to set %i",set);
         newCard.parentPack = this;
         cardsInPackCounter++;
+    }
+
+    return success;
+}
+
+bool cardPack::removeCard(flashCard * cardToDelete)
+{
+    if (cardToDelete == NULL)
+        return false;
+    bool success = true;
+    success = success &
+            cardToDelete->parentSet->removeCard(*cardToDelete);
+    if (success)
+    {
+        cardsInPackCounter--;
+        delete cardToDelete;
     }
 
     return success;
@@ -106,8 +121,11 @@ flashCard * cardPack::getNextCard(const flashCard * currentCard)
 
 flashCard * cardPack::getCardByIndex(int index)
 {
-    //this is VERY lazy and VERY inefficient
-    //FISH! better implementation with guards etc. TODO
+    if (isEmpty())
+        return NULL;
+
+    //this is VERY lazy and VERY inefficient (I think)
+    //FISH! better implementation etc. TODO
     flashCard * returnCard = getFirstCard();
     while (index != 1)
     {
