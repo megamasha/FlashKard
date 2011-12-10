@@ -3,6 +3,7 @@
 #include <time.h>
 #include "popupwindow.h"
 #include "flashcardwindow.h"
+#include <QFile>
 
 cardPack mainPack;
 
@@ -146,4 +147,39 @@ bool cardPack::isEmpty()
 int cardPack::cardsInPack()
 {
     return cardsInPackCounter;
+}
+
+void cardPack::exportdatabase (char * outputfilename)
+//this is all just a bit of a kludge
+{
+    flashCard * currentCard = mainPack.getFirstCard();
+    if (currentCard == NULL) return;
+
+    QFile outputfile (outputfilename);
+    outputfile.open(QIODevice::WriteOnly);
+
+    do
+    {
+        outputfile.write(currentCard->getQuestion().toAscii());
+        outputfile.write("~");
+        outputfile.write(currentCard->getAnswer().toAscii());
+        outputfile.write("~");
+        outputfile.write(currentCard->getInfo().toAscii());
+        outputfile.write("~");
+        outputfile.write(currentCard->getHint().toAscii());
+        outputfile.write("~");
+
+        char tempstring[10];
+        sprintf(tempstring,"%d~%d~%d",
+                currentCard->wasCorrectLastTime(),
+                currentCard->levelUp,
+                currentCard->knownLevel);
+
+        outputfile.write(tempstring);
+        if (mainPack.getNextCard(currentCard) != NULL)
+            outputfile.write("\n");
+    }
+    while ((currentCard = mainPack.getNextCard(currentCard)) != NULL);
+
+    outputfile.close();
 }

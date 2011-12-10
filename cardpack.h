@@ -30,6 +30,9 @@ class cardPack : public QObject
         bool isEmpty();
         int cardsInPack();
 
+        //FISH! this is just a bit of a kludge
+        void exportdatabase(char * outputfilename);
+
     signals:
 
     public slots:

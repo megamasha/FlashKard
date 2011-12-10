@@ -82,6 +82,7 @@ class flashCard : public QObject // required for Qt Signals and Slots
         friend class cardSet;
 
         /*cardPack required for promoting and demoting cards*/
+        //possibly not any more
 
         friend class cardPack;
 

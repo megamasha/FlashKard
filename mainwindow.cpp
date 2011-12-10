@@ -29,7 +29,7 @@ void MainWindow::on_loadButton_clicked()
 {
     QString filename;
     filename = QFileDialog::getOpenFileName(this, tr("Load Flashcard Database"),
-                                            "~/Documents", tr("Files (*.*)"));
+                                            "~/Documents", tr("Files (*.~sv)"));
     QByteArray poop = filename.toAscii();
     char * importfilename = (char *)malloc(256);
     importfilename = poop.data();
@@ -59,4 +59,15 @@ void MainWindow::on_databaseButton_clicked()
 {
     databaseWindow database;
     database.exec();
+}
+
+void MainWindow::on_saveButton_clicked()
+{
+    QString filename;
+    filename = QFileDialog::getSaveFileName(this, tr("Save Flashcard Database"),
+                                            "~/Documents", tr("Files (*.~sv)"));
+    qDebug("Filename: %s",filename.toAscii().data());
+    mainPack.isEmpty();
+    mainPack.exportdatabase(filename.toAscii().data());
+
 }
