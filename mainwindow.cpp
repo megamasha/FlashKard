@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    enableAndDisableButtons();
 }
 
 MainWindow::~MainWindow()
@@ -36,6 +37,7 @@ void MainWindow::on_loadButton_clicked()
 
     importdatabase(importfilename);
 
+    enableAndDisableButtons();
 }
 
 void MainWindow::on_testButton_clicked()
@@ -59,6 +61,7 @@ void MainWindow::on_databaseButton_clicked()
 {
     databaseWindow database;
     database.exec();
+    enableAndDisableButtons();
 }
 
 void MainWindow::on_saveButton_clicked()
@@ -70,4 +73,18 @@ void MainWindow::on_saveButton_clicked()
     mainPack.isEmpty();
     mainPack.exportdatabase(filename.toAscii().data());
 
+}
+
+void MainWindow::enableAndDisableButtons()
+{
+    if (mainPack.isEmpty())
+    {
+        ui->saveButton->setDisabled(true);
+        ui->statsButton->setDisabled(true);
+    }
+    else
+    {
+        ui->saveButton->setEnabled(true);
+        ui->statsButton->setEnabled(true);
+    }
 }

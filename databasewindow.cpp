@@ -3,6 +3,7 @@
 #include "carddatabasemodel.h"
 #include "editorwindow.h"
 #include "popupwindow.h"
+#include "cardpack.h"
 
 databaseWindow::databaseWindow(QWidget *parent) :
     QDialog(parent),
@@ -12,6 +13,7 @@ databaseWindow::databaseWindow(QWidget *parent) :
 
     cardDatabaseModel * model = new cardDatabaseModel;
     ui->databaseTreeView->setModel(model);
+    enableAndDisableButtons();
 }
 
 databaseWindow::~databaseWindow()
@@ -30,6 +32,7 @@ void databaseWindow::on_addButton_clicked()
     ui->databaseTreeView->model()->insertRow(
                 ui->databaseTreeView->model()->rowCount()
                 );
+    enableAndDisableButtons();
 }
 
 void databaseWindow::on_deleteButton_clicked()
@@ -38,6 +41,7 @@ void databaseWindow::on_deleteButton_clicked()
     {
         QModelIndex index = ui->databaseTreeView->selectionModel()->currentIndex();
         ui->databaseTreeView->model()->removeRow(index.row());
+        enableAndDisableButtons();
     }
 }
 
@@ -62,4 +66,18 @@ void databaseWindow::on_databaseTreeView_doubleClicked(const QModelIndex &index)
 
     editorWindow editor(this,card);
     editor.exec();
+}
+
+void databaseWindow::enableAndDisableButtons()
+{
+    if (mainPack.isEmpty())
+    {
+        ui->deleteButton->setDisabled(true);
+        ui->editButton->setDisabled(true);
+    }
+    else
+    {
+        ui->deleteButton->setEnabled(true);
+        ui->editButton->setEnabled(true);
+    }
 }

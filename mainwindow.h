@@ -27,7 +27,10 @@ private slots:
     void on_saveButton_clicked();
 
 private:
+
     Ui::MainWindow *ui;
+
+    void enableAndDisableButtons();
 };
 
 extern MainWindow mainWindow;

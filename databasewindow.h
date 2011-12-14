@@ -27,12 +27,15 @@ private slots:
 
     void on_closeButton_clicked();
 
-    flashCard * indexToCard(const QModelIndex & index);
-
     void on_databaseTreeView_doubleClicked(const QModelIndex &index);
 
 private:
+
     Ui::databaseWindow *ui;
+
+    flashCard * indexToCard(const QModelIndex & index);
+
+    void enableAndDisableButtons();
 };
 
 #endif // DATABASEWINDOW_H
