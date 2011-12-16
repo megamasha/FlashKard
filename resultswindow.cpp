@@ -24,6 +24,13 @@ bool resultsWindow::processResults(QString givenAnswer)
     else
         currentCard->markAsIncorrect();
 
+    generateResultsText(givenAnswer);
+
+    return true; //FISH! TODO replace with success value
+}
+
+void resultsWindow::generateResultsText(QString & givenAnswer)
+{
     //(re)create results text for user
     if (currentCard->isCorrect(givenAnswer))
         resultsText = tr("Yay! You're right!");
@@ -47,10 +54,20 @@ bool resultsWindow::processResults(QString givenAnswer)
                 QString::number(currentCard->getCurrentStreak()) +
                 tr(" times in a row.");
 
+    resultsText +=
+            tr("\n\nYour score for this card is ") +
+            QString::number(currentCard->score()) +
+            tr(" out of ") +
+            QString::number(flashCard::maxPossibleScore) +
+            tr(".");
+
+    resultsText +=
+            tr("\nYour overall score is ") +
+            QString::number(double(mainPack.packScore()),'f',2) +
+            tr("%.");
+
     //put this string in the window
     ui->resultsText->setText(resultsText);
-
-    return true; //FISH! TODO replace with success value
 }
 
 void resultsWindow::on_stopButton_clicked()

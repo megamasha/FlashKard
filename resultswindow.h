@@ -31,7 +31,7 @@ private slots:
 
 private:
 
-
+    void generateResultsText(QString & givenAnswer);
 
     Ui::resultsWindow *ui;
     flashCard * currentCard;

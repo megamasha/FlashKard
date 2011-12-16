@@ -33,6 +33,8 @@ class cardPack : public QObject
         //FISH! this is just a bit of a kludge
         void exportdatabase(char * outputfilename);
 
+        float packScore();
+
     signals:
 
     public slots:

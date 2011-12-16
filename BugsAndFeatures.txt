@@ -1,14 +1,18 @@
 Bugs:
 
 Fixed: Crashes if Edit button is pressed in Database when no card is selected.
-Unconfirmed: Under Windows, in resluts window, hitting enter edits the card, doesn't continue testing.
+Export routine is not fully back-compatible.
+Unconfirmed: Under Windows, in results window, hitting enter edits the card, doesn't continue testing.
 
 Features:
 
 Added: Disable save and stats buttons if no card loaded.
 Added: Disable Edit/Delete buttons if no card selected in database editor.
+Added: Display Score in results Window.
+Display card score in card editor window.
 Enable Stats Window.
-Display Score in results Window.
+Ask to save when exiting.
 Implement Menu.
 Add Status Bar.
 Save location of last loaded file for purposes of loading/saving.
+Save to/load from SQL Databases and XML files.

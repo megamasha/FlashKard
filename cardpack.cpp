@@ -183,3 +183,24 @@ void cardPack::exportdatabase (char * outputfilename)
 
     outputfile.close();
 }
+
+float cardPack::packScore()
+{
+    if (isEmpty())
+        return 0.0;
+    if (flashCard::maxPossibleScore == 0)
+        return 0.0;
+
+    long score = 0;
+    flashCard * currentCard = getFirstCard();
+    do
+    {
+        if (currentCard->wasCorrectLastTime())
+        {
+            score += currentCard->score();
+        }
+    }
+    while ((currentCard = mainPack.getNextCard(currentCard)) != NULL);
+
+    return (float(score) / float(cardsInPackCounter) / float(flashCard::maxPossibleScore) * 100);
+}

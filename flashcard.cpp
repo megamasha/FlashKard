@@ -104,6 +104,26 @@ bool flashCard::markAsIncorrect()
     return true;
 }
 
+int flashCard::score()
+{
+    int returnValue = 0;
+    returnValue += BONUS_PER_KNOWN_LEVEL * (knownLevel - 1);
+    if (wasCorrectLastTime())
+    {
+        returnValue += BONUS_FOR_CORRECT_ANSWER;
+        //enforce max streak length
+        int bonusStreak =
+                currentStreak >= MAX_BONUS_STREAK_LENGTH ?
+                    MAX_BONUS_STREAK_LENGTH : currentStreak;
+        returnValue += (BONUS_PER_CORRECT_STREAK * bonusStreak);
+    }
+    else
+        returnValue += (BONUS_FOR_CORRECT_ANSWER - currentStreak);
+
+    // ensure return value isn't negative
+    return (returnValue > 0 ? returnValue : 0);
+}
+
 
 //string access functions
 bool flashCard::setQuestion(QString newQuestion)

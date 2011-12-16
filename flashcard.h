@@ -3,6 +3,11 @@
 
 #include <QObject> // required for Qt Signals and Slots
 
+#define BONUS_FOR_CORRECT_ANSWER 3
+#define BONUS_PER_CORRECT_STREAK 1
+#define MAX_BONUS_STREAK_LENGTH 5
+#define BONUS_PER_KNOWN_LEVEL 1
+
 enum knownLevel_t {level_min = 0, level_n2l = 0, level_norm = 1, level_known = 2, level_old = 3, level_max = 3};
 
 class cardSet;
@@ -32,6 +37,12 @@ class flashCard : public QObject // required for Qt Signals and Slots
         int getCurrentStreak();
         bool markAsCorrect();
         bool markAsIncorrect();
+
+        int score();
+        static const int maxPossibleScore = (
+                 BONUS_FOR_CORRECT_ANSWER +
+                (BONUS_PER_CORRECT_STREAK * MAX_BONUS_STREAK_LENGTH) +
+                 BONUS_PER_KNOWN_LEVEL * (level_max - 1));
 
         //string access functions
         QString getQuestion();
