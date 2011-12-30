@@ -9,10 +9,12 @@ Features:
 Added: Disable save and stats buttons if no card loaded.
 Added: Disable Edit/Delete buttons if no card selected in database editor.
 Added: Display Score in results Window.
-Display card score in card editor window.
+Added: Display card score in card editor window.
 Enable Stats Window.
 Ask to save when exiting.
 Implement Menu.
 Add Status Bar.
 Save location of last loaded file for purposes of loading/saving.
 Save to/load from SQL Databases and XML files.
+Implement initialisation lists where possible.
+Use vectors instead of arrays where possible.
