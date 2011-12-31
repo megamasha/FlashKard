@@ -4,6 +4,7 @@
 #include "popupwindow.h"
 #include "flashcardwindow.h"
 #include <QFile>
+#include "svfileops.h" //for MAXTEXTLENGTH
 
 cardPack mainPack;
 
@@ -150,7 +151,8 @@ int cardPack::cardsInPack()
 }
 
 void cardPack::exportdatabase (char * outputfilename)
-//this is all just a bit of a kludge
+//this is all just a bit of a kludge,
+//might be alright in C, but probably bad C++ form
 {
     flashCard * currentCard = mainPack.getFirstCard();
     if (currentCard == NULL) return;
@@ -158,15 +160,31 @@ void cardPack::exportdatabase (char * outputfilename)
     QFile outputfile (outputfilename);
     outputfile.open(QIODevice::WriteOnly);
 
+    int bytesToWrite;
     do
     {
-        outputfile.write(currentCard->getQuestion().toAscii());
+        bytesToWrite = currentCard->getQuestion().length() > MAXTEXTLENGTH ?
+                            MAXTEXTLENGTH :
+                            currentCard->getQuestion().length();
+        outputfile.write(currentCard->getQuestion().toAscii(),bytesToWrite);
         outputfile.write("~");
-        outputfile.write(currentCard->getAnswer().toAscii());
+
+        bytesToWrite = currentCard->getAnswer().length() > MAXTEXTLENGTH ?
+                            MAXTEXTLENGTH :
+                            currentCard->getAnswer().length();
+        outputfile.write(currentCard->getAnswer().toAscii(),bytesToWrite);
         outputfile.write("~");
-        outputfile.write(currentCard->getInfo().toAscii());
+
+        bytesToWrite = currentCard->getInfo().length() > MAXTEXTLENGTH ?
+                            MAXTEXTLENGTH :
+                            currentCard->getInfo().length();
+        outputfile.write(currentCard->getInfo().toAscii(),bytesToWrite);
         outputfile.write("~");
-        outputfile.write(currentCard->getHint().toAscii());
+
+        bytesToWrite = currentCard->getHint().length() > MAXTEXTLENGTH ?
+                            MAXTEXTLENGTH :
+                            currentCard->getHint().length();
+        outputfile.write(currentCard->getHint().toAscii(),bytesToWrite);
         outputfile.write("~");
 
         char tempstring[10];
