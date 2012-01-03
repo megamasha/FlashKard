@@ -10,6 +10,7 @@ Added: Disable save and stats buttons if no card loaded.
 Added: Disable Edit/Delete buttons if no card selected in database editor.
 Added: Display Score in results Window.
 Added: Display card score in card editor window.
+Added: Untested flashcards have a score of 0.
 Enable Stats Window.
 Ask to save when exiting.
 Implement Menu.
@@ -17,5 +18,5 @@ Add Status Bar.
 Save location of last loaded file for purposes of loading/saving.
 Save to/load from SQL Databases and XML files.
 Implement initialisation lists where possible.
-Use vectors instead of arrays where possible.
+Use STL container classes instead of arrays where possible.
 Check for presence of tilde ('~') when exporting to .~sv

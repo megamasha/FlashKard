@@ -106,6 +106,8 @@ bool flashCard::markAsIncorrect()
 
 int flashCard::score()
 {
+    if (currentStreak == 0) return 0;
+
     int returnValue = 0;
     returnValue += BONUS_PER_KNOWN_LEVEL * (knownLevel - 1);
     if (wasCorrectLastTime())
