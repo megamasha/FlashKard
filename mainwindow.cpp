@@ -7,6 +7,7 @@
 #include "flashcardwindow.h"
 #include "popupwindow.h"
 #include "databasewindow.h"
+#include "statswindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -87,4 +88,9 @@ void MainWindow::enableAndDisableButtons()
         ui->saveButton->setEnabled(true);
         ui->statsButton->setEnabled(true);
     }
+}
+void MainWindow::on_statsButton_clicked()
+{
+    StatsWindow statsWindow;
+    statsWindow.exec();
 }

@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     resultswindow.cpp \
     editorwindow.cpp \
     databasewindow.cpp \
-    carddatabasemodel.cpp
+    carddatabasemodel.cpp \
+    statswindow.cpp
 
 HEADERS  += mainwindow.h \
     cardpack.h \
@@ -33,13 +34,15 @@ HEADERS  += mainwindow.h \
     resultswindow.h \
     editorwindow.h \
     databasewindow.h \
-    carddatabasemodel.h
+    carddatabasemodel.h \
+    statswindow.h
 
 FORMS    += mainwindow.ui \
     flashcardwindow.ui \
     resultswindow.ui \
     editorwindow.ui \
-    databasewindow.ui
+    databasewindow.ui \
+    statswindow.ui
 
 RESOURCES += \
     resources.qrc
