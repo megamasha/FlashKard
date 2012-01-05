@@ -8,6 +8,7 @@
 #include "popupwindow.h"
 #include "databasewindow.h"
 #include "statswindow.h"
+#include <QCloseEvent>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -22,8 +23,34 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::closeEvent(QCloseEvent * event)
+{
+    //if no changes have been made, the program can be safely closed
+    if ( !mainPack.hasUnsavedChanges() )
+        event->accept();
+
+    //otherwise ask whether user wants to save changes
+    else if (popup.importantQuestion(this,tr("Save changes before quitting?")))
+    {
+        on_saveButton_clicked();
+        event->accept();
+    }
+    // if user doesn't want to save changes, just quit
+    else
+        event->accept();
+}
+
 void MainWindow::on_exitButton_clicked()
 {
+    //if non-empty pack has unsaved changes that eh user wants to save...
+    if ( mainPack.hasUnsavedChanges() &&
+         ! mainPack.isEmpty() &&
+         popup.importantQuestion(this,tr("Save changes before quitting?")) )
+    {
+        //...then save
+        on_saveButton_clicked();
+    }
+
     exit(EXIT_SUCCESS);
 }
 
@@ -54,12 +81,14 @@ void MainWindow::on_testButton_clicked()
             return;
     }
 
+    mainPack.setChanged();
     flashCardWindow tester;
     tester.exec();
 }
 
 void MainWindow::on_databaseButton_clicked()
 {
+    mainPack.setChanged();
     databaseWindow database;
     database.exec();
     enableAndDisableButtons();
@@ -70,10 +99,8 @@ void MainWindow::on_saveButton_clicked()
     QString filename;
     filename = QFileDialog::getSaveFileName(this, tr("Save Flashcard Database"),
                                             "~/Documents", tr("Files (*.~sv)"));
-    qDebug("Filename: %s",filename.toAscii().data());
-    mainPack.isEmpty();
     mainPack.exportdatabase(filename.toAscii().data());
-
+    mainPack.SetUnchanged();
 }
 
 void MainWindow::enableAndDisableButtons()

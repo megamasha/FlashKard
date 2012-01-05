@@ -20,8 +20,11 @@ flashCardWindow::~flashCardWindow()
 
 void flashCardWindow::closeEvent(QCloseEvent * event)
 {
+    //if the card has already been answer, the window can be safely closed
     if (answered)
         event->accept();
+
+    //otherwise ask whether user wants to forfeit the question
     else if (popup.importantQuestion(this,tr("Are you sure you want to close the tester?\n\nThis will count as an incorrect answer!")))
     {
         currentCard->markAsIncorrect();

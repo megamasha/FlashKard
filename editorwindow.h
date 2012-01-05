@@ -19,7 +19,7 @@ public:
     ~editorWindow();
 
 protected:
-    void closeEvent(QCloseEvent *event) {/*FISH! TODO*/}
+    void closeEvent(QCloseEvent *event);
 
 private slots:
     void on_markN2lButton_clicked();

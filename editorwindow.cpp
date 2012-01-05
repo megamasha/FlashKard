@@ -1,6 +1,7 @@
 #include "editorwindow.h"
 #include "ui_editorwindow.h"
 #include "popupwindow.h"
+#include <QCloseEvent>
 
 editorWindow::editorWindow(QWidget *parent, flashCard * card) :
     QDialog(parent),
@@ -25,6 +26,26 @@ editorWindow::editorWindow(QWidget *parent, flashCard * card) :
 editorWindow::~editorWindow()
 {
     delete ui;
+}
+
+void editorWindow::closeEvent(QCloseEvent *event)
+{
+    // has text changed?
+    if (ui->questionText->text() != currentCard->getQuestion() ||
+        ui->answerText->text()   != currentCard->getAnswer()   ||
+        ui->infoText->text()     != currentCard->getInfo()     ||
+        ui->hintText->text()     != currentCard->getHint()       )
+    {
+        // if so, does user want to close without saving it?
+        if (popup.importantQuestion(this,tr("Discard changes?")))
+            event->accept();
+        else
+            event->ignore();
+    }
+    // close window without asking if text hasn't changed
+    else
+        event->accept();
+
 }
 
 QString editorWindow::createLevelText()

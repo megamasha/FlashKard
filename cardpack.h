@@ -29,6 +29,9 @@ class cardPack : public QObject
 
         bool isEmpty();
         int cardsInPack();
+        void setChanged();
+        void SetUnchanged();
+        bool hasUnsavedChanges();
 
         //FISH! this is just a bit of a kludge
         void exportdatabase(char * outputfilename);
@@ -44,6 +47,7 @@ class cardPack : public QObject
         cardSet knownLevelSets[level_max + 1]; //one set of cards for each 'knownLevel'
         unsigned int cardsInPackCounter;
         bool n2lFlag;
+        bool changed;
 
     //friends:
 

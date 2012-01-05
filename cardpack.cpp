@@ -150,6 +150,21 @@ int cardPack::cardsInPack()
     return cardsInPackCounter;
 }
 
+void cardPack::setChanged()
+{
+    changed = true;
+}
+
+void cardPack::SetUnchanged()
+{
+    changed = false;
+}
+
+bool cardPack::hasUnsavedChanges()
+{
+    return changed;
+}
+
 void cardPack::exportdatabase (char * outputfilename)
 //this is all just a bit of a kludge,
 //might be alright in C, but probably bad C++ form

@@ -12,7 +12,7 @@ Added: Display Score in results Window.
 Added: Display card score in card editor window.
 Added: Untested flashcards have a score of 0.
 Added: Enable Stats Window.
-Ask to save when exiting.
+Added: Ask to save when exiting program or closing editor window.
 Implement Menu.
 Add Status Bar.
 Save location of last loaded file for purposes of loading/saving.
