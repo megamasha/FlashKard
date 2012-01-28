@@ -3,9 +3,9 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    QApplication flashKard(argc, argv);
     MainWindow mainWindow;
     mainWindow.show();
 
-    return a.exec();
+    return flashKard.exec();
 }

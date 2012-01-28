@@ -224,6 +224,29 @@
      <height>21</height>
     </rect>
    </property>
+   <property name="nativeMenuBar">
+    <bool>false</bool>
+   </property>
+   <widget class="QMenu" name="menuFlashKard">
+    <property name="title">
+     <string>FlashKard</string>
+    </property>
+    <addaction name="actionOpen_FlashKard_Database"/>
+    <addaction name="actionSave_FlashKard_Database"/>
+    <addaction name="separator"/>
+    <addaction name="actionStart_Testing"/>
+    <addaction name="separator"/>
+    <addaction name="actionE_xit"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionStatistics"/>
+    <addaction name="actionDatabase_Editor"/>
+   </widget>
+   <addaction name="menuFlashKard"/>
+   <addaction name="menuView"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -234,8 +257,179 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionOpen_FlashKard_Database">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/document_open.svgz</normaloff>:/images/document_open.svgz</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Open FlashKard Database...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionSave_FlashKard_Database">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/document_save.svgz</normaloff>:/images/document_save.svgz</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Save FlashKard Database...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionStart_Testing">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/go_next.svgz</normaloff>:/images/go_next.svgz</iconset>
+   </property>
+   <property name="text">
+    <string>Start Testing...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
+   </property>
+  </action>
+  <action name="actionE_xit">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/application_exit.svgz</normaloff>:/images/application_exit.svgz</iconset>
+   </property>
+   <property name="text">
+    <string>E&amp;xit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="actionStatistics">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/view_statistics.svgz</normaloff>:/images/view_statistics.svgz</iconset>
+   </property>
+   <property name="text">
+    <string>Statistics...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
+   </property>
+  </action>
+  <action name="actionDatabase_Editor">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/edit.svg</normaloff>:/images/edit.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Database Editor...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
- <connections/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>actionOpen_FlashKard_Database</sender>
+   <signal>triggered()</signal>
+   <receiver>loadButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>55</x>
+     <y>86</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDatabase_Editor</sender>
+   <signal>triggered()</signal>
+   <receiver>databaseButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>55</x>
+     <y>201</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionE_xit</sender>
+   <signal>triggered()</signal>
+   <receiver>exitButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>272</x>
+     <y>201</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSave_FlashKard_Database</sender>
+   <signal>triggered()</signal>
+   <receiver>saveButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>272</x>
+     <y>86</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionStart_Testing</sender>
+   <signal>triggered()</signal>
+   <receiver>testButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>164</x>
+     <y>86</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionStatistics</sender>
+   <signal>triggered()</signal>
+   <receiver>statsButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>164</x>
+     <y>201</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
