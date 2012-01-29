@@ -14,7 +14,7 @@ Added: Untested flashcards have a score of 0.
 Added: Enable Stats Window.
 Added: Ask to save when exiting program or closing editor window.
 Added: Implement Menu.
-Add Status Bar.
+Added: Add Status Bar.
 Save location of last loaded file for purposes of loading/saving.
 Save to/load from SQL Databases and XML files.
 Implement initialisation lists where possible.
