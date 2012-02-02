@@ -56,12 +56,12 @@ void MainWindow::on_exitButton_clicked()
 
 void MainWindow::on_loadButton_clicked()
 {
-    QString filename;
-    filename = QFileDialog::getOpenFileName(this, tr("Load Flashcard Database"),
+    currentlyLoadedFilename = QFileDialog::getOpenFileName(this,
+                                            tr("Load Flashcard Database"),
                                             "~/Documents", tr("Files (*.~sv)"));
-    QByteArray poop = filename.toAscii();
-    char * importfilename = (char *)malloc(256);
-    importfilename = poop.data();
+
+    QByteArray temporaryIntermediate = currentlyLoadedFilename.toAscii();
+    char * importfilename = temporaryIntermediate.data();
 
     importdatabase(importfilename);
 
@@ -98,7 +98,8 @@ void MainWindow::on_saveButton_clicked()
 {
     QString filename;
     filename = QFileDialog::getSaveFileName(this, tr("Save Flashcard Database"),
-                                            "~/Documents", tr("Files (*.~sv)"));
+                                            currentlyLoadedFilename.toAscii().data(),
+                                            tr("Files (*.~sv)"));
     mainPack.exportdatabase(filename.toAscii().data());
     mainPack.SetUnchanged();
 }

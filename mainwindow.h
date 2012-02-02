@@ -36,6 +36,8 @@ private:
     Ui::MainWindow *ui;
 
     void enableAndDisableButtons();
+
+    QString currentlyLoadedFilename;
 };
 
 extern MainWindow mainWindow;

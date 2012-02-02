@@ -15,8 +15,10 @@ Added: Enable Stats Window.
 Added: Ask to save when exiting program or closing editor window.
 Added: Implement Menu.
 Added: Add Status Bar.
-Save location of last loaded file for purposes of loading/saving.
+Added: Save location of last loaded file for purposes of saving.
 Save to/load from SQL Databases and XML files.
 Implement initialisation lists where possible.
 Use STL container classes instead of arrays where possible.
 Check for presence of tilde ('~') when exporting to .~sv
+Disable save and stats menu entires with their corresponding buttons
+Implement 'Open Recent' menu.
