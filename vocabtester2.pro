@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui sql xml
 
 TARGET = vocabtester2
 TEMPLATE = app
@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     editorwindow.cpp \
     databasewindow.cpp \
     carddatabasemodel.cpp \
-    statswindow.cpp
+    statswindow.cpp \
+    fmlhandler.cpp
 
 HEADERS  += mainwindow.h \
     cardpack.h \
@@ -35,7 +36,8 @@ HEADERS  += mainwindow.h \
     editorwindow.h \
     databasewindow.h \
     carddatabasemodel.h \
-    statswindow.h
+    statswindow.h \
+    fmlhandler.h
 
 FORMS    += mainwindow.ui \
     flashcardwindow.ui \

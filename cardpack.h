@@ -30,7 +30,7 @@ class cardPack : public QObject
         bool isEmpty();
         int cardsInPack();
         void setChanged();
-        void SetUnchanged();
+        void setUnchanged();
         bool hasUnsavedChanges();
 
         //FISH! this is just a bit of a kludge

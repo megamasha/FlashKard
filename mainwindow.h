@@ -35,6 +35,11 @@ private:
 
     Ui::MainWindow *ui;
 
+    void loadFML();
+    void saveFML();
+    void loadFDB();
+    void saveFDB();
+
     void enableAndDisableButtons();
 
     QString currentlyLoadedFilename;

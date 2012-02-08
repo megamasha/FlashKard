@@ -35,6 +35,7 @@ class flashCard : public QObject // required for Qt Signals and Slots
         // bool isAlmostCorrect (QString & yourAnswer); //FISH! TODO
         bool wasCorrectLastTime();
         int getCurrentStreak();
+        int getLevelUp();
         bool markAsCorrect();
         bool markAsIncorrect();
 
@@ -60,6 +61,7 @@ class flashCard : public QObject // required for Qt Signals and Slots
         bool promoteCard();
         bool demoteCard();
 
+        knownLevel_t getKnownLevel();
         bool resetKnownLevel();
         bool isHighPriority();
         bool setHighPriority();
@@ -89,18 +91,19 @@ class flashCard : public QObject // required for Qt Signals and Slots
         the need for friendship, removing the .next member, and allowing
         a clashcard to be in more than one list, but making list calls
         more complex*/
-
         friend class cardSet;
 
         /*cardPack required for promoting and demoting cards*/
         //possibly not any more
-
         friend class cardPack;
 
         /*editorWindow is a friend because it is the designated class for
           allowing the user to change the card*/
-
         friend class editorWindow;
+
+        /*FLMHandler constructs flashCards from a (hopefully) well-formed
+          xml file*/
+        friend class FMLHandler;
 };
 
 #endif // FLASHCARD_H

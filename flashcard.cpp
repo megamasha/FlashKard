@@ -64,6 +64,11 @@ int flashCard::getCurrentStreak()
     return currentStreak;
 }
 
+int flashCard::getLevelUp()
+{
+    return levelUp;
+}
+
 bool flashCard::markAsCorrect()
 {
     if (lastCorrect)
@@ -260,6 +265,11 @@ bool flashCard::demoteCard() //FISH! TODO display (somewhere) messages about dem
     return true; // FISH! TODO return success value
 }
 
+
+knownLevel_t flashCard::getKnownLevel()
+{
+    return knownLevel;
+}
 
 bool flashCard::resetKnownLevel()
 {

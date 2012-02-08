@@ -155,7 +155,7 @@ void cardPack::setChanged()
     changed = true;
 }
 
-void cardPack::SetUnchanged()
+void cardPack::setUnchanged()
 {
     changed = false;
 }
