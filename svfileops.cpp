@@ -9,7 +9,7 @@ the vocab structs from memory.
 */
 
 #include "svfileops.h"
-#include <QString>
+#include <QString> // required to interface with Qt (importdatabase())
 #include "flashcard.h"
 #include "cardpack.h"
 

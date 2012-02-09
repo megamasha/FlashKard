@@ -133,11 +133,15 @@ void MainWindow::enableAndDisableButtons()
 {
     if (mainPack.isEmpty())
     {
+        ui->actionSave_FlashKard_Database->setDisabled(true);
+        ui->actionStatistics->setDisabled(true);
         ui->saveButton->setDisabled(true);
         ui->statsButton->setDisabled(true);
     }
     else
     {
+        ui->actionSave_FlashKard_Database->setEnabled(true);
+        ui->actionStatistics->setEnabled(true);
         ui->saveButton->setEnabled(true);
         ui->statsButton->setEnabled(true);
     }
