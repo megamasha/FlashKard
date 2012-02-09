@@ -33,8 +33,10 @@ class cardPack : public QObject
         void setUnchanged();
         bool hasUnsavedChanges();
 
+        bool containsCharacter(char charToFind);
+        void replaceCharacter(char charToReplace, char replaceWith);
         //FISH! this is just a bit of a kludge
-        void exportdatabase(char * outputfilename);
+        void exportdatabase(QString fileToExport);
 
         float packScore();
 

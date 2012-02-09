@@ -59,7 +59,7 @@ QVariant cardDatabaseModel::data ( const QModelIndex & index, int role ) const
     return returnValue;
 }
 
-bool cardDatabaseModel::insertRows(int row, int count, const QModelIndex &parent)
+bool cardDatabaseModel::insertRows(int, int count, const QModelIndex &parent)
 {
     bool success = true;
 
@@ -83,4 +83,5 @@ bool cardDatabaseModel::removeRows (int row,int count,const QModelIndex & parent
         mainPack.removeCard(cardToBeRemoved);
     }
     endRemoveRows();
+    return true;
 }

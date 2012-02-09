@@ -7,7 +7,7 @@ flashCard::flashCard() :
     question (tr("Question")),
     answer (tr("Answer")),
     knownLevel (level_norm),
-    lastCorrect (false)
+    lastCorrect (false),
     currentStreak (0),
     levelUp (0),
 
@@ -194,6 +194,21 @@ QString flashCard::getHint()
     return hint;
 }
 
+bool flashCard::containsCharacter(char charToFind)
+{
+    return question.contains(charToFind) ||
+           answer.contains(charToFind) ||
+           info.contains(charToFind) ||
+           hint.contains(charToFind);
+}
+
+void flashCard::replaceCharacter(char charToReplace, char replaceWith)
+{
+    question.replace(charToReplace,replaceWith);
+    answer.replace(charToReplace,replaceWith);
+    info.replace(charToReplace,replaceWith);
+    hint.replace(charToReplace,replaceWith);
+}
 
 //priority adjustment functions
 bool flashCard::canBePromoted()

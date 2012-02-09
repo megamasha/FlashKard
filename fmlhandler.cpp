@@ -10,6 +10,7 @@ bool FMLHandler::startDocument()
 {
     inFlashcardsSection = inFlashcard = false;
     currentCardProperty = "none";
+    return true;
 }
 
 bool FMLHandler::startElement( const QString &, const QString & name, const QString &, const QXmlAttributes &)

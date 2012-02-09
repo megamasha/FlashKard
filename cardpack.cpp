@@ -168,14 +168,61 @@ bool cardPack::hasUnsavedChanges()
     return changed;
 }
 
-void cardPack::exportdatabase (char * outputfilename)
+bool cardPack::containsCharacter(char charToFind)
+{
+    if (isEmpty()) return false;
+
+    //loop through all cards
+    flashCard * currentCard = getFirstCard();
+    do
+    {
+        if (currentCard->containsCharacter(charToFind)) return true;
+    }
+    while ((currentCard = getNextCard(currentCard)) != NULL);
+
+    return false;
+}
+
+void cardPack::replaceCharacter(char charToReplace, char replaceWith)
+{
+    if (isEmpty()) return;
+
+    //loop through all cards
+    flashCard * currentCard = getFirstCard();
+    do
+    {
+        currentCard->replaceCharacter(charToReplace,replaceWith);
+    }
+    while ((currentCard = getNextCard(currentCard)) != NULL);
+}
+
+void cardPack::exportdatabase (QString fileToExport)
 //this is all just a bit of a kludge,
 //might be alright in C, but probably bad C++ form
 {
     flashCard * currentCard = mainPack.getFirstCard();
     if (currentCard == NULL) return;
 
-    QFile outputfile (outputfilename);
+    //check for invalid character '~'
+    if (mainPack.containsCharacter('~'))
+    {
+        //if pack has invalid characters and user doesn't want to replace them,
+        if ( ! popup.importantQuestion(0,tr("Your flashcards contain the character '~', which cannot be stored in a '~sv' file.\n\nWould you like to replace '~' with '-' in all loaded cards?")))
+        {
+            popup.info(0,tr("File not saved."));
+            return;
+        }
+
+        //FISH! TODO Make this act on a copy of the pack (requires cardPack copy constructor)
+
+        //otherwise, replace characters and continue
+        else
+        {
+            mainPack.replaceCharacter('~','-');
+        }
+    }
+
+    QFile outputfile (fileToExport);
     outputfile.open(QIODevice::WriteOnly);
 
     int bytesToWrite;

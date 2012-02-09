@@ -9,6 +9,7 @@ original Vocab tester Version 1 (http://github.com/megamasha/Vocab-Tester)
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
+#include <QString> // required to interface with Qt (importdatabase())
 
 #define MAXTEXTLENGTH 256
 #define MAXINTVALUE 2147483647
@@ -36,7 +37,7 @@ struct listinfo//struct holds head, tail and the number of entries for the n2l, 
 extern FILE * inputfile;
 extern struct listinfo n2l, norm, known, old;
 
-void importdatabase(char * inputfilename);/*performs the functions of the old loaddatabase(),
+void importdatabase(QString fileToImport);/*performs the functions of the old loaddatabase(),
 passing correct parameters to getrecordsfromfile(), which reads the file into
 vocab structs in memory.
 It then converts these vocab structs into flashcards in a cardpack and unloads

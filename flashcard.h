@@ -55,6 +55,10 @@ class flashCard : public QObject // required for Qt Signals and Slots
         QString getHint();
         bool setHint(QString newHint);
 
+        //string adjustment functions
+        bool containsCharacter(char charToFind);
+        void replaceCharacter(char charToReplace, char replaceWith);
+
         //priority adjustment functions
         bool canBePromoted();
         bool canBeDemoted();
@@ -81,8 +85,8 @@ class flashCard : public QObject // required for Qt Signals and Slots
         int levelUp;
 
         flashCard * next;
-        cardSet * parentSet;
         cardPack * parentPack;
+        cardSet * parentSet;
 
     //friends:
 
@@ -93,8 +97,8 @@ class flashCard : public QObject // required for Qt Signals and Slots
         more complex*/
         friend class cardSet;
 
-        /*cardPack required for promoting and demoting cards*/
-        //possibly not any more
+        /* cardPack (was at one point) required for promoting and demoting cards
+         * and replacing characters*/
         friend class cardPack;
 
         /*editorWindow is a friend because it is the designated class for

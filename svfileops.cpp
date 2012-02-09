@@ -9,15 +9,18 @@ the vocab structs from memory.
 */
 
 #include "svfileops.h"
-#include "QString"
+#include <QString>
 #include "flashcard.h"
 #include "cardpack.h"
 
 FILE * inputfile = NULL;
 struct listinfo n2l, norm, known, old;
 
-void importdatabase(char * inputfilename)
+void importdatabase(QString fileToImport)
 {
+    QByteArray temporaryIntermediate = fileToImport.toAscii();
+    char * inputfilename = temporaryIntermediate.data();
+
     //identify csv or ~sv file
     char separator = '~';
     if (inputfilename[strlen(inputfilename)-3] == 'c') separator = ',';

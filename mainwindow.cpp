@@ -76,11 +76,8 @@ void MainWindow::on_loadButton_clicked()
         loadFDB();
     else if (fileToLoad.suffix() == "~sv" ||
              fileToLoad.suffix() == "csv")
-    {
-        QByteArray temporaryIntermediate = currentlyLoadedFilename.toAscii();
-        char * importfilename = temporaryIntermediate.data();
-        importdatabase(importfilename);
-    }
+        importdatabase(currentlyLoadedFilename);
+
 
     enableAndDisableButtons();
 }
@@ -126,9 +123,8 @@ void MainWindow::on_saveButton_clicked()
         saveFML();
     else if (fileToSave.suffix() == "fdb")
         saveFDB();
-    else if (fileToSave.suffix() == "~sv" ||
-             fileToSave.suffix() == "csv")
-        mainPack.exportdatabase(currentlyLoadedFilename.toAscii().data());
+    else if (fileToSave.suffix() == "~sv")
+        mainPack.exportdatabase(currentlyLoadedFilename);
 
     mainPack.setUnchanged();
 }
