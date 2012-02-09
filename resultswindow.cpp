@@ -4,10 +4,10 @@
 
 resultsWindow::resultsWindow(QWidget *parent,flashCard * card, QString givenAnswer) :
     QDialog(parent),
-    ui(new Ui::resultsWindow)
+    ui(new Ui::resultsWindow),
+    currentCard(card)
 {
     ui->setupUi(this);
-    currentCard = card;
     processResults(givenAnswer);
 }
 

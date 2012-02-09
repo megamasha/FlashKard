@@ -2,10 +2,12 @@
 
 #include "cardset.h"
 
-cardSet::cardSet()
+cardSet::cardSet() :
+    head(NULL),
+    tail(NULL),
+    cardsInSetCounter(0)
 {
-    head = tail = NULL;
-    cardsInSetCounter = 0;
+
 }
 
 bool cardSet::addCard(flashCard & newCard)

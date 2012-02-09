@@ -5,11 +5,10 @@
 
 editorWindow::editorWindow(QWidget *parent, flashCard * card) :
     QDialog(parent),
-    ui(new Ui::editorWindow)
+    ui(new Ui::editorWindow),
+    currentCard(card)
 {
     ui->setupUi(this);
-
-    currentCard = card;
 
     ui->questionText->setText(currentCard->getQuestion());
     ui->answerText->setText(currentCard->getAnswer());

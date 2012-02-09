@@ -3,17 +3,19 @@
 #include "cardset.h"
 #include <QString>
 
-flashCard::flashCard()
-{
-    question = tr("Question");
-    answer = tr("Answer");
-    knownLevel = level_norm;
-    lastCorrect = false;
-    currentStreak = levelUp = 0;
+flashCard::flashCard() :
+    question (tr("Question")),
+    answer (tr("Answer")),
+    knownLevel (level_norm),
+    lastCorrect (false)
+    currentStreak (0),
+    levelUp (0),
 
-    next = NULL;
-    parentPack = NULL;
-    parentSet = NULL;
+    next (NULL),
+    parentPack (NULL),
+    parentSet (NULL)
+{
+
 }
 
 flashCard::flashCard (
@@ -25,20 +27,23 @@ flashCard::flashCard (
     bool lc,
     int cs,
     int lu)
+
+    :
+
+      question (qu),
+      answer (an),
+      info (in),
+      hint (hi),
+
+      knownLevel (kl),
+      lastCorrect (lc),
+      currentStreak (cs),
+      levelUp (lu),
+
+      next (NULL),
+      parentPack (NULL),
+      parentSet (NULL)
 {
-    question = qu;
-    answer = an;
-    info = in;
-    hint = hi;
-
-    knownLevel = kl;
-    lastCorrect = lc;
-    currentStreak = cs;
-    levelUp = lu;
-
-    next = NULL;
-    parentPack = NULL;
-    parentSet = NULL;
 
 }
 

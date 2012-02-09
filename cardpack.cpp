@@ -8,7 +8,10 @@
 
 cardPack mainPack;
 
-cardPack::cardPack()
+cardPack::cardPack() :
+    cardsInPackCounter(0),
+    n2lFlag (false),
+    changed (false)
 {
     srand((unsigned)time(NULL));
 }
