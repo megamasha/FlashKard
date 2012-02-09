@@ -161,15 +161,17 @@ void MainWindow::saveFDB()
 
     //create table
     QSqlQuery query;
+    query.exec("DROP TABLE Flashcards");
     query.exec("CREATE TABLE Flashcards (Question TEXT, Answer TEXT, Info TEXT, Hint TEXT, KnownLevel TINYINT, LastCorrect TINYINT, CurrentStreak TINYINT, LevelUp TINYINT)");
 
     //add all cards to database
     flashCard * currentCard = mainPack.getFirstCard();
+    query.exec("BEGIN TRANSACTION");
     do
     {
-        QString queryString;
         QString knownLevel, lastCorrect, currentStreak, levelUp;
-        queryString += "INSERT INTO Flashcards (Question, Answer, Info, Hint, KnownLevel, LastCorrect, CurrentStreak, LevelUp) VALUES ('" +
+        QString queryString;
+        queryString = "INSERT INTO Flashcards (Question, Answer, Info, Hint, KnownLevel, LastCorrect, CurrentStreak, LevelUp) VALUES ('" +
                 currentCard->getQuestion().replace(QString("'"),QString("''")) + "', '" +
                 currentCard->getAnswer().replace(QString("'"),QString("''")) + "', '" +
                 currentCard->getInfo().replace(QString("'"),QString("''")) + "', '" +
@@ -178,6 +180,7 @@ void MainWindow::saveFDB()
                 lastCorrect.setNum(currentCard->wasCorrectLastTime() ? 1 : 0) + ", " +
                 currentStreak.setNum(currentCard->getCurrentStreak()) + ", " +
                 levelUp.setNum(currentCard->getLevelUp()) + ")";
+
         if(!query.exec(queryString.toUtf8().data()))
         {
             popup.error(this,query.lastQuery());
@@ -185,6 +188,8 @@ void MainWindow::saveFDB()
         }
     }
     while ((currentCard = mainPack.getNextCard(currentCard)) != NULL);
+
+    query.exec("END TRANSACTION");
 
     flashcardDatabase.close();
     QSqlDatabase::removeDatabase(QSqlDatabase::database().connectionName());
