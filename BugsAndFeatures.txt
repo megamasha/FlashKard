@@ -21,8 +21,8 @@ Added: Save location of last loaded file for purposes of saving.
 Added: Save to/load from SQL Databases and XML files.
 Added: Implement initialisation lists where possible.
 Added: Check for presence of tilde ('~') when exporting to .~sv files.
-Added: Disable save and stats menu entires with their corresponding buttons.
-Implement 'Open Recent' menu.
+Added: Disable save and stats menu entries with their corresponding buttons.
+Added: Implement 'Open Recent' menu.
 Write cardPack copy constructor to allow saving of a (modified) copy of the pack.
 Write destructors where appropriate.
 Implement 'Save' as well as 'Save As'.

@@ -15,13 +15,21 @@
 #include <QDomDocument>
 #include <QTextStream>
 #include "fmlhandler.h"
+#include <QSettings>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    connect(ui->actionRecent1,SIGNAL(triggered()),this,SLOT(loadRecent()));
+    connect(ui->actionRecent2,SIGNAL(triggered()),this,SLOT(loadRecent()));
+    connect(ui->actionRecent3,SIGNAL(triggered()),this,SLOT(loadRecent()));
+    connect(ui->actionRecent4,SIGNAL(triggered()),this,SLOT(loadRecent()));
+    connect(ui->actionRecent5,SIGNAL(triggered()),this,SLOT(loadRecent()));
+
     enableAndDisableButtons();
+    updateRecentFiles();
 }
 
 MainWindow::~MainWindow()
@@ -63,9 +71,26 @@ void MainWindow::on_exitButton_clicked()
 void MainWindow::on_loadButton_clicked()
 {
     //get filename to open
-    currentlyLoadedFilename = QFileDialog::getOpenFileName(this,
+    QString fileName = QFileDialog::getOpenFileName(this,
                                             tr("Load Flashcards"),
                                             "~/Documents", tr("All FlashKard Files (*.~sv *.csv *.fml *.fdb);;FlashKard Markup Languge (*.fml);;Tilde~Separated Values (*.~sv);;FlashKard Database (*.fdb)"));
+
+    if (fileName.isEmpty())
+        return;
+
+    loadFile(fileName);
+}
+
+void MainWindow::loadRecent()
+{
+    QAction *loadRecentAction = qobject_cast<QAction *>(sender());
+    loadFile(loadRecentAction->data().toString());
+}
+
+void MainWindow::loadFile(QString fileName)
+{
+    currentlyLoadedFilename = fileName;
+    updateRecentFiles();
 
     QFileInfo fileToLoad(currentlyLoadedFilename);
 
@@ -115,6 +140,9 @@ void MainWindow::on_saveButton_clicked()
     currentlyLoadedFilename = QFileDialog::getSaveFileName(this, tr("Save Flashcard Database"),
                                                 currentlyLoadedFilename.toAscii().data(),
                                                 tr("FlashKard Markup Languge (*.fml);;Tilde~Separated Values (*.~sv);;FlashKard Database (*.fdb)"));
+    if (currentlyLoadedFilename.isEmpty())
+        return;
+    updateRecentFiles();
 
     QFileInfo fileToSave(currentlyLoadedFilename);
 
@@ -146,6 +174,73 @@ void MainWindow::enableAndDisableButtons()
         ui->statsButton->setEnabled(true);
     }
 }
+
+void MainWindow::updateRecentFiles()
+{
+    //Lovingly adapted from the Qt examples...
+    //open/create settings file for storing recent files. This could be done by setting the app author and name if the setting file is required elsewhere
+    QSettings settings("MM","FlashKard");
+    QStringList recentFiles = settings.value("recentFiles").toStringList();
+
+    recentFiles.removeAll(currentlyLoadedFilename);
+    if (!currentlyLoadedFilename.isEmpty())
+        recentFiles.prepend(currentlyLoadedFilename);
+    while (recentFiles.size() > 5)
+        recentFiles.removeLast();
+    settings.setValue("recentFiles", recentFiles);
+
+    //the following kludge is necessary only to allow for the creation of the menu entries through Qt designer
+    //it is high-maintenance and not really scalable. A more ideal solution would be an array as in the Qt examples.
+    if (recentFiles.size() > 0)
+    {
+        ui->menuRecentFiles->menuAction()->setVisible(true);
+        ui->actionRecent1->setVisible(true);
+        ui->actionRecent1->setText(QFileInfo(recentFiles[0]).fileName());
+        ui->actionRecent1->setData(recentFiles[0]);
+    }
+    else
+    {
+        ui->actionRecent1->setVisible(false);
+        ui->menuRecentFiles->menuAction()->setVisible(false);
+    }
+
+    if (recentFiles.size() > 1)
+    {
+        ui->actionRecent2->setVisible(true);
+        ui->actionRecent2->setText(QFileInfo(recentFiles[1]).fileName());
+        ui->actionRecent2->setData(recentFiles[1]);
+    }
+    else
+        ui->actionRecent2->setVisible(false);
+
+    if (recentFiles.size() > 2)
+    {
+        ui->actionRecent3->setVisible(true);
+        ui->actionRecent3->setText(QFileInfo(recentFiles[2]).fileName());
+        ui->actionRecent3->setData(recentFiles[2]);
+    }
+    else
+        ui->actionRecent3->setVisible(false);
+
+    if (recentFiles.size() > 3)
+    {
+        ui->actionRecent4->setVisible(true);
+        ui->actionRecent4->setText(QFileInfo(recentFiles[3]).fileName());
+        ui->actionRecent4->setData(recentFiles[3]);
+    }
+    else
+        ui->actionRecent4->setVisible(false);
+
+    if (recentFiles.size() > 4)
+    {
+        ui->actionRecent5->setVisible(true);
+        ui->actionRecent5->setText(QFileInfo(recentFiles[4]).fileName());
+        ui->actionRecent5->setData(recentFiles[4]);
+    }
+    else
+        ui->actionRecent5->setVisible(false);
+}
+
 void MainWindow::on_statsButton_clicked()
 {
     StatsWindow statsWindow;

@@ -23,6 +23,8 @@ private slots:
 
     void on_loadButton_clicked();
 
+    void loadRecent();
+
     void on_testButton_clicked();
 
     void on_databaseButton_clicked();
@@ -35,12 +37,16 @@ private:
 
     Ui::MainWindow *ui;
 
+    void loadFile(QString fileName);
+
     void loadFML();
     void saveFML();
     void loadFDB();
     void saveFDB();
 
     void enableAndDisableButtons();
+
+    void updateRecentFiles();
 
     QString currentlyLoadedFilename;
 };
