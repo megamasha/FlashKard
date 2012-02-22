@@ -1,9 +1,9 @@
 #include "cardpack.h"
 #include <stdlib.h>
-#include <time.h>
 #include "popupwindow.h"
 #include "flashcardwindow.h"
 #include <QFile>
+#include <QObject>
 #include "svfileops.h" //for MAXTEXTLENGTH
 
 cardPack mainPack;
@@ -13,7 +13,24 @@ cardPack::cardPack() :
     n2lFlag (false),
     changed (false)
 {
-    srand((unsigned)time(NULL));
+    ;
+}
+
+cardPack::cardPack(cardPack & source) :
+    cardsInPackCounter(0),
+    n2lFlag (source.n2lFlag),
+    changed (false)
+{
+    flashCard * sourceCard = source.getFirstCard();
+    if (sourceCard == NULL) return;
+
+    do
+    {
+        flashCard * newCard = new flashCard;
+        *newCard = *sourceCard;
+        addCard(*newCard,newCard->getKnownLevel());
+    }
+    while ((sourceCard = source.getNextCard(sourceCard)) != NULL);
 }
 
 bool cardPack::addCard(flashCard &newCard, knownLevel_t set = level_norm)
@@ -200,16 +217,16 @@ void cardPack::exportdatabase (QString fileToExport)
 //this is all just a bit of a kludge,
 //might be alright in C, but probably bad C++ form
 {
-    flashCard * currentCard = mainPack.getFirstCard();
+    flashCard * currentCard = getFirstCard();
     if (currentCard == NULL) return;
 
     //check for invalid character '~'
-    if (mainPack.containsCharacter('~'))
+    if (containsCharacter('~'))
     {
         //if pack has invalid characters and user doesn't want to replace them,
-        if ( ! popup.importantQuestion(0,tr("Your flashcards contain the character '~', which cannot be stored in a '~sv' file.\n\nWould you like to replace '~' with '-' in all loaded cards?")))
+        if ( ! popup.importantQuestion(0,QObject::tr("Your flashcards contain the character '~', which cannot be stored in a '~sv' file.\n\nWould you like to export a file in which all instances of '~' are replaced with '-'?")))
         {
-            popup.info(0,tr("File not saved."));
+            popup.info(0,QObject::tr("File not saved."));
             return;
         }
 
@@ -218,7 +235,10 @@ void cardPack::exportdatabase (QString fileToExport)
         //otherwise, replace characters and continue
         else
         {
-            mainPack.replaceCharacter('~','-');
+            cardPack exportCopy = mainPack;
+            exportCopy.replaceCharacter('~','-');
+            exportCopy.exportdatabase(fileToExport);
+            return;
         }
     }
 
@@ -259,10 +279,10 @@ void cardPack::exportdatabase (QString fileToExport)
                 currentCard->knownLevel);
 
         outputfile.write(tempstring);
-        if (mainPack.getNextCard(currentCard) != NULL)
+        if (getNextCard(currentCard) != NULL)
             outputfile.write("\n");
     }
-    while ((currentCard = mainPack.getNextCard(currentCard)) != NULL);
+    while ((currentCard = getNextCard(currentCard)) != NULL);
 
     outputfile.close();
 }

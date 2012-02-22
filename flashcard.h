@@ -1,22 +1,20 @@
 #ifndef FLASHCARD_H
 #define FLASHCARD_H
 
-#include <QObject> // required for Qt Signals and Slots
-
 #define BONUS_FOR_CORRECT_ANSWER 3
 #define BONUS_PER_CORRECT_STREAK 1
 #define MAX_BONUS_STREAK_LENGTH 5
 #define BONUS_PER_KNOWN_LEVEL 1
+
+#include <QString>
 
 enum knownLevel_t {level_min = 0, level_n2l = 0, level_norm = 1, level_known = 2, level_old = 3, level_max = 3};
 
 class cardSet;
 class cardPack;
 
-class flashCard : public QObject // required for Qt Signals and Slots
+class flashCard
 {
-    Q_OBJECT // required for Qt Signals and Slots
-
     public:
 
         flashCard();
@@ -29,6 +27,7 @@ class flashCard : public QObject // required for Qt Signals and Slots
             bool lc,
             int cs,
             int lu);
+        flashCard & operator=(const flashCard & source);
 
         //functions to do with answer correctness
         bool isCorrect (QString & yourAnswer);

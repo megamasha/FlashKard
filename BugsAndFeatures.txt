@@ -1,9 +1,9 @@
 Bugs:
 
-Fixed: Crashes if Edit button is pressed in Database when no card is selected.
 Fixed: Export routine is not fully back-compatible.
 Fixed: Saving large databases to SQL is very slow.
 Fixed: Saving to an existing SQL database creates duplicates.
+Reopened: Crashes if Edit button is pressed in Database when no card is selected.
 Unconfirmed: Under Windows, in results window, hitting enter edits the card, doesn't continue testing.
 
 Features:
@@ -23,7 +23,7 @@ Added: Implement initialisation lists where possible.
 Added: Check for presence of tilde ('~') when exporting to .~sv files.
 Added: Disable save and stats menu entries with their corresponding buttons.
 Added: Implement 'Open Recent' menu.
-Write cardPack copy constructor to allow saving of a (modified) copy of the pack.
+Added: Write cardPack copy constructor to allow saving of a (modified) copy of the pack.
 Write destructors where appropriate.
 Implement 'Save' as well as 'Save As'.
 Replace Invalid characters (<, >, & etc.) when writing fml files

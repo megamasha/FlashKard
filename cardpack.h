@@ -12,12 +12,12 @@
 #define KNOWNTOOLD 3
 #define OLDTONORM 1
 
-class cardPack : public QObject
+class cardPack
 {
-    Q_OBJECT
     public:
 
         explicit cardPack();
+        cardPack(cardPack & source);
 
         bool addCard(flashCard & newCard, knownLevel_t set);
         bool removeCard(flashCard * cardToDelete = NULL);
@@ -39,10 +39,6 @@ class cardPack : public QObject
         void exportdatabase(QString fileToExport);
 
         float packScore();
-
-    signals:
-
-    public slots:
 
     private:
 

@@ -2,10 +2,11 @@
 #include "cardpack.h"
 #include "cardset.h"
 #include <QString>
+#include <QObject>
 
 flashCard::flashCard() :
-    question (tr("Question")),
-    answer (tr("Answer")),
+    question (QObject::tr("Question")),
+    answer (QObject::tr("Answer")),
     knownLevel (level_norm),
     lastCorrect (false),
     currentStreak (0),
@@ -47,6 +48,24 @@ flashCard::flashCard (
 
 }
 
+flashCard & flashCard::operator =(const flashCard & source)
+{
+    question = source.question;
+    answer = source.answer;
+    info = source.info;
+    hint = source.hint;
+
+    knownLevel = source.knownLevel;
+    lastCorrect = source.lastCorrect;
+    currentStreak = source.currentStreak;
+    levelUp = source.levelUp;
+
+    next = NULL;
+    parentPack = NULL;
+    parentSet = NULL;
+
+    return *this;
+}
 
 //functions to do with answer correctness
 bool flashCard::isCorrect (QString & yourAnswer)
