@@ -18,6 +18,7 @@ databaseWindow::databaseWindow(QWidget *parent) :
 
 databaseWindow::~databaseWindow()
 {
+    delete ui->databaseTreeView->model();
     delete ui;
 }
 

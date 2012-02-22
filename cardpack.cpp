@@ -33,6 +33,18 @@ cardPack::cardPack(cardPack & source) :
     while ((sourceCard = source.getNextCard(sourceCard)) != NULL);
 }
 
+cardPack::~cardPack()
+{
+    flashCard * currentCard = getFirstCard();
+    if (currentCard == NULL)
+        return;
+    do
+    {
+        delete currentCard;
+    }
+    while ((currentCard = getFirstCard()) != NULL);
+}
+
 bool cardPack::addCard(flashCard &newCard, knownLevel_t set = level_norm)
 {
     bool success = knownLevelSets[set].addCard(newCard);

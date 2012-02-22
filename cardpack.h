@@ -19,6 +19,8 @@ class cardPack
         explicit cardPack();
         cardPack(cardPack & source);
 
+        ~cardPack();
+
         bool addCard(flashCard & newCard, knownLevel_t set);
         bool removeCard(flashCard * cardToDelete = NULL);
 

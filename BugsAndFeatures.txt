@@ -24,6 +24,7 @@ Added: Check for presence of tilde ('~') when exporting to .~sv files.
 Added: Disable save and stats menu entries with their corresponding buttons.
 Added: Implement 'Open Recent' menu.
 Added: Write cardPack copy constructor to allow saving of a (modified) copy of the pack.
-Write destructors where appropriate.
+Added: Write destructors where appropriate.
 Implement 'Save' as well as 'Save As'.
-Replace Invalid characters (<, >, & etc.) when writing fml files
+Replace Invalid characters (<, >, & etc.) when writing fml files.
+Enable sorting of database editor view.
