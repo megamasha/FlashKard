@@ -27,7 +27,6 @@ Added: Implement 'Open Recent' menu.
 Added: Write cardPack copy constructor to allow saving of a (modified) copy of the pack.
 Added: Write destructors where appropriate.
 Added: Implement 'Save' as well as 'Save As'.
-Replace Invalid characters (<, >, & etc.) when writing fml files.
 Enable sorting of database editor view.
 Manage merging databases and unloading of current cards before loading new ones.
 Enable searching (filtering) in database editor.
