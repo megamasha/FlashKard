@@ -40,7 +40,7 @@ cardPack::~cardPack()
         return;
     do
     {
-        delete currentCard;
+        removeCard(currentCard);
     }
     while ((currentCard = getFirstCard()) != NULL);
 }

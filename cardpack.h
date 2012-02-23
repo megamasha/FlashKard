@@ -1,7 +1,6 @@
 #ifndef CARDPACK_H
 #define CARDPACK_H
 
-#include <QObject>
 #include "flashcard.h"
 #include "cardset.h"
 

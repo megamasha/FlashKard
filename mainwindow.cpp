@@ -137,11 +137,15 @@ void MainWindow::on_saveButton_clicked()
 {
     if (mainPack.isEmpty()) return; //don't save empty file
 
-    currentlyLoadedFilename = QFileDialog::getSaveFileName(this, tr("Save Flashcard Database"),
+    if (currentlyLoadedFilename.isEmpty())
+        currentlyLoadedFilename = QFileDialog::getSaveFileName(this, tr("Save Flashcard Database"),
                                                 currentlyLoadedFilename.toAscii().data(),
                                                 tr("FlashKard Markup Languge (*.fml);;Tilde~Separated Values (*.~sv);;FlashKard Database (*.fdb)"));
     if (currentlyLoadedFilename.isEmpty())
+    {
+        popup.info(this,tr("File not saved."));
         return;
+    }
     updateRecentFiles();
 
     QFileInfo fileToSave(currentlyLoadedFilename);
@@ -157,11 +161,24 @@ void MainWindow::on_saveButton_clicked()
     mainPack.setUnchanged();
 }
 
+void MainWindow::on_actionSave_FlashKard_Database_As_triggered()
+{
+    QString filename = QFileDialog::getSaveFileName(this, tr("Save Flashcard Database"),
+                                                           currentlyLoadedFilename.toAscii().data(),
+                                                           tr("FlashKard Markup Languge (*.fml);;Tilde~Separated Values (*.~sv);;FlashKard Database (*.fdb)"));
+    if (! filename.isEmpty())
+    {
+        currentlyLoadedFilename = filename;
+        on_saveButton_clicked();
+    }
+}
+
 void MainWindow::enableAndDisableButtons()
 {
     if (mainPack.isEmpty())
     {
         ui->actionSave_FlashKard_Database->setDisabled(true);
+        ui->actionSave_FlashKard_Database_As->setDisabled(true);
         ui->actionStatistics->setDisabled(true);
         ui->saveButton->setDisabled(true);
         ui->statsButton->setDisabled(true);
@@ -169,6 +186,7 @@ void MainWindow::enableAndDisableButtons()
     else
     {
         ui->actionSave_FlashKard_Database->setEnabled(true);
+        ui->actionSave_FlashKard_Database_As->setEnabled(true);
         ui->actionStatistics->setEnabled(true);
         ui->saveButton->setEnabled(true);
         ui->statsButton->setEnabled(true);

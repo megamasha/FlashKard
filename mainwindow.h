@@ -33,6 +33,8 @@ private slots:
 
     void on_statsButton_clicked();
 
+    void on_actionSave_FlashKard_Database_As_triggered();
+
 private:
 
     Ui::MainWindow *ui;
