@@ -1,6 +1,7 @@
 #include "carddatabasemodel.h"
 #include "cardpack.h"
 #include "flashcard.h"
+#include <QSize>
 
 cardDatabaseModel::cardDatabaseModel(QObject *parent) :
     QAbstractTableModel(parent)
@@ -21,6 +22,42 @@ int cardDatabaseModel::columnCount ( const QModelIndex & parent) const
         return 0;
     else
         return 4;
+}
+
+QVariant cardDatabaseModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+    QVariant returnValue = QVariant();
+
+    //range check
+    if (section >= columnCount())
+        return returnValue;
+
+    if (role == Qt::SizeHintRole)
+    {
+        returnValue = QSize(20,20);
+    }
+
+    if (role == Qt::DisplayRole)
+    {
+        //this only does top (horizontal) header
+        if (orientation == Qt::Horizontal)
+        {
+            switch (section)
+            {
+            case 0: returnValue = QString("Question");
+                break;
+            case 1: returnValue = QString("Answer");
+                break;
+            case 2: returnValue = QString("Info");
+                break;
+            case 3: returnValue = QString("Hint");
+                break;
+            default: returnValue = section;
+            }
+        }
+    }
+
+    return returnValue;
 }
 
 QVariant cardDatabaseModel::data ( const QModelIndex & index, int role ) const

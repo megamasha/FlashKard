@@ -5,7 +5,7 @@ Fixed: Saving large databases to SQL is very slow.
 Fixed: Saving to an existing SQL database creates duplicates.
 Fixed: Crash when exiting if flashcards are loaded (related to cardpack destructor)
 Reopened: Crashes if Edit button is pressed in Database when no card is selected.
-Unconfirmed: Under Windows, in results window, hitting enter edits the card, doesn't continue testing.
+Under Windows, in results window, hitting enter edits the card, doesn't continue testing.
 
 Features:
 
@@ -31,4 +31,4 @@ Added: Enable sorting of database editor view.
 Added: Enable searching (filtering) in database editor.
 Added: Manage merging databases and unloading of current cards before loading new ones.
 Added: Add option to clear pack.
-Label columns correctly in database editor.
+Added: Label columns correctly in database editor.
