@@ -70,6 +70,14 @@ void MainWindow::on_exitButton_clicked()
 
 void MainWindow::on_loadButton_clicked()
 {
+    if (mainPack.hasUnsavedChanges() &&
+            popup.getYesOrNo(this,tr("Save current cards before opening a different database?")))
+    {
+        on_actionSave_FlashKard_Database_As_triggered();
+    }
+
+    mainPack.empty();
+
     //get filename to open
     QString fileName = QFileDialog::getOpenFileName(this,
                                             tr("Load Flashcards"),
@@ -83,6 +91,14 @@ void MainWindow::on_loadButton_clicked()
 
 void MainWindow::loadRecent()
 {
+    if (mainPack.hasUnsavedChanges() &&
+            popup.getYesOrNo(this,tr("Save current cards before opening a different database?")))
+    {
+        on_actionSave_FlashKard_Database_As_triggered();
+    }
+
+    mainPack.empty();
+
     QAction *loadRecentAction = qobject_cast<QAction *>(sender());
     loadFile(loadRecentAction->data().toString());
 }
@@ -103,7 +119,7 @@ void MainWindow::loadFile(QString fileName)
              fileToLoad.suffix() == "csv")
         importdatabase(currentlyLoadedFilename);
 
-
+    mainPack.setUnchanged();
     enableAndDisableButtons();
 }
 
@@ -173,12 +189,27 @@ void MainWindow::on_actionSave_FlashKard_Database_As_triggered()
     }
 }
 
+void MainWindow::on_actionMerge_from_FlashKard_Database_triggered()
+{
+    //get filename to open
+    QString fileName = QFileDialog::getOpenFileName(this,
+                                            tr("Merge Flashcards"),
+                                            "~/Documents", tr("All FlashKard Files (*.~sv *.csv *.fml *.fdb);;FlashKard Markup Languge (*.fml);;Tilde~Separated Values (*.~sv);;FlashKard Database (*.fdb)"));
+
+    if (fileName.isEmpty())
+        return;
+
+    loadFile(fileName);
+    mainPack.setChanged();
+}
+
 void MainWindow::enableAndDisableButtons()
 {
     if (mainPack.isEmpty())
     {
         ui->actionSave_FlashKard_Database->setDisabled(true);
         ui->actionSave_FlashKard_Database_As->setDisabled(true);
+        ui->actionMerge_from_FlashKard_Database->setDisabled(true);
         ui->actionStatistics->setDisabled(true);
         ui->saveButton->setDisabled(true);
         ui->statsButton->setDisabled(true);
@@ -187,6 +218,7 @@ void MainWindow::enableAndDisableButtons()
     {
         ui->actionSave_FlashKard_Database->setEnabled(true);
         ui->actionSave_FlashKard_Database_As->setEnabled(true);
+        ui->actionMerge_from_FlashKard_Database->setEnabled(true);
         ui->actionStatistics->setEnabled(true);
         ui->saveButton->setEnabled(true);
         ui->statsButton->setEnabled(true);

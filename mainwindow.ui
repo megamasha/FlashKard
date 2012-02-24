@@ -261,6 +261,7 @@
     </widget>
     <addaction name="actionOpen_FlashKard_Database"/>
     <addaction name="menuRecentFiles"/>
+    <addaction name="actionMerge_from_FlashKard_Database"/>
     <addaction name="actionSave_FlashKard_Database"/>
     <addaction name="actionSave_FlashKard_Database_As"/>
     <addaction name="separator"/>
@@ -404,6 +405,14 @@
    </property>
    <property name="statusTip">
     <string>Save currently loaded cards to a specified file.</string>
+   </property>
+  </action>
+  <action name="actionMerge_from_FlashKard_Database">
+   <property name="text">
+    <string>Merge from FlashKard Database...</string>
+   </property>
+   <property name="statusTip">
+    <string>Add cards from a file to those already loaded.</string>
    </property>
   </action>
  </widget>

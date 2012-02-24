@@ -35,6 +35,8 @@ private slots:
 
     void on_actionSave_FlashKard_Database_As_triggered();
 
+    void on_actionMerge_from_FlashKard_Database_triggered();
+
 private:
 
     Ui::MainWindow *ui;

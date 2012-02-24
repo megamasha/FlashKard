@@ -169,6 +169,18 @@ flashCard * cardPack::getCardByIndex(int index)
     return returnCard;
 }
 
+void cardPack::empty()
+{
+    flashCard * currentCard = getFirstCard();
+    if (currentCard == NULL)
+        return;
+    do
+    {
+        removeCard(currentCard);
+    }
+    while ((currentCard = getFirstCard()) != NULL);
+}
+
 bool cardPack::isEmpty()
 {
     if (cardsInPackCounter == 0)

@@ -28,6 +28,8 @@ class cardPack
         flashCard * getNextCard(const flashCard *);
         flashCard * getCardByIndex(int index);
 
+        void empty();
+
         bool isEmpty();
         int cardsInPack();
         void setChanged();
