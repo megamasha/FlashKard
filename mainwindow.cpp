@@ -200,7 +200,17 @@ void MainWindow::on_actionMerge_from_FlashKard_Database_triggered()
         return;
 
     loadFile(fileName);
+    currentlyLoadedFilename = QString();
     mainPack.setChanged();
+}
+
+void MainWindow::on_actionClear_Pack_triggered()
+{
+    if (popup.importantQuestion(this,tr("Are you sure you want to clear the pack, removing ALL cards?")))
+    {
+        mainPack.empty();
+        currentlyLoadedFilename = QString();
+    }
 }
 
 void MainWindow::enableAndDisableButtons()
@@ -210,6 +220,7 @@ void MainWindow::enableAndDisableButtons()
         ui->actionSave_FlashKard_Database->setDisabled(true);
         ui->actionSave_FlashKard_Database_As->setDisabled(true);
         ui->actionMerge_from_FlashKard_Database->setDisabled(true);
+        ui->actionClear_Pack->setDisabled(true);
         ui->actionStatistics->setDisabled(true);
         ui->saveButton->setDisabled(true);
         ui->statsButton->setDisabled(true);
@@ -219,6 +230,7 @@ void MainWindow::enableAndDisableButtons()
         ui->actionSave_FlashKard_Database->setEnabled(true);
         ui->actionSave_FlashKard_Database_As->setEnabled(true);
         ui->actionMerge_from_FlashKard_Database->setEnabled(true);
+        ui->actionClear_Pack->setEnabled(true);
         ui->actionStatistics->setEnabled(true);
         ui->saveButton->setEnabled(true);
         ui->statsButton->setEnabled(true);

@@ -259,6 +259,7 @@
      <addaction name="actionRecent4"/>
      <addaction name="actionRecent5"/>
     </widget>
+    <addaction name="actionClear_Pack"/>
     <addaction name="actionOpen_FlashKard_Database"/>
     <addaction name="menuRecentFiles"/>
     <addaction name="actionMerge_from_FlashKard_Database"/>
@@ -413,6 +414,11 @@
    </property>
    <property name="statusTip">
     <string>Add cards from a file to those already loaded.</string>
+   </property>
+  </action>
+  <action name="actionClear_Pack">
+   <property name="text">
+    <string>Clear Pack</string>
    </property>
   </action>
  </widget>

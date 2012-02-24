@@ -30,5 +30,5 @@ Added: Implement 'Save' as well as 'Save As'.
 Added: Enable sorting of database editor view.
 Added: Enable searching (filtering) in database editor.
 Added: Manage merging databases and unloading of current cards before loading new ones.
-Add option to clear pack.
+Added: Add option to clear pack.
 Label columns correctly in database editor.
