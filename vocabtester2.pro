@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     databasewindow.cpp \
     carddatabasemodel.cpp \
     statswindow.cpp \
-    fmlhandler.cpp
+    fmlhandler.cpp \
+    carddatabaseproxymodel.cpp
 
 HEADERS  += mainwindow.h \
     cardpack.h \
@@ -37,7 +38,8 @@ HEADERS  += mainwindow.h \
     databasewindow.h \
     carddatabasemodel.h \
     statswindow.h \
-    fmlhandler.h
+    fmlhandler.h \
+    carddatabaseproxymodel.h
 
 FORMS    += mainwindow.ui \
     flashcardwindow.ui \
