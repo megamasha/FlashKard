@@ -5,6 +5,8 @@
 #include "carddatabasemodel.h"
 #include "flashcard.h"
 
+class QSortFilterProxyModel;
+
 namespace Ui {
     class databaseWindow;
 }
@@ -36,6 +38,10 @@ private:
     flashCard * indexToCard(const QModelIndex & index);
 
     void enableAndDisableButtons();
+
+    cardDatabaseModel * model;
+    QSortFilterProxyModel * proxyModel;
+
 };
 
 #endif // DATABASEWINDOW_H

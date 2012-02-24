@@ -1,6 +1,7 @@
 #include "databasewindow.h"
 #include "ui_databasewindow.h"
 #include "carddatabasemodel.h"
+#include <QSortFilterProxyModel>
 #include "editorwindow.h"
 #include "popupwindow.h"
 #include "cardpack.h"
@@ -11,14 +12,20 @@ databaseWindow::databaseWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    cardDatabaseModel * model = new cardDatabaseModel;
-    ui->databaseTreeView->setModel(model);
+    model = new cardDatabaseModel;
+    proxyModel = new QSortFilterProxyModel;
+    proxyModel->setSourceModel(model);
+
+    ui->databaseTreeView->setModel(proxyModel);
+    ui->databaseTreeView->setSortingEnabled(true);
+
     enableAndDisableButtons();
 }
 
 databaseWindow::~databaseWindow()
 {
-    delete ui->databaseTreeView->model();
+    delete proxyModel;
+    delete model;
     delete ui;
 }
 
