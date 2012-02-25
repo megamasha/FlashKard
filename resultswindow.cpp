@@ -9,6 +9,7 @@ resultsWindow::resultsWindow(QWidget *parent,flashCard * card, QString givenAnsw
 {
     ui->setupUi(this);
     processResults(givenAnswer);
+    ui->continueButton->setFocus();
 }
 
 resultsWindow::~resultsWindow()

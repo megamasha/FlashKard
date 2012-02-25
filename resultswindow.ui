@@ -31,6 +31,9 @@
        <property name="text">
         <string>&amp;Edit</string>
        </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
      <item>
