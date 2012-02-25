@@ -32,8 +32,11 @@ databaseWindow::~databaseWindow()
 
 void databaseWindow::on_editButton_clicked()
 {
-    QModelIndex index = ui->databaseTreeView->selectionModel()->currentIndex();
-    on_databaseTreeView_doubleClicked(index);
+    if (ui->databaseTreeView->selectionModel()->hasSelection())
+    {
+        QModelIndex index = ui->databaseTreeView->selectionModel()->currentIndex();
+        on_databaseTreeView_doubleClicked(index);
+    }
 }
 
 void databaseWindow::on_addButton_clicked()
