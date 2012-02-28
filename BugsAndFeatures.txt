@@ -34,7 +34,7 @@ Added: Add option to clear pack.
 Added: Label columns correctly in database editor.
 Added: Remove duplicates, keeping/merging the best version.
 Added: Enable and Disable Inf/Hint buttons in flashcard Window.
-Case-insensitive database filtering.
+Added: Case-insensitive database filtering.
 Timed answers.
 Options (preferences) dialog.
 Popup mode.

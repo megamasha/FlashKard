@@ -3,6 +3,7 @@
 cardDatabaseProxyModel::cardDatabaseProxyModel(QObject *parent) :
     QSortFilterProxyModel(parent)
 {
+    setFilterCaseSensitivity(Qt::CaseInsensitive);
 }
 
 bool cardDatabaseProxyModel::filterAcceptsRow(int sourceRow,
