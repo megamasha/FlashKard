@@ -45,6 +45,16 @@ void flashCardWindow::anotherCard()
     ui->answerBox->clear();
     answered = usedHintThisTime = false;
     ui->questionText->setText(currentCard->getQuestion());
+
+    if (currentCard->hasInfo())
+        ui->infoButton->setEnabled(true);
+    else
+        ui->infoButton->setDisabled(true);
+
+    if (currentCard->hasHint())
+        ui->hintButton->setEnabled(true);
+    else
+        ui->hintButton->setDisabled(true);
 }
 
 void flashCardWindow::on_infoButton_clicked()

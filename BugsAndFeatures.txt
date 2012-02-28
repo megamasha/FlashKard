@@ -33,7 +33,7 @@ Added: Manage merging databases and unloading of current cards before loading ne
 Added: Add option to clear pack.
 Added: Label columns correctly in database editor.
 Added: Remove duplicates, keeping/merging the best version.
-Enable and Disable Inf/Hint buttons in flashcard Window.
+Added: Enable and Disable Inf/Hint buttons in flashcard Window.
 Case-insensitive database filtering.
 Timed answers.
 Options (preferences) dialog.
