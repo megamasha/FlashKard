@@ -39,6 +39,8 @@ private slots:
 
     void on_actionClear_Pack_triggered();
 
+    void on_actionRemove_Duplicates_triggered();
+
 private:
 
     Ui::MainWindow *ui;

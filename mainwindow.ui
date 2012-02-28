@@ -259,12 +259,14 @@
      <addaction name="actionRecent4"/>
      <addaction name="actionRecent5"/>
     </widget>
-    <addaction name="actionClear_Pack"/>
     <addaction name="actionOpen_FlashKard_Database"/>
     <addaction name="menuRecentFiles"/>
-    <addaction name="actionMerge_from_FlashKard_Database"/>
     <addaction name="actionSave_FlashKard_Database"/>
     <addaction name="actionSave_FlashKard_Database_As"/>
+    <addaction name="separator"/>
+    <addaction name="actionMerge_from_FlashKard_Database"/>
+    <addaction name="actionRemove_Duplicates"/>
+    <addaction name="actionClear_Pack"/>
     <addaction name="separator"/>
     <addaction name="actionStart_Testing"/>
     <addaction name="separator"/>
@@ -419,6 +421,11 @@
   <action name="actionClear_Pack">
    <property name="text">
     <string>Clear Pack</string>
+   </property>
+  </action>
+  <action name="actionRemove_Duplicates">
+   <property name="text">
+    <string>Remove Duplicates</string>
    </property>
   </action>
  </widget>

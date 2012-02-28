@@ -237,6 +237,88 @@ void cardPack::replaceCharacter(char charToReplace, char replaceWith)
     while ((currentCard = getNextCard(currentCard)) != NULL);
 }
 
+void cardPack::removeDuplicates()
+{
+    // *** WARNING!! *** Here be demons! Specifically, gotos. ***
+    // They are used to make the logic of this function easier to follow.
+    // Otherwise, there'd be a truck-load of loops and massive indentations (bad enough as it is!),
+    // And recursion is difficult to implement while trying to keep track of how many entries were removed.
+
+    int cardsRemoved = 0;
+
+    flashCard * cardA;
+    flashCard * cardB;
+
+STARTOVER:
+
+    //sanity check
+    if (cardsInPackCounter <= 1)
+        goto FINISHED;
+
+    //iterate over all combinations of two cards in the pack
+    for (cardA = getFirstCard() ; cardA != getCardByIndex(cardsInPackCounter) ; cardA = getNextCard(cardA) )
+    {
+        for (cardB = getNextCard(cardA); cardB != NULL ; cardB = getNextCard(cardB) )
+        {
+            if (cardB->isDuplicateOf(cardA))
+            {
+                mergeCards(cardA,cardB);
+                cardsRemoved++;
+                goto STARTOVER;
+            }
+        }
+    }
+
+FINISHED:
+
+    popup.info(0,QObject::tr("Cards removed: %1.").arg(cardsRemoved));
+
+}
+
+void cardPack::mergeCards(flashCard *cardA, flashCard *cardB)
+{
+    //determine which card to delete
+    flashCard * cardToDelete;
+
+    //delete one if it has a lower score
+    if      (cardA->score() > cardB->score())
+        cardToDelete = cardB;
+    else if (cardB->score() > cardA->score())
+        cardToDelete = cardA;
+
+    //if scores are the same, check whether one has a hint while the other does not
+    else if (cardA->hasHint() && !cardB->hasHint())
+        cardToDelete = cardB;
+    else if (cardB->hasHint() && !cardA->hasHint())
+        cardToDelete = cardA;
+
+    //or whether one has more info than the other
+    else if (cardA->getInfo().length() > cardB->getInfo().length())
+        cardToDelete = cardB;
+    else if (cardB->getInfo().length() > cardA->getInfo().length())
+        cardToDelete = cardA;
+
+    //and if they're otherwise identical, just delete card A
+    else
+        cardToDelete = cardA;
+
+
+    //move favourable changes to the card to be kept.
+    flashCard * cardToKeep;
+    if (cardToDelete == cardA)
+        cardToKeep = cardB;
+    else
+        cardToKeep = cardA;
+
+    if (cardToDelete->hasHint() && !cardToKeep->hasHint())
+        cardToKeep->setHint(cardToDelete->getHint());
+    if (cardToDelete->getInfo().length() > cardToKeep->getInfo().length())
+        cardToKeep->setInfo(cardToDelete->getInfo());
+
+    //and delete the unneeded duplicate
+    removeCard(cardToDelete);
+}
+
 void cardPack::exportdatabase (QString fileToExport)
 //this is all just a bit of a kludge,
 //might be alright in C, but probably bad C++ form

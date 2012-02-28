@@ -185,6 +185,11 @@ QString flashCard::getAnswer()
     return answer;
 }
 
+bool flashCard::hasInfo()
+{
+    return ! info.isEmpty();
+}
+
 bool flashCard::setInfo(QString newInfo)
 {
     info = newInfo;
@@ -197,6 +202,11 @@ bool flashCard::setInfo(QString newInfo)
 QString flashCard::getInfo()
 {
     return info;
+}
+
+bool flashCard::hasHint()
+{
+    return ! hint.isEmpty();
 }
 
 bool flashCard::setHint(QString newHint)
@@ -381,4 +391,9 @@ bool flashCard::isLowPriority()
         return true;
     else
         return false;
+}
+
+bool flashCard::isDuplicateOf(flashCard * otherCard)
+{
+    return (question == otherCard->question);
 }

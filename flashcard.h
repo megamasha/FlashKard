@@ -49,8 +49,10 @@ class flashCard
         bool setQuestion(QString newQuestion);
         QString getAnswer();
         bool setAnswer(QString newAnswer);
+        bool hasInfo();
         QString getInfo();
         bool setInfo(QString newInfo);
+        bool hasHint();
         QString getHint();
         bool setHint(QString newHint);
 
@@ -70,6 +72,8 @@ class flashCard
         bool setHighPriority();
         bool isLowPriority();
         bool setLowPriority();
+
+        bool isDuplicateOf(flashCard * otherCard);
 
     private:
 

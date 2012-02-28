@@ -38,6 +38,10 @@ class cardPack
 
         bool containsCharacter(char charToFind);
         void replaceCharacter(char charToReplace, char replaceWith);
+
+        void removeDuplicates();
+        void mergeCards(flashCard * cardA, flashCard * cardB);
+
         //FISH! this is just a bit of a kludge
         void exportdatabase(QString fileToExport);
 

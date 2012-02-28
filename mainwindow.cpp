@@ -210,7 +210,14 @@ void MainWindow::on_actionClear_Pack_triggered()
     {
         mainPack.empty();
         currentlyLoadedFilename = QString();
+        enableAndDisableButtons();
     }
+}
+
+void MainWindow::on_actionRemove_Duplicates_triggered()
+{
+    mainPack.removeDuplicates();
+    enableAndDisableButtons();
 }
 
 void MainWindow::enableAndDisableButtons()
@@ -235,6 +242,11 @@ void MainWindow::enableAndDisableButtons()
         ui->saveButton->setEnabled(true);
         ui->statsButton->setEnabled(true);
     }
+
+    if (mainPack.cardsInPack() > 1)
+        ui->actionRemove_Duplicates->setEnabled(true);
+    else
+        ui->actionRemove_Duplicates->setDisabled(true);
 }
 
 void MainWindow::updateRecentFiles()
