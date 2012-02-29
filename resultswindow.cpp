@@ -59,7 +59,7 @@ void resultsWindow::generateResultsText(QString & givenAnswer)
             tr("\n\nYour score for this card is ") +
             QString::number(currentCard->score()) +
             tr(" out of ") +
-            QString::number(flashCard::maxPossibleScore) +
+            QString::number(flashCard::maxPossibleScore()) +
             tr(".");
 
     resultsText +=

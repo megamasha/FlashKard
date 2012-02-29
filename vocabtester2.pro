@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     carddatabasemodel.cpp \
     statswindow.cpp \
     fmlhandler.cpp \
-    carddatabaseproxymodel.cpp
+    carddatabaseproxymodel.cpp \
+    preferenceswindow.cpp
 
 HEADERS  += mainwindow.h \
     cardpack.h \
@@ -39,14 +40,16 @@ HEADERS  += mainwindow.h \
     carddatabasemodel.h \
     statswindow.h \
     fmlhandler.h \
-    carddatabaseproxymodel.h
+    carddatabaseproxymodel.h \
+    preferenceswindow.h
 
 FORMS    += mainwindow.ui \
     flashcardwindow.ui \
     resultswindow.ui \
     editorwindow.ui \
     databasewindow.ui \
-    statswindow.ui
+    statswindow.ui \
+    preferenceswindow.ui
 
 RESOURCES += \
     resources.qrc

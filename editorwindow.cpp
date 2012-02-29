@@ -73,7 +73,7 @@ QString editorWindow::createLevelText()
     returnString += tr("\nThe current card score is ") +
                     QString::number(currentCard->score()) +
                     tr(" out of ") +
-                    QString::number(flashCard::maxPossibleScore) +
+            QString::number(flashCard::maxPossibleScore()) +
                     tr(".");
 
     return returnString;

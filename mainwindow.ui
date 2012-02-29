@@ -279,7 +279,14 @@
     <addaction name="actionStatistics"/>
     <addaction name="actionDatabase_Editor"/>
    </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionConfigure_FlashKard"/>
+   </widget>
    <addaction name="menuFlashKard"/>
+   <addaction name="menuEdit"/>
    <addaction name="menuView"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -422,10 +429,24 @@
    <property name="text">
     <string>Clear Pack</string>
    </property>
+   <property name="statusTip">
+    <string>Empty all cards from the currently loaded pack.</string>
+   </property>
   </action>
   <action name="actionRemove_Duplicates">
    <property name="text">
     <string>Remove Duplicates</string>
+   </property>
+   <property name="statusTip">
+    <string>Remove duplicates/merge cards that are the same.</string>
+   </property>
+  </action>
+  <action name="actionConfigure_FlashKard">
+   <property name="text">
+    <string>Configure FlashKard...</string>
+   </property>
+   <property name="statusTip">
+    <string>Change options in the FlashKard Preferences Window.</string>
    </property>
   </action>
  </widget>

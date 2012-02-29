@@ -16,6 +16,7 @@
 #include <QTextStream>
 #include "fmlhandler.h"
 #include <QSettings>
+#include "preferenceswindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -30,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     enableAndDisableButtons();
     updateRecentFiles();
+    applyPreferences();
 }
 
 MainWindow::~MainWindow()
@@ -220,6 +222,13 @@ void MainWindow::on_actionRemove_Duplicates_triggered()
     enableAndDisableButtons();
 }
 
+void MainWindow::on_actionConfigure_FlashKard_triggered()
+{
+    preferencesWindow prefs;
+    prefs.exec();
+    applyPreferences();
+}
+
 void MainWindow::enableAndDisableButtons()
 {
     if (mainPack.isEmpty())
@@ -253,7 +262,7 @@ void MainWindow::updateRecentFiles()
 {
     //Lovingly adapted from the Qt examples...
     //open/create settings file for storing recent files. This could be done by setting the app author and name if the setting file is required elsewhere
-    QSettings settings("MM","FlashKard");
+    QSettings settings;
     QStringList recentFiles = settings.value("recentFiles").toStringList();
 
     recentFiles.removeAll(currentlyLoadedFilename);
@@ -313,6 +322,29 @@ void MainWindow::updateRecentFiles()
     }
     else
         ui->actionRecent5->setVisible(false);
+}
+
+void MainWindow::applyPreferences()
+{
+    QSettings settings;
+
+    //scoring section
+    settings.beginGroup("Scoring");
+    flashCard::bonusForCorrectAnswer = settings.value("bonusForCorrectAnswer",BONUS_FOR_CORRECT_ANSWER).toInt();
+    flashCard::bonusPerCorrectStreak = settings.value("bonusPerCorrectStreak",BONUS_PER_CORRECT_STREAK).toInt();
+    flashCard::maxBonusStreakLength = settings.value("maxBonusStreakLength",MAX_BONUS_STREAK_LENGTH).toInt();
+    flashCard::bonusPerKnownLevel = settings.value("bonusPerKnownLevel",BONUS_PER_KNOWN_LEVEL).toInt();
+    settings.endGroup();
+
+    //learning section
+    settings.beginGroup("Learning");
+    flashCard::n2lToNorm = settings.value("n2lToNorm",N2LTONORM).toInt();
+    flashCard::normToN2l = settings.value("normToN2l",NORMTON2L).toInt();
+    flashCard::normToKnown = settings.value("normToKnown",NORMTOKNOWN).toInt();
+    flashCard::knownToNorm = settings.value("knownToNorm",KNOWNTONORM).toInt();
+    flashCard::knownToOld = settings.value("knownToOld",KNOWNTOOLD).toInt();
+    flashCard::oldToNorm = settings.value("oldToNorm",OLDTONORM).toInt();
+    settings.endGroup();
 }
 
 void MainWindow::on_statsButton_clicked()

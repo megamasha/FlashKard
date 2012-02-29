@@ -15,6 +15,20 @@ class cardPack;
 
 class flashCard
 {
+    private:
+
+        static int n2lToNorm;
+        static int normToN2l;
+        static int normToKnown;
+        static int knownToNorm;
+        static int knownToOld;
+        static int oldToNorm;
+
+        static int bonusForCorrectAnswer;
+        static int bonusPerCorrectStreak;
+        static int maxBonusStreakLength;
+        static int bonusPerKnownLevel;
+
     public:
 
         flashCard();
@@ -39,10 +53,7 @@ class flashCard
         bool markAsIncorrect();
 
         int score();
-        static const int maxPossibleScore = (
-                 BONUS_FOR_CORRECT_ANSWER +
-                (BONUS_PER_CORRECT_STREAK * MAX_BONUS_STREAK_LENGTH) +
-                 BONUS_PER_KNOWN_LEVEL * (level_max - 1));
+        static int maxPossibleScore();
 
         //string access functions
         QString getQuestion();
@@ -111,6 +122,10 @@ class flashCard
         /*FLMHandler constructs flashCards from a (hopefully) well-formed
           xml file*/
         friend class FMLHandler;
+
+        /*the static members of flashcard can be adjusted from the preferences window
+         *they are then applied from the main window*/
+        friend class MainWindow;
 };
 
 #endif // FLASHCARD_H

@@ -41,6 +41,8 @@ private slots:
 
     void on_actionRemove_Duplicates_triggered();
 
+    void on_actionConfigure_FlashKard_triggered();
+
 private:
 
     Ui::MainWindow *ui;
@@ -55,6 +57,8 @@ private:
     void enableAndDisableButtons();
 
     void updateRecentFiles();
+
+    void applyPreferences();
 
     QString currentlyLoadedFilename;
 };

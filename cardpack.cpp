@@ -397,7 +397,7 @@ float cardPack::packScore()
 {
     if (isEmpty())
         return 0.0;
-    if (flashCard::maxPossibleScore == 0)
+    if (flashCard::maxPossibleScore() == 0)
         return 0.0;
 
     long score = 0;
@@ -411,5 +411,5 @@ float cardPack::packScore()
     }
     while ((currentCard = mainPack.getNextCard(currentCard)) != NULL);
 
-    return (float(score) / float(cardsInPackCounter) / float(flashCard::maxPossibleScore) * 100);
+    return (float(score) / float(cardsInPackCounter) / float(flashCard::maxPossibleScore()) * 100);
 }

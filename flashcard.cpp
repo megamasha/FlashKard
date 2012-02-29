@@ -4,6 +4,26 @@
 #include <QString>
 #include <QObject>
 
+int flashCard::n2lToNorm = N2LTONORM;
+int flashCard::normToN2l = NORMTON2L;
+int flashCard::normToKnown = NORMTOKNOWN;
+int flashCard::knownToNorm = KNOWNTONORM;
+int flashCard::knownToOld = KNOWNTOOLD;
+int flashCard::oldToNorm = OLDTONORM;
+
+int flashCard::bonusForCorrectAnswer = BONUS_FOR_CORRECT_ANSWER;
+int flashCard::bonusPerCorrectStreak = BONUS_PER_CORRECT_STREAK;
+int flashCard::maxBonusStreakLength = MAX_BONUS_STREAK_LENGTH;
+int flashCard::bonusPerKnownLevel = BONUS_PER_KNOWN_LEVEL;
+
+int flashCard::maxPossibleScore()
+{
+    return (bonusForCorrectAnswer +
+        (bonusPerCorrectStreak * maxBonusStreakLength) +
+         bonusPerKnownLevel * (level_max - 1));
+}
+
+
 flashCard::flashCard() :
     question (QObject::tr("Question")),
     answer (QObject::tr("Answer")),
@@ -138,18 +158,18 @@ int flashCard::score()
     if (currentStreak == 0) return 0;
 
     int returnValue = 0;
-    returnValue += BONUS_PER_KNOWN_LEVEL * (knownLevel - 1);
+    returnValue += bonusPerKnownLevel * (knownLevel - 1);
     if (wasCorrectLastTime())
     {
-        returnValue += BONUS_FOR_CORRECT_ANSWER;
+        returnValue += bonusForCorrectAnswer;
         //enforce max streak length
         int bonusStreak =
-                currentStreak >= MAX_BONUS_STREAK_LENGTH ?
-                    MAX_BONUS_STREAK_LENGTH : currentStreak;
-        returnValue += (BONUS_PER_CORRECT_STREAK * bonusStreak);
+                currentStreak >= maxBonusStreakLength ?
+                    maxBonusStreakLength : currentStreak;
+        returnValue += (bonusPerCorrectStreak * bonusStreak);
     }
     else
-        returnValue += (BONUS_FOR_CORRECT_ANSWER - currentStreak);
+        returnValue += (bonusForCorrectAnswer - currentStreak);
 
     // ensure return value isn't negative
     return (returnValue > 0 ? returnValue : 0);
@@ -248,11 +268,11 @@ bool flashCard::canBePromoted()
     int requiredLevelUp = INT_MAX;
 
     if (knownLevel == level_n2l)
-        requiredLevelUp = N2LTONORM;
+        requiredLevelUp = n2lToNorm;
     else if (knownLevel == level_norm)
-        requiredLevelUp = NORMTOKNOWN;
+        requiredLevelUp = normToKnown;
     else if (knownLevel == level_known)
-        requiredLevelUp = KNOWNTOOLD;
+        requiredLevelUp = knownToOld;
 
     if (levelUp >= requiredLevelUp)
         return true;
@@ -268,11 +288,11 @@ bool flashCard::canBeDemoted()
     int requiredLevelUp = INT_MAX;
 
     if (knownLevel == level_norm)
-        requiredLevelUp = NORMTON2L;
+        requiredLevelUp = normToN2l;
     else if (knownLevel == level_known)
-        requiredLevelUp = KNOWNTONORM;
+        requiredLevelUp = knownToNorm;
     else if (knownLevel == level_old)
-        requiredLevelUp = OLDTONORM;
+        requiredLevelUp = oldToNorm;
 
     if (levelUp >= requiredLevelUp)
         return true;
