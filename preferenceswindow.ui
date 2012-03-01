@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>312</width>
-    <height>449</height>
+    <height>451</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,16 +17,16 @@
    <item>
     <widget class="QGroupBox" name="testingGroup">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="title">
-      <string>Testing (under construction)</string>
+      <string>Testing</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QCheckBox" name="caseSensitiveAnswersBox">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="text">
          <string>Case-sensitive Answers</string>
@@ -39,7 +39,7 @@
          <bool>false</bool>
         </property>
         <property name="text">
-         <string>Timed Answers</string>
+         <string>Timed Answers (under development)</string>
         </property>
        </widget>
       </item>
@@ -49,7 +49,7 @@
          <bool>false</bool>
         </property>
         <property name="text">
-         <string>Popup Mode</string>
+         <string>Popup Mode (under development)</string>
         </property>
         <property name="checked">
          <bool>false</bool>

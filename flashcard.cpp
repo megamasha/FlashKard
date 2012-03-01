@@ -3,6 +3,7 @@
 #include "cardset.h"
 #include <QString>
 #include <QObject>
+#include <QSettings>
 
 int flashCard::n2lToNorm = N2LTONORM;
 int flashCard::normToN2l = NORMTON2L;
@@ -90,10 +91,15 @@ flashCard & flashCard::operator =(const flashCard & source)
 //functions to do with answer correctness
 bool flashCard::isCorrect (QString & yourAnswer)
 {
-    if (yourAnswer == answer)
-        return true;
-    else
-        return false;
+    //establish case sensitivity
+    QSettings settings;
+    Qt::CaseSensitivity cs = settings.value("Testing/caseSensitiveAnswers",true).toBool()
+                           ? Qt::CaseSensitive
+                           : Qt::CaseInsensitive;
+
+    int comparisonResult = answer.compare(yourAnswer,cs);
+
+    return (comparisonResult == 0);
 }
 
 // bool isAlmostCorrect (QString & yourAnswer); //FISH! TODO

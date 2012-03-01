@@ -6,7 +6,7 @@
 
 QT       += core gui sql xml
 
-TARGET = vocabtester2
+TARGET = flashkard
 TEMPLATE = app
 
 

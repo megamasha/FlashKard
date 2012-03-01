@@ -36,7 +36,7 @@ Added: Remove duplicates, keeping/merging the best version.
 Added: Enable and Disable Info/Hint buttons in flashcard Window.
 Added: Case-insensitive database filtering.
 Added: Options (preferences) dialog.
-Case insensitive answers.
+Added: Case insensitive answers.
 Timed answers.
 Allowances for answers that are almost correct.
 Popup mode.
