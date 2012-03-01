@@ -31,15 +31,18 @@
         <property name="text">
          <string>Case-sensitive Answers</string>
         </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="timedAnswersBox">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="text">
-         <string>Timed Answers (under development)</string>
+         <string>Timed Answers</string>
         </property>
        </widget>
       </item>

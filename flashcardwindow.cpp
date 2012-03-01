@@ -4,12 +4,26 @@
 #include "popupwindow.h"
 #include "resultswindow.h"
 #include <QCloseEvent>
+#include <QSettings>
 
 flashCardWindow::flashCardWindow(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::flashCardWindow)
+    ui(new Ui::flashCardWindow),
+    currentTimerProgress(0)
 {
     ui->setupUi(this);
+
+    QSettings settings;
+    if (settings.value("Testing/timedAnswers",false).toBool() == true)
+    {
+        resize( size().width(), size().height() + ui->timerProgressBar->size().height());
+        ui->timerProgressBar->setVisible(true);
+    }
+    else
+        ui->timerProgressBar->setVisible(false);
+
+    connect(&timer,SIGNAL(timeout()),this,SLOT(progressTimer()));
+
     anotherCard();
 }
 
@@ -55,6 +69,14 @@ void flashCardWindow::anotherCard()
         ui->hintButton->setEnabled(true);
     else
         ui->hintButton->setDisabled(true);
+
+    QSettings settings;
+    if (settings.value("Testing/timedAnswers",false).toBool() == true)
+    {
+        ui->timerProgressBar->reset();
+        currentTimerProgress = 0;
+        timer.start(100);
+    }
 }
 
 void flashCardWindow::on_infoButton_clicked()
@@ -77,9 +99,20 @@ void flashCardWindow::on_hintButton_clicked()
 
 void flashCardWindow::on_answerOKButton_clicked()
 {
+    timer.stop();
 
     resultsWindow results(this,currentCard,ui->answerBox->text());
     if (results.exec())
         anotherCard();
     else accept();
+}
+
+void flashCardWindow::progressTimer()
+{
+    ui->timerProgressBar->setValue(currentTimerProgress++);
+
+    if (ui->timerProgressBar->value() == ui->timerProgressBar->maximum())
+    {
+        on_answerOKButton_clicked();
+    }
 }

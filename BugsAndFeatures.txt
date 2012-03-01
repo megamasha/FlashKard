@@ -37,6 +37,6 @@ Added: Enable and Disable Info/Hint buttons in flashcard Window.
 Added: Case-insensitive database filtering.
 Added: Options (preferences) dialog.
 Added: Case insensitive answers.
-Timed answers.
+Added: Timed answers.
 Allowances for answers that are almost correct.
 Popup mode.
