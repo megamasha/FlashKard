@@ -4,6 +4,7 @@
 #include <QString>
 #include <QObject>
 #include <QSettings>
+#include <QVector>
 
 int flashCard::n2lToNorm = N2LTONORM;
 int flashCard::normToN2l = NORMTON2L;
@@ -102,7 +103,44 @@ bool flashCard::isCorrect (QString & yourAnswer)
     return (comparisonResult == 0);
 }
 
-// bool isAlmostCorrect (QString & yourAnswer); //FISH! TODO
+unsigned int flashCard::levenshteinDistance(const QString & yourAnswer)
+{
+    // I like the levenshtein distance string metric, so I'm using it in this class :-)
+    // Implementation provided by wikibooks, 02/03/2012
+    // (http://en.wikibooks.org/wiki/Algorithm_implementation/Strings/Levenshtein_distance#C.2B.2B)
+
+    const unsigned int len1 = yourAnswer.length(), len2 = answer.length();
+    std::vector<int> col(len2+1), prevCol(len2+1);
+
+    for (unsigned int i = 0; i < prevCol.size(); i++)
+        prevCol[i] = i;
+    for (unsigned int i = 0; i < len1; i++)
+    {
+        col[0] = i+1;
+        for (unsigned int j = 0; j < len2; j++)
+            col[j+1] = std::min( std::min( 1 + col[j], 1 + prevCol[1 + j]),
+                            prevCol[j] + (yourAnswer[i]==answer[j] ? 0 : 1) );
+        col.swap(prevCol);
+    }
+    qDebug("Levenshtein distance: %i",prevCol[len2]);
+    return prevCol[len2];
+}
+
+bool flashCard::isAlmostCorrect (QString & yourAnswer)
+{
+    //get error threshold
+    QSettings settings;
+    int targetSimilarity = settings.value("Testing/almostCorrectThreshold",DEFAULT_ALMOST_CORRECT_THRESHOLD).toInt();
+
+    int maxLength = qMax(answer.length(),yourAnswer.length());
+    int similarLetters = maxLength - levenshteinDistance(yourAnswer);
+    long timesHundred = similarLetters * 100;
+    int percentageSimilarity = timesHundred / maxLength;
+
+    qDebug("MaxLength: %i, Similarity: %i",maxLength,percentageSimilarity);
+
+    return (percentageSimilarity >= targetSimilarity);
+}
 
 bool flashCard::wasCorrectLastTime()
 {

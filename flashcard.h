@@ -6,6 +6,8 @@
 #define MAX_BONUS_STREAK_LENGTH 5
 #define BONUS_PER_KNOWN_LEVEL 1
 
+#define DEFAULT_ALMOST_CORRECT_THRESHOLD 85
+
 #include <QString>
 
 enum knownLevel_t {level_min = 0, level_n2l = 0, level_norm = 1, level_known = 2, level_old = 3, level_max = 3};
@@ -45,7 +47,8 @@ class flashCard
 
         //functions to do with answer correctness
         bool isCorrect (QString & yourAnswer);
-        // bool isAlmostCorrect (QString & yourAnswer); //FISH! TODO
+        unsigned int levenshteinDistance (const QString & yourAnswer); //used for isAlmostCorrect()
+        bool isAlmostCorrect (QString & yourAnswer);
         bool wasCorrectLastTime();
         int getCurrentStreak();
         int getLevelUp();
