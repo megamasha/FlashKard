@@ -1,6 +1,7 @@
 #include "resultswindow.h"
 #include "ui_resultswindow.h"
 #include "editorwindow.h" //so it can spawn one
+#include <QSettings>
 
 resultsWindow::resultsWindow(QWidget *parent,flashCard * card, QString givenAnswer) :
     QDialog(parent),
@@ -9,7 +10,12 @@ resultsWindow::resultsWindow(QWidget *parent,flashCard * card, QString givenAnsw
 {
     ui->setupUi(this);
     processResults(givenAnswer);
-    ui->continueButton->setFocus();
+
+    QSettings settings;
+    if (settings.value("Testing/popupMode",false).toBool())
+        ui->stopButton->setFocus();
+    else
+        ui->continueButton->setFocus();
 }
 
 resultsWindow::~resultsWindow()

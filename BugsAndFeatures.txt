@@ -39,7 +39,9 @@ Added: Options (preferences) dialog.
 Added: Case insensitive answers.
 Added: Timed answers.
 Added: Allowances for answers that are almost correct.
-Popup mode.
+Added: Popup mode.
 Allow cancelling of quitting when asked to save.
 Adaptive flashcard time limits.
 Additional columns in database editor.
+Adding a new card automatically opens it for editing.
+Add/implement more/better icons.

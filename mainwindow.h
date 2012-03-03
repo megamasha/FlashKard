@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "flashkardtrayicon.h"
 
 namespace Ui {
     class MainWindow;
@@ -14,6 +15,10 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+    bool currentlyTesting() {return testingFlag;}
+    void setTesting(bool setTo) {testingFlag = setTo;}
+
 
 protected:
     void closeEvent(QCloseEvent *event);
@@ -56,11 +61,15 @@ private:
 
     void enableAndDisableButtons();
 
+    bool testingFlag;
+
     void updateRecentFiles();
 
     void applyPreferences();
 
     QString currentlyLoadedFilename;
+
+    flashKardTrayIcon trayIcon;
 };
 
 extern MainWindow mainWindow;

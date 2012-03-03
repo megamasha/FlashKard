@@ -17,10 +17,13 @@
 #include "fmlhandler.h"
 #include <QSettings>
 #include "preferenceswindow.h"
+#include "flashkardtrayicon.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    testingFlag(false),
+    trayIcon(this)
 {
     ui->setupUi(this);
     connect(ui->actionRecent1,SIGNAL(triggered()),this,SLOT(loadRecent()));
@@ -28,6 +31,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionRecent3,SIGNAL(triggered()),this,SLOT(loadRecent()));
     connect(ui->actionRecent4,SIGNAL(triggered()),this,SLOT(loadRecent()));
     connect(ui->actionRecent5,SIGNAL(triggered()),this,SLOT(loadRecent()));
+
+    trayIcon.setIcon(style()->standardIcon(QStyle::SP_FileIcon));
 
     enableAndDisableButtons();
     updateRecentFiles();
@@ -41,6 +46,15 @@ MainWindow::~MainWindow()
 
 void MainWindow::closeEvent(QCloseEvent * event)
 {
+    QSettings settings;
+    if (settings.value("Testing/popupMode",false).toBool())
+    {
+        hide();
+        popup.info(0,tr("Popup Mode activated.\n\nClick the tray icon to restore FlashKard."));
+        event->ignore();
+        return;
+    }
+
     //if no changes have been made, the program can be safely closed
     if ( !mainPack.hasUnsavedChanges() )
         event->accept();
@@ -139,8 +153,10 @@ void MainWindow::on_testButton_clicked()
     }
 
     mainPack.setChanged();
+    setTesting(true);
     flashCardWindow tester;
     tester.exec();
+    setTesting(false);
 }
 
 void MainWindow::on_databaseButton_clicked()
@@ -327,6 +343,12 @@ void MainWindow::updateRecentFiles()
 void MainWindow::applyPreferences()
 {
     QSettings settings;
+
+    //testing section
+    settings.beginGroup("Testing");
+    bool popup = settings.value("popupMode",false).toBool();
+    trayIcon.setPopupMode(popup);
+    settings.endGroup();
 
     //scoring section
     settings.beginGroup("Scoring");
