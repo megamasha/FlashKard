@@ -46,6 +46,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::closeEvent(QCloseEvent * event)
 {
+    //are we actually quitting, or just hiding the window in popup mode?
     QSettings settings;
     if (settings.value("Testing/popupMode",false).toBool())
     {
@@ -55,33 +56,22 @@ void MainWindow::closeEvent(QCloseEvent * event)
         return;
     }
 
-    //if no changes have been made, the program can be safely closed
-    if ( !mainPack.hasUnsavedChanges() )
+    //we're actually quitting...
+    //if no changes have been made or the pack is empty, the program can be safely closed
+    if ( !mainPack.hasUnsavedChanges() ||
+         mainPack.isEmpty() )
         event->accept();
 
     //otherwise ask whether user wants to save changes
-    else if (popup.importantQuestion(this,tr("Save changes before quitting?")))
-    {
-        on_saveButton_clicked();
+    else if (popup.dealWithChanges(this))
         event->accept();
-    }
-    // if user doesn't want to save changes, just quit
     else
-        event->accept();
+        event->ignore();
 }
 
 void MainWindow::on_exitButton_clicked()
 {
-    //if non-empty pack has unsaved changes that the user wants to save...
-    if ( mainPack.hasUnsavedChanges() &&
-         ! mainPack.isEmpty() &&
-         popup.importantQuestion(this,tr("Save changes before quitting?")) )
-    {
-        //...then save
-        on_saveButton_clicked();
-    }
-
-    exit(EXIT_SUCCESS);
+    close(); //calls closeEvent()
 }
 
 void MainWindow::on_loadButton_clicked()
@@ -167,9 +157,9 @@ void MainWindow::on_databaseButton_clicked()
     enableAndDisableButtons();
 }
 
-void MainWindow::on_saveButton_clicked()
+bool MainWindow::on_saveButton_clicked()
 {
-    if (mainPack.isEmpty()) return; //don't save empty file
+    if (mainPack.isEmpty()) return false; //don't save empty file
 
     if (currentlyLoadedFilename.isEmpty())
         currentlyLoadedFilename = QFileDialog::getSaveFileName(this, tr("Save Flashcard Database"),
@@ -178,7 +168,7 @@ void MainWindow::on_saveButton_clicked()
     if (currentlyLoadedFilename.isEmpty())
     {
         popup.info(this,tr("File not saved."));
-        return;
+        return false;
     }
     updateRecentFiles();
 
@@ -193,6 +183,7 @@ void MainWindow::on_saveButton_clicked()
         mainPack.exportdatabase(currentlyLoadedFilename);
 
     mainPack.setUnchanged();
+    return true;
 }
 
 void MainWindow::on_actionSave_FlashKard_Database_As_triggered()

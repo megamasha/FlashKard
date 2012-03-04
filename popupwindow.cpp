@@ -31,6 +31,33 @@ bool popupWindow::importantQuestion(QWidget * parent, QString message)
         return false;
 }
 
+bool popupWindow::dealWithChanges(MainWindow * parent)
+{
+    QMessageBox box(parent);
+    box.setIcon(QMessageBox::Question);
+    box.setText("You have unsaved changes or Progress.");
+    box.setInformativeText("Save changes before quitting?");
+    box.setStandardButtons(QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel);
+    box.setDefaultButton(QMessageBox::Save);
+    box.setEscapeButton(QMessageBox::Cancel);
+
+    int buttonClicked = box.exec();
+    switch (buttonClicked)
+    {
+    case QMessageBox::Cancel:
+        return false;
+        break;
+    case QMessageBox::Discard:
+        return true;
+        break;
+    case QMessageBox::Save:
+        return parent->on_saveButton_clicked();
+        break;
+    default:
+        return false;
+    }
+}
+
 void popupWindow::error(QWidget * parent, QString message)
 {
     QMessageBox::critical(parent, tr("Error"),message, QMessageBox::Ok);

@@ -34,7 +34,7 @@ private slots:
 
     void on_databaseButton_clicked();
 
-    void on_saveButton_clicked();
+    bool on_saveButton_clicked();
 
     void on_statsButton_clicked();
 
@@ -70,6 +70,9 @@ private:
     QString currentlyLoadedFilename;
 
     flashKardTrayIcon trayIcon;
+
+    //for saving changes on exit
+    friend class popupWindow;
 };
 
 extern MainWindow mainWindow;

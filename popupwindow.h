@@ -2,6 +2,7 @@
 #define POPUPWINDOW_H
 
 #include <QObject>
+#include "mainwindow.h"
 
 class popupWindow : public QObject
 {
@@ -11,6 +12,7 @@ public:
 
     bool getYesOrNo(QWidget * parent, QString message);
     bool importantQuestion(QWidget * parent, QString message);
+    bool dealWithChanges(MainWindow * parent);
     void error(QWidget * parent, QString message);
     void info(QWidget * parent, QString message);
 
