@@ -21,7 +21,7 @@ int cardDatabaseModel::columnCount ( const QModelIndex & parent) const
     if (parent != QModelIndex())
         return 0;
     else
-        return 4;
+        return 7;
 }
 
 QVariant cardDatabaseModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -52,6 +52,12 @@ QVariant cardDatabaseModel::headerData(int section, Qt::Orientation orientation,
                 break;
             case 3: returnValue = QString("Hint");
                 break;
+            case 4: returnValue = QString("Level");
+                break;
+            case 5: returnValue = QString("Score");
+                break;
+            case 6: returnValue = QString("Streak");
+                break;
             default: returnValue = section;
             }
         }
@@ -79,6 +85,7 @@ QVariant cardDatabaseModel::data ( const QModelIndex & index, int role ) const
         return QVariant(index.row() + 1);
 
     // or use the column to retreive the right string
+    int kl;//for case 4 (knownLevel)
     switch (index.column())
     {
         case 0: returnValue = currentCard->getQuestion();
@@ -89,6 +96,16 @@ QVariant cardDatabaseModel::data ( const QModelIndex & index, int role ) const
                 break;
         case 3: returnValue = currentCard->getHint();
                 break;
+        case 4: kl = (int)currentCard->getKnownLevel();
+            if      (kl == 0) returnValue = QString("Need To Learn");
+            else if (kl == 1) returnValue = QString("Still Learning");
+            else if (kl == 2) returnValue = QString("Well-known");
+            else if (kl == 3) returnValue = QString("Archived");
+            break;
+        case 5: returnValue = currentCard->score();
+            break;
+        case 6: returnValue = currentCard->getCurrentStreak();
+            break;
         default:
                 break;
     } //switch
