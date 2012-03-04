@@ -81,8 +81,5 @@ unsigned int cardSet::cardsInSet()
 
 bool cardSet::isEmpty()
 {
-    if (cardsInSetCounter == 0)
-        return true;
-    else
-        return false;
+    return (cardsInSetCounter == 0);
 }

@@ -329,6 +329,9 @@ bool flashCard::canBeDemoted()
     if (wasCorrectLastTime()) return false;
     if (knownLevel == level_min) return false;
 
+    if (knownLevel == level_norm && parentPack->knownLevelSets[level_min].isEmpty())
+        return true;//special case - if no card marked need2learn
+
     int requiredLevelUp = INT_MAX;
 
     if (knownLevel == level_norm)
