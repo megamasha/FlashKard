@@ -6,26 +6,6 @@
 #include <QSettings>
 #include <QVector>
 
-int flashCard::n2lToNorm = N2LTONORM;
-int flashCard::normToN2l = NORMTON2L;
-int flashCard::normToKnown = NORMTOKNOWN;
-int flashCard::knownToNorm = KNOWNTONORM;
-int flashCard::knownToOld = KNOWNTOOLD;
-int flashCard::oldToNorm = OLDTONORM;
-
-int flashCard::bonusForCorrectAnswer = BONUS_FOR_CORRECT_ANSWER;
-int flashCard::bonusPerCorrectStreak = BONUS_PER_CORRECT_STREAK;
-int flashCard::maxBonusStreakLength = MAX_BONUS_STREAK_LENGTH;
-int flashCard::bonusPerKnownLevel = BONUS_PER_KNOWN_LEVEL;
-
-int flashCard::maxPossibleScore()
-{
-    return (bonusForCorrectAnswer +
-        (bonusPerCorrectStreak * maxBonusStreakLength) +
-         bonusPerKnownLevel * (level_max - 1));
-}
-
-
 flashCard::flashCard() :
     question (QObject::tr("Question")),
     answer (QObject::tr("Answer")),
@@ -33,6 +13,8 @@ flashCard::flashCard() :
     lastCorrect (false),
     currentStreak (0),
     levelUp (0),
+
+    answerTime (DEFAULT_TIME_LIMIT),
 
     next (NULL),
     parentPack (NULL),
@@ -62,6 +44,8 @@ flashCard::flashCard (
       lastCorrect (lc),
       currentStreak (cs),
       levelUp (lu),
+
+      answerTime (DEFAULT_TIME_LIMIT),
 
       next (NULL),
       parentPack (NULL),
@@ -101,29 +85,6 @@ bool flashCard::isCorrect (QString & yourAnswer)
     int comparisonResult = answer.compare(yourAnswer,cs);
 
     return (comparisonResult == 0);
-}
-
-unsigned int flashCard::levenshteinDistance(const QString & yourAnswer)
-{
-    // I like the levenshtein distance string metric, so I'm using it in this class :-)
-    // Implementation provided by wikibooks, 02/03/2012
-    // (http://en.wikibooks.org/wiki/Algorithm_implementation/Strings/Levenshtein_distance#C.2B.2B)
-
-    const unsigned int len1 = yourAnswer.length(), len2 = answer.length();
-    std::vector<int> col(len2+1), prevCol(len2+1);
-
-    for (unsigned int i = 0; i < prevCol.size(); i++)
-        prevCol[i] = i;
-    for (unsigned int i = 0; i < len1; i++)
-    {
-        col[0] = i+1;
-        for (unsigned int j = 0; j < len2; j++)
-            col[j+1] = std::min( std::min( 1 + col[j], 1 + prevCol[1 + j]),
-                            prevCol[j] + (yourAnswer[i]==answer[j] ? 0 : 1) );
-        col.swap(prevCol);
-    }
-    qDebug("Levenshtein distance: %i",prevCol[len2]);
-    return prevCol[len2];
 }
 
 bool flashCard::isAlmostCorrect (QString & yourAnswer)
@@ -197,6 +158,18 @@ bool flashCard::markAsIncorrect()
     return true;
 }
 
+int flashCard::n2lToNorm = N2LTONORM;
+int flashCard::normToN2l = NORMTON2L;
+int flashCard::normToKnown = NORMTOKNOWN;
+int flashCard::knownToNorm = KNOWNTONORM;
+int flashCard::knownToOld = KNOWNTOOLD;
+int flashCard::oldToNorm = OLDTONORM;
+
+int flashCard::bonusForCorrectAnswer = BONUS_FOR_CORRECT_ANSWER;
+int flashCard::bonusPerCorrectStreak = BONUS_PER_CORRECT_STREAK;
+int flashCard::maxBonusStreakLength = MAX_BONUS_STREAK_LENGTH;
+int flashCard::bonusPerKnownLevel = BONUS_PER_KNOWN_LEVEL;
+
 int flashCard::score()
 {
     if (currentStreak == 0) return 0;
@@ -219,6 +192,33 @@ int flashCard::score()
     return (returnValue > 0 ? returnValue : 0);
 }
 
+int flashCard::maxPossibleScore()
+{
+    return (bonusForCorrectAnswer +
+        (bonusPerCorrectStreak * maxBonusStreakLength) +
+         bonusPerKnownLevel * (level_max - 1));
+}
+
+void flashCard::setAnswerTime(int time)
+{
+    answerTime = time;
+}
+
+int flashCard::getTimeLimit()
+{
+    //default for unanswered cards
+    if (score() == 0 || answerTime == DEFAULT_TIME_LIMIT)
+        return DEFAULT_TIME_LIMIT;
+    //steadily decreasing time limits for up to half max score
+    else if (score() < (maxPossibleScore() / 2))
+        return ( (DEFAULT_TIME_LIMIT * score()) / maxPossibleScore() );
+    //over half score, the time limit depends on how quickly they answed last time
+    else if (score() != maxPossibleScore())
+        return (answerTime + TIME_LIMIT_MARGIN);
+    //at max score, each answer must be quicker than the last!!
+    else
+        return(answerTime);
+}
 
 //string access functions
 bool flashCard::setQuestion(QString newQuestion)
@@ -463,4 +463,27 @@ bool flashCard::isLowPriority()
 bool flashCard::isDuplicateOf(flashCard * otherCard)
 {
     return (question == otherCard->question);
+}
+
+unsigned int flashCard::levenshteinDistance(const QString & yourAnswer)
+{
+    // I like the levenshtein distance string metric, so I'm using it in this class :-)
+    // Implementation provided by wikibooks, 02/03/2012
+    // (http://en.wikibooks.org/wiki/Algorithm_implementation/Strings/Levenshtein_distance#C.2B.2B)
+
+    const unsigned int len1 = yourAnswer.length(), len2 = answer.length();
+    std::vector<int> col(len2+1), prevCol(len2+1);
+
+    for (unsigned int i = 0; i < prevCol.size(); i++)
+        prevCol[i] = i;
+    for (unsigned int i = 0; i < len1; i++)
+    {
+        col[0] = i+1;
+        for (unsigned int j = 0; j < len2; j++)
+            col[j+1] = std::min( std::min( 1 + col[j], 1 + prevCol[1 + j]),
+                            prevCol[j] + (yourAnswer[i]==answer[j] ? 0 : 1) );
+        col.swap(prevCol);
+    }
+    qDebug("Levenshtein distance: %i",prevCol[len2]);
+    return prevCol[len2];
 }

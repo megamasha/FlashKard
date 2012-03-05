@@ -73,22 +73,23 @@ void flashCardWindow::anotherCard()
     QSettings settings;
     if (settings.value("Testing/timedAnswers",false).toBool() == true)
     {
+        ui->timerProgressBar->setMaximum( (currentCard->getTimeLimit()) / TIMER_FRAME_LENGTH );
         ui->timerProgressBar->reset();
         currentTimerProgress = 0;
-        timer.start(100);
+        timer.start(TIMER_FRAME_LENGTH);
     }
 }
 
 void flashCardWindow::on_infoButton_clicked()
 {
-    if (currentCard->getInfo().isEmpty())
+    if (!currentCard->hasInfo())
         popup.info(this,tr("Sorry, there is no additional information for this flashcard\nPerhaps you should add some..."));
     else popup.info(this, currentCard->getInfo());
 }
 
 void flashCardWindow::on_hintButton_clicked()
 {
-    if (currentCard->getHint().isEmpty())
+    if (!currentCard->hasHint())
         popup.info(this,tr("Sorry, there is no hint for this flashcard\nPerhaps you should add one..."));
     else
     {
@@ -100,6 +101,7 @@ void flashCardWindow::on_hintButton_clicked()
 void flashCardWindow::on_answerOKButton_clicked()
 {
     timer.stop();
+    currentCard->setAnswerTime(ui->timerProgressBar->value() * TIMER_FRAME_LENGTH);
 
     resultsWindow results(this,currentCard,ui->answerBox->text());
     if (results.exec())
@@ -109,7 +111,7 @@ void flashCardWindow::on_answerOKButton_clicked()
 
 void flashCardWindow::progressTimer()
 {
-    ui->timerProgressBar->setValue(currentTimerProgress++);
+    ui->timerProgressBar->setValue(++currentTimerProgress);
 
     if (ui->timerProgressBar->value() == ui->timerProgressBar->maximum())
     {

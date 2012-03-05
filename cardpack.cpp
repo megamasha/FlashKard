@@ -404,10 +404,7 @@ float cardPack::packScore()
     flashCard * currentCard = getFirstCard();
     do
     {
-        if (currentCard->wasCorrectLastTime())
-        {
-            score += currentCard->score();
-        }
+        score += currentCard->score();
     }
     while ((currentCard = mainPack.getNextCard(currentCard)) != NULL);
 

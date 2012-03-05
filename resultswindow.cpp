@@ -3,7 +3,7 @@
 #include "editorwindow.h" //so it can spawn one
 #include <QSettings>
 
-resultsWindow::resultsWindow(QWidget *parent,flashCard * card, QString givenAnswer) :
+resultsWindow::resultsWindow(flashCardWindow *parent,flashCard * card, QString givenAnswer) :
     QDialog(parent),
     ui(new Ui::resultsWindow),
     currentCard(card)

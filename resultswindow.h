@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "flashcard.h"
 #include "cardpack.h" //for default arg 2 of constructor
+#include "flashcardwindow.h" //parent
 
 namespace Ui {
     class resultsWindow;
@@ -14,7 +15,7 @@ class resultsWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit resultsWindow(QWidget *parent = 0,
+    explicit resultsWindow(flashCardWindow *parent = 0,
                            flashCard * card = mainPack.getFirstCard(),
                            QString givenAnswer = QString());
 

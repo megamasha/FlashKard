@@ -5,6 +5,9 @@
 #include <QTimer>
 #include "flashcard.h"
 
+#define TIMER_FPS 25
+#define TIMER_FRAME_LENGTH (1000 / TIMER_FPS)
+
 namespace Ui {
     class flashCardWindow;
 }

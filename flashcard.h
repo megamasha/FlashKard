@@ -8,6 +8,9 @@
 
 #define DEFAULT_ALMOST_CORRECT_THRESHOLD 85
 
+#define DEFAULT_TIME_LIMIT 30000 //in milliseconds
+#define TIME_LIMIT_MARGIN 3000 //how much slower (in milliseconds) the card may be answered than last time
+
 #include <QString>
 
 enum knownLevel_t {level_min = 0, level_n2l = 0, level_norm = 1, level_known = 2, level_old = 3, level_max = 3};
@@ -17,20 +20,6 @@ class cardPack;
 
 class flashCard
 {
-    private:
-
-        static int n2lToNorm;
-        static int normToN2l;
-        static int normToKnown;
-        static int knownToNorm;
-        static int knownToOld;
-        static int oldToNorm;
-
-        static int bonusForCorrectAnswer;
-        static int bonusPerCorrectStreak;
-        static int maxBonusStreakLength;
-        static int bonusPerKnownLevel;
-
     public:
 
         flashCard();
@@ -47,7 +36,6 @@ class flashCard
 
         //functions to do with answer correctness
         bool isCorrect (QString & yourAnswer);
-        unsigned int levenshteinDistance (const QString & yourAnswer); //used for isAlmostCorrect()
         bool isAlmostCorrect (QString & yourAnswer);
         bool wasCorrectLastTime();
         int getCurrentStreak();
@@ -55,8 +43,11 @@ class flashCard
         bool markAsCorrect();
         bool markAsIncorrect();
 
+        //other testing-related functions
         int score();
         static int maxPossibleScore();
+        void setAnswerTime(int time);
+        int getTimeLimit();
 
         //string access functions
         QString getQuestion();
@@ -89,6 +80,20 @@ class flashCard
 
         bool isDuplicateOf(flashCard * otherCard);
 
+        //static members
+        static int n2lToNorm;
+        static int normToN2l;
+        static int normToKnown;
+        static int knownToNorm;
+        static int knownToOld;
+        static int oldToNorm;
+
+        static int bonusForCorrectAnswer;
+        static int bonusPerCorrectStreak;
+        static int maxBonusStreakLength;
+        static int bonusPerKnownLevel;
+
+
     private:
 
         QString question;
@@ -101,9 +106,13 @@ class flashCard
         int currentStreak;
         int levelUp;
 
+        int answerTime;
+
         flashCard * next;
         cardPack * parentPack;
         cardSet * parentSet;
+
+        unsigned int levenshteinDistance (const QString & yourAnswer); //used for isAlmostCorrect()
 
     //friends:
 
