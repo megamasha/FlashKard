@@ -326,6 +326,17 @@ void cardPack::exportdatabase (QString fileToExport)
     flashCard * currentCard = getFirstCard();
     if (currentCard == NULL) return;
 
+    //warn about file format limitations
+    if (!popup.importantQuestion(0,QObject::tr("Are you sure you wish to save to a '~sv' file?\n\n"
+                                      "The '~sv' file format is an older format.\n"
+                                      "It does not support the '~' character, non-latin characters, timed answers, "
+                                      "and has some scoring limitations.\n\n"
+                                      "Save with some potential loss of data?")))
+    {
+        popup.info(0,QObject::tr("File not saved."));
+        return;
+    }
+
     //check for invalid character '~'
     if (containsCharacter('~'))
     {
@@ -336,9 +347,7 @@ void cardPack::exportdatabase (QString fileToExport)
             return;
         }
 
-        //FISH! TODO Make this act on a copy of the pack (requires cardPack copy constructor)
-
-        //otherwise, replace characters and continue
+        //otherwise, create copy of pack, replace characters and save it
         else
         {
             cardPack exportCopy = mainPack;

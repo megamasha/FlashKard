@@ -376,16 +376,16 @@ void MainWindow::saveFDB()
     //create table
     QSqlQuery query;
     query.exec("DROP TABLE Flashcards");
-    query.exec("CREATE TABLE Flashcards (Question TEXT, Answer TEXT, Info TEXT, Hint TEXT, KnownLevel TINYINT, LastCorrect TINYINT, CurrentStreak TINYINT, LevelUp TINYINT)");
+    query.exec("CREATE TABLE Flashcards (Question TEXT, Answer TEXT, Info TEXT, Hint TEXT, KnownLevel TINYINT, LastCorrect TINYINT, CurrentStreak TINYINT, LevelUp TINYINT, AnswerTime INT)");
 
     //add all cards to database
     flashCard * currentCard = mainPack.getFirstCard();
     query.exec("BEGIN TRANSACTION");
     do
     {
-        QString knownLevel, lastCorrect, currentStreak, levelUp;
+        QString knownLevel, lastCorrect, currentStreak, levelUp, answerTime;
         QString queryString;
-        queryString = "INSERT INTO Flashcards (Question, Answer, Info, Hint, KnownLevel, LastCorrect, CurrentStreak, LevelUp) VALUES ('" +
+        queryString = "INSERT INTO Flashcards (Question, Answer, Info, Hint, KnownLevel, LastCorrect, CurrentStreak, LevelUp, AnswerTime) VALUES ('" +
                 currentCard->getQuestion().replace(QString("'"),QString("''")) + "', '" +
                 currentCard->getAnswer().replace(QString("'"),QString("''")) + "', '" +
                 currentCard->getInfo().replace(QString("'"),QString("''")) + "', '" +
@@ -393,7 +393,8 @@ void MainWindow::saveFDB()
                 knownLevel.setNum((int)currentCard->getKnownLevel()) + ", " +
                 lastCorrect.setNum(currentCard->wasCorrectLastTime() ? 1 : 0) + ", " +
                 currentStreak.setNum(currentCard->getCurrentStreak()) + ", " +
-                levelUp.setNum(currentCard->getLevelUp()) + ")";
+                levelUp.setNum(currentCard->getLevelUp()) + ", " +
+                answerTime.setNum(currentCard->answerTime) + ")";
 
         if(!query.exec(queryString.toUtf8().data()))
         {
@@ -418,7 +419,7 @@ void MainWindow::loadFDB()
     QSqlQuery query;
 
     //read in all cards
-    query.exec("SELECT Question,Answer,Info,Hint,KnownLevel,LastCorrect,CurrentStreak,LevelUp FROM Flashcards");
+    query.exec("SELECT Question,Answer,Info,Hint,KnownLevel,LastCorrect,CurrentStreak,LevelUp,AnswerTime FROM Flashcards");
 
     QString qu;
     QString an;
@@ -428,6 +429,7 @@ void MainWindow::loadFDB()
     bool lc;
     int cs;
     int lu;
+    int at;
     while (query.next())
     {
         qu = query.value(0).toString();
@@ -438,8 +440,9 @@ void MainWindow::loadFDB()
         lc = query.value(5).toInt() ? 1 : 0;
         cs = query.value(6).toInt();
         lu = query.value(7).toInt();
+        at = query.value(8).toInt();
 
-        flashCard * fc = new flashCard(qu,an,in,hi,kl,lc,cs,lu);
+        flashCard * fc = new flashCard(qu,an,in,hi,kl,lc,cs,lu,at);
 
         mainPack.addCard(*fc,kl);
     }
@@ -480,7 +483,7 @@ void MainWindow::saveFML()
         flashcard.appendChild(hint);
 
         //others:
-        QString kl, lc, cs, lu;
+        QString kl, lc, cs, lu, at;
 
         QDomElement knownLevel = flashKardMLDoc.createElement("KnownLevel");
         QDomText knownLevelText = flashKardMLDoc.createTextNode(kl.setNum((int)currentCard->getKnownLevel()));
@@ -498,6 +501,10 @@ void MainWindow::saveFML()
         QDomText levelUpText = flashKardMLDoc.createTextNode(lu.setNum(currentCard->getLevelUp()));
         levelUp.appendChild(levelUpText);
         flashcard.appendChild(levelUp);
+        QDomElement answerTime = flashKardMLDoc.createElement("AnswerTime");
+        QDomText answerTimeText = flashKardMLDoc.createTextNode(at.setNum(currentCard->answerTime));
+        answerTime.appendChild(answerTimeText);
+        flashcard.appendChild(answerTime);
 
         flashcards.appendChild(flashcard);
     }

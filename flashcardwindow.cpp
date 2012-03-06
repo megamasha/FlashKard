@@ -101,7 +101,11 @@ void flashCardWindow::on_hintButton_clicked()
 void flashCardWindow::on_answerOKButton_clicked()
 {
     timer.stop();
-    currentCard->setAnswerTime(ui->timerProgressBar->value() * TIMER_FRAME_LENGTH);
+    QString intermediate = ui->answerBox->text(); //intermediate required as othwise
+    // compiler complains about non-matching QString and QString & arguments to isCorrect()
+
+    if (currentCard->isCorrect(intermediate))
+        currentCard->setAnswerTime(ui->timerProgressBar->value() * TIMER_FRAME_LENGTH);
 
     resultsWindow results(this,currentCard,ui->answerBox->text());
     if (results.exec())

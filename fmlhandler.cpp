@@ -31,7 +31,8 @@ bool FMLHandler::startElement( const QString &, const QString & name, const QStr
              name == "KnownLevel" ||
              name == "LastCorrect" ||
              name == "CurrentStreak" ||
-             name == "LevelUp")
+             name == "LevelUp" ||
+             name == "AnswerTime")
     {
         currentCardProperty = name;
     }
@@ -61,6 +62,8 @@ bool FMLHandler::characters ( const QString & text )
             currentCard->currentStreak = text.toInt();
         else if (currentCardProperty == "LevelUp")
             currentCard->levelUp = text.toInt();
+        else if (currentCardProperty == "AnswerTime")
+            currentCard->answerTime = text.toInt();
     }
 
     return true;
@@ -85,7 +88,8 @@ bool FMLHandler::endElement( const QString & , const QString & name, const QStri
              name == "KnownLevel" ||
              name == "LastCorrect" ||
              name == "CurrentStreak" ||
-             name == "LevelUp")
+             name == "LevelUp" ||
+             name == "AnswerTime")
     {
         currentCardProperty = "none";
     }

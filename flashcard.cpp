@@ -31,7 +31,8 @@ flashCard::flashCard (
     knownLevel_t kl,
     bool lc,
     int cs,
-    int lu)
+    int lu,
+    int at)
 
     :
 
@@ -45,7 +46,7 @@ flashCard::flashCard (
       currentStreak (cs),
       levelUp (lu),
 
-      answerTime (DEFAULT_TIME_LIMIT),
+      answerTime (at),
 
       next (NULL),
       parentPack (NULL),

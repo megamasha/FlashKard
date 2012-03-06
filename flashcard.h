@@ -31,7 +31,9 @@ class flashCard
             knownLevel_t kl,
             bool lc,
             int cs,
-            int lu);
+            int lu,
+            int at = DEFAULT_TIME_LIMIT);
+
         flashCard & operator=(const flashCard & source);
 
         //functions to do with answer correctness
