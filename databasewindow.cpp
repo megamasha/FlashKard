@@ -18,6 +18,7 @@ databaseWindow::databaseWindow(QWidget *parent) :
 
     ui->databaseTreeView->setModel(proxyModel);
 
+    connect(model,SIGNAL(cardAdded(flashCard*)),this,SLOT(itemJustAdded(flashCard*)));
     connect(ui->searchText,SIGNAL(textChanged(QString)),proxyModel,SLOT(setFilterFixedString(QString)));
 
     enableAndDisableButtons();
@@ -77,6 +78,12 @@ void databaseWindow::on_databaseTreeView_doubleClicked(const QModelIndex &index)
     flashCard * card = indexToCard(index);
 
     editorWindow editor(this,card);
+    editor.exec();
+}
+
+void databaseWindow::itemJustAdded(flashCard *addedCard)
+{
+    editorWindow editor(this,addedCard);
     editor.exec();
 }
 

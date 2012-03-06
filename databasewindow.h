@@ -31,6 +31,8 @@ private slots:
 
     void on_databaseTreeView_doubleClicked(const QModelIndex &index);
 
+    void itemJustAdded(flashCard * addedCard);
+
 private:
 
     Ui::databaseWindow *ui;

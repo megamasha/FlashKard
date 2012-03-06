@@ -123,6 +123,7 @@ bool cardDatabaseModel::insertRows(int, int count, const QModelIndex &parent)
         flashCard * card = new flashCard;
         success = success &
                 mainPack.addCard(*card,level_norm);
+        cardAdded(card);
     }
     endInsertRows();
     return success;

@@ -44,6 +44,6 @@ Added: Allow cancelling of quitting when asked to save.
 Added: Move wrongly answered cards to n2l if there are no other n2l cards
 Added: Additional columns in database editor.
 Added: Adaptive flashcard time limits.
+Added: Adding a new card automatically opens it for editing.
 Save flashcard time limits to FML and FDB files.
-Adding a new card automatically opens it for editing.
 Add/implement more/better icons.

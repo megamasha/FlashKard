@@ -3,6 +3,8 @@
 
 #include <QAbstractTableModel>
 
+class flashCard;
+
 class cardDatabaseModel : public QAbstractTableModel
 {
     Q_OBJECT
@@ -16,6 +18,8 @@ public:
     bool removeRows ( int row, int count, const QModelIndex & parent = QModelIndex() );
 
 signals:
+
+    void cardAdded(flashCard * addedCard);
 
 public slots:
 
