@@ -23,7 +23,7 @@ resultsWindow::~resultsWindow()
     delete ui;
 }
 
-bool resultsWindow::processResults(QString givenAnswer)
+void resultsWindow::processResults(QString givenAnswer)
 {
     //mark the card accordingly
     if (currentCard->isCorrect(givenAnswer))
@@ -35,12 +35,12 @@ bool resultsWindow::processResults(QString givenAnswer)
 
     generateResultsText(givenAnswer);
 
-    return true; //FISH! TODO replace with success value
+    return;
 }
 
 void resultsWindow::generateResultsText(QString & givenAnswer)
 {
-    //FISH! This calls isCorrect() and isAlmostCorrect() multiple times.
+    //NOTE: This calls isCorrect() and isAlmostCorrect() multiple times.
     //The results could be cached if performance is an issue.
 
     //(re)create results text for user

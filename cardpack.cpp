@@ -97,9 +97,9 @@ flashCard * cardPack::getRandomCard()
     if (currentSet==&knownLevelSets[level_n2l] && n2lFlag)
     {
         currentSet=&knownLevelSets[level_norm];
-        n2lFlag = 0; // FISH! change to false
+        n2lFlag = false;
     }
-    if (currentSet==&knownLevelSets[level_n2l]) n2lFlag = 1; //FISH! change to true//is using n2l this time, set flag so it won't be used next time as well
+    if (currentSet==&knownLevelSets[level_n2l]) n2lFlag = true;//is using n2l this time, set flag so it won't be used next time as well
     if (currentSet->isEmpty()) currentSet = &knownLevelSets[level_norm];//if current list is empty, default to normal list
     if (currentSet->isEmpty() && !n2lFlag) currentSet = &knownLevelSets[level_n2l];//if normal list is empty, try n2l list if it wasn't used last time
     if (currentSet->isEmpty() && selector % 10 == 0) currentSet = &knownLevelSets[level_old];//if list is still empty, in 10% of cases try old list
@@ -158,10 +158,13 @@ flashCard * cardPack::getCardByIndex(int index)
     if (isEmpty())
         return NULL;
 
-    //this is VERY lazy and VERY inefficient (I think)
-    //FISH! better implementation etc. TODO
+    /*this works by stepping through the pack th eappropriate number of times
+     *(a for loop could be used here)
+     *without an index field in the cards, I see no better way,
+     *and there's no garantee another way would be more efficient.
+     */
     flashCard * returnCard = getFirstCard();
-    while (index != 1)
+    while (index != 1 && returnCard != NULL)
     {
         returnCard = getNextCard(returnCard);
         index--;

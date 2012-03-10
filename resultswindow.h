@@ -21,7 +21,7 @@ public:
 
     ~resultsWindow();
 
-    bool processResults(QString givenAnswer);
+    void processResults(QString givenAnswer);
 
 private slots:
     void on_stopButton_clicked();

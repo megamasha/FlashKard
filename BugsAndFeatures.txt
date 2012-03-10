@@ -41,9 +41,14 @@ Added: Timed answers.
 Added: Allowances for answers that are almost correct.
 Added: Popup mode.
 Added: Allow cancelling of quitting when asked to save.
-Added: Move wrongly answered cards to n2l if there are no other n2l cards
+Added: Move wrongly answered cards to n2l if there are no other n2l cards.
 Added: Additional columns in database editor.
 Added: Adaptive flashcard time limits.
 Added: Adding a new card automatically opens it for editing.
 Added: Save flashcard time limits to FML and FDB files.
 Add/implement more/better icons.
+
+Other:
+Refactor resultsWindow class.
+Review cardPack.exportDatabase.
+See if I can use mapToSource() or related function to open an editor for newly-created cards.
