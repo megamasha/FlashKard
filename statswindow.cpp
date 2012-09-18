@@ -2,6 +2,12 @@
 #include "ui_statswindow.h"
 #include "cardpack.h"
 
+//! The only constructor.
+/*! Initialises the UI and automatically populates it with up-to-date stats.
+ * A QWidget or subclass should be passed as the parent parameter to
+ * avoid memory leaks.
+ * \param parent The parent widget.
+ */
 StatsWindow::StatsWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::StatsWindow)
@@ -10,11 +16,19 @@ StatsWindow::StatsWindow(QWidget *parent) :
     generateStats();
 }
 
+//! The destructor.
+/*! Properly cleans up the UI upon destruction.
+ */
 StatsWindow::~StatsWindow()
 {
     delete ui;
 }
 
+//! Generates the stats.
+/*! Runs through all loaded cards and generates stats,
+ * then loads them into the stats window. Called automatically
+ * upon stats window construction.
+ */
 void StatsWindow::generateStats()
 {
     Q_ASSERT(!mainPack.isEmpty());
@@ -52,6 +66,9 @@ void StatsWindow::generateStats()
     while ((currentCard = mainPack.getNextCard(currentCard)) != NULL);
 
     // generate text from stats
+
+    // QStringBuilder could be used, but would reduce code readability, and
+    // is unnecessary as this is not (currently) a performance bottleneck.
     QString generatedText;
 
     generatedText =
