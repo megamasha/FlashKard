@@ -52,12 +52,14 @@ void StatsWindow::generateStats()
         if (currentCard->getCurrentStreak() == 0) untested++;
         else if (currentCard->wasCorrectLastTime()) rights++;
         else wrongs++;
-        if (currentCard->wasCorrectLastTime() && (currentCard->getCurrentStreak() > bestRun) )
+        if (currentCard->wasCorrectLastTime() &&
+                (currentCard->getCurrentStreak() > bestRun) )
         {
             bestRun = currentCard->getCurrentStreak();
             bestRunCard = currentCard;
         }
-        else if ( !currentCard->wasCorrectLastTime() && currentCard->getCurrentStreak() > worstRun)
+        else if ( !currentCard->wasCorrectLastTime() &&
+                   currentCard->getCurrentStreak() > worstRun)
         {
             worstRun = currentCard->getCurrentStreak();
             worstRunCard = currentCard;

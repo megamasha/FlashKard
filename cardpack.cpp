@@ -369,25 +369,25 @@ void cardPack::exportdatabase (QString fileToExport)
         bytesToWrite = currentCard->getQuestion().length() > MAXTEXTLENGTH ?
                             MAXTEXTLENGTH :
                             currentCard->getQuestion().length();
-        outputfile.write(currentCard->getQuestion().toAscii(),bytesToWrite);
+        outputfile.write(currentCard->getQuestion().toLatin1(),bytesToWrite);
         outputfile.write("~");
 
         bytesToWrite = currentCard->getAnswer().length() > MAXTEXTLENGTH ?
                             MAXTEXTLENGTH :
                             currentCard->getAnswer().length();
-        outputfile.write(currentCard->getAnswer().toAscii(),bytesToWrite);
+        outputfile.write(currentCard->getAnswer().toLatin1(),bytesToWrite);
         outputfile.write("~");
 
         bytesToWrite = currentCard->getInfo().length() > MAXTEXTLENGTH ?
                             MAXTEXTLENGTH :
                             currentCard->getInfo().length();
-        outputfile.write(currentCard->getInfo().toAscii(),bytesToWrite);
+        outputfile.write(currentCard->getInfo().toLatin1(),bytesToWrite);
         outputfile.write("~");
 
         bytesToWrite = currentCard->getHint().length() > MAXTEXTLENGTH ?
                             MAXTEXTLENGTH :
                             currentCard->getHint().length();
-        outputfile.write(currentCard->getHint().toAscii(),bytesToWrite);
+        outputfile.write(currentCard->getHint().toLatin1(),bytesToWrite);
         outputfile.write("~");
 
         char tempstring[10];

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql xml
+QT       += core gui sql xml widgets
 
 TARGET = flashkard
 TEMPLATE = app

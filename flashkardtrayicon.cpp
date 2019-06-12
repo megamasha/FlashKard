@@ -5,6 +5,7 @@
 #include "cardpack.h"
 #include "mainwindow.h"
 #include "popupwindow.h" //included for debugging, can be removed
+#include <QApplication>
 
 flashKardTrayIcon::flashKardTrayIcon(QObject *parent) :
     QSystemTrayIcon(parent),

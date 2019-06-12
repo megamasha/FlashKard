@@ -18,7 +18,7 @@ struct listinfo n2l, norm, known, old;
 
 void importdatabase(QString fileToImport)
 {
-    QByteArray temporaryIntermediate = fileToImport.toAscii();
+    QByteArray temporaryIntermediate = fileToImport.toLatin1();
     char * inputfilename = temporaryIntermediate.data();
 
     //identify csv or ~sv file

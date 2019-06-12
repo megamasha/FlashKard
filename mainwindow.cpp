@@ -163,7 +163,7 @@ bool MainWindow::on_saveButton_clicked()
 
     if (currentlyLoadedFilename.isEmpty())
         currentlyLoadedFilename = QFileDialog::getSaveFileName(this, tr("Save Flashcard Database"),
-                                                currentlyLoadedFilename.toAscii().data(),
+                                                currentlyLoadedFilename.toLatin1().data(),
                                                 tr("FlashKard Markup Languge (*.fml);;Tilde~Separated Values (*.~sv);;FlashKard Database (*.fdb)"));
     if (currentlyLoadedFilename.isEmpty())
     {
@@ -189,7 +189,7 @@ bool MainWindow::on_saveButton_clicked()
 void MainWindow::on_actionSave_FlashKard_Database_As_triggered()
 {
     QString filename = QFileDialog::getSaveFileName(this, tr("Save Flashcard Database"),
-                                                           currentlyLoadedFilename.toAscii().data(),
+                                                           currentlyLoadedFilename.toLatin1().data(),
                                                            tr("FlashKard Markup Languge (*.fml);;Tilde~Separated Values (*.~sv);;FlashKard Database (*.fdb)"));
     if (! filename.isEmpty())
     {
